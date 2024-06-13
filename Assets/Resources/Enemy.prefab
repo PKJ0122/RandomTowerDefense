@@ -43,7 +43,8 @@ GameObject:
   - component: {fileID: 7301896312125527021}
   - component: {fileID: 3382393665205191232}
   - component: {fileID: 6983656938531843191}
-  m_Layer: 0
+  - component: {fileID: 7905994795171965534}
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +101,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5d2521218cb8747bce6cca50f15fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &7905994795171965534
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162792657821188891}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &481170677959333110
 GameObject:
   m_ObjectHideFlags: 0

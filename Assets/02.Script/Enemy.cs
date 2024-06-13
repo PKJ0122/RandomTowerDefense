@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,11 +7,7 @@ public class Enemy : MonoBehaviour
 
     LinkedListNode<Vector3> _node;
 
-    float _Hp;
-    public float Hp
-    {
-        set => _Hp = value;
-    }
+    float _hp;
 
 
     void FixedUpdate()
@@ -36,6 +30,17 @@ public class Enemy : MonoBehaviour
         _node = EnemySpawner.Path.First;
         transform.position = _node.Value;
         _node = _node.Next;
-        Hp = hp;
+        _hp = hp;
+    }
+
+    /// <summary>
+    /// 데미지 적용 함수
+    /// </summary>
+    /// <param name="damage">데미지 값</param>
+    /// <returns>실제 준 데미지를 반환</returns>
+    public float Damage(float damage)
+    {
+        _hp -= damage;
+        return _hp >= 0 ? _hp : damage + _hp;
     }
 }
