@@ -28,15 +28,16 @@ public abstract class UIBase : MonoBehaviour
     /// <summary>
     /// UI 활성화 함수
     /// </summary>
-    protected virtual void Show()
+    public virtual void Show()
     {
         UIManager.Instance.PushUI(this);
+        _canvas.enabled = true;
     }
-    
+
     /// <summary>
     /// UI 비활성화 함수
     /// </summary>
-    protected virtual void Hide()
+    public virtual void Hide()
     {
         UIManager.Instance.PopUI(this);
         _canvas.enabled = false;

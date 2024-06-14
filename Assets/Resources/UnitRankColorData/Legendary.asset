@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Legendary
   m_EditorClassIdentifier: 
   unitRank: 4
-  unitRankColorData: {r: 0, g: 1, b: 0, a: 1}
+  unitRankName: "\uB808\uC804\uB354\uB9AC"
+  unitRankColor: {r: 0, g: 1, b: 0, a: 1}

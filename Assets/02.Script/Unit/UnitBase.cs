@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,17 @@ public class UnitBase : MonoBehaviour
     public UnitKind Kind { get => _Kind;}
     public UnitRank Rank { get => _Rank;}
     public float Power { get => _power;}
-    public float Damage { get => _damage;}
+    public float Damage
+    {
+        get => _damage;
+        set
+        {
+            _damage = value;
+            onDamageChange?.Invoke(_damage);
+        }
+    }
+
+    public event Action<float> onDamageChange;
 
 
     private void Awake()
@@ -72,10 +83,18 @@ public class UnitBase : MonoBehaviour
     {
         _Kind = kind;
         _Rank = rank;
-        _power = UnitRepository.UnitPowerDatas[(kind, rank)];
+        //_power = UnitRepository.UnitKindDatas[(kind, rank)];
         ParticleSystem.MainModule main = _particleSystem.main;
-        main.startColor = UnitRepository.UnitRankColorDatas[rank];
+        //main.startColor = UnitRepository.UnitRankDatas[rank];
         _damage = 0;
+    }
+
+    /// <summary>
+    /// 유닛의 딜량(데미지) 0으로 리셋해주는 함숨
+    /// </summary>
+    public void DamageReSet()
+    {
+        Damage = 0;
     }
 
     /// <summary>

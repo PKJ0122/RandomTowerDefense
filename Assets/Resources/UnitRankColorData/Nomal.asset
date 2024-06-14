@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Nomal
   m_EditorClassIdentifier: 
   unitRank: 0
-  unitRankColorData: {r: 1, g: 1, b: 1, a: 1}
+  unitRankName: "\uB178\uB9D0"
+  unitRankColor: {r: 1, g: 1, b: 1, a: 1}

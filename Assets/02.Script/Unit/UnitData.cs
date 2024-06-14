@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObject/UnitData")]
+[CreateAssetMenu(fileName = "UnitName", menuName = "ScriptableObject/UnitData")]
 [Serializable]
 public class UnitData : ScriptableObject
 {
-    public UnitPowerData[] unitPowerDatas = new UnitPowerData[Enum.GetValues(typeof(UnitKind)).Length];
-    public UnitRankColorData[] unitRankColorDatas = new UnitRankColorData[Enum.GetValues(typeof(UnitRank)).Length];
+    public UnitKind unitKind;
+    public string unitName;
+    public float[] unitPowerDatas = new float[Enum.GetValues(typeof(UnitRank)).Length];
 }

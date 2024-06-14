@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Aquashine
+  m_Controller: {fileID: 9100000, guid: 68a403e220ae63d468d23295d8a50f8e, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b220ef9a5006c3542b1ed9ff931b8fe4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a54c61121e033854eada130849004995, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 59d1d61b6cb1be8419bc214c87e982a2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ee08b52da103a374182652befee853e1, type: 2}

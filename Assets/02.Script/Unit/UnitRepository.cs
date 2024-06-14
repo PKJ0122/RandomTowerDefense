@@ -6,52 +6,49 @@ using UnityEngine;
 /// </summary>
 public class UnitRepository : MonoBehaviour
 {
-    static UnitData _unitData;
-    static public UnitData UnitData
+    static UnitDatas _unitDatas;
+    static public UnitDatas UnitDatas
     {
         get
         {
-            if (_unitData == null)
-                _unitData = Resources.Load<UnitData>("UnitData");
+            if (_unitDatas == null)
+                _unitDatas = Resources.Load<UnitDatas>("UnitDatas");
 
-            return _unitData;
+            return _unitDatas;
         }
     }
 
-    static Dictionary<(UnitKind kind,UnitRank rank), float> s_unitPowerDatas;
-    static public Dictionary<(UnitKind kind,UnitRank rank), float> UnitPowerDatas
+    static Dictionary<UnitKind, UnitData> s_unitKindDatas;
+    static public Dictionary<UnitKind, UnitData> UnitKindDatas
     {
         get
         {
-            if (s_unitPowerDatas == null)
+            if (s_unitKindDatas == null)
             {
-                s_unitPowerDatas = new Dictionary<(UnitKind kind, UnitRank rank), float>();
-                foreach (UnitPowerData item in UnitData.unitPowerDatas)
+                s_unitKindDatas = new Dictionary<UnitKind, UnitData>();
+                foreach (UnitData item in UnitDatas.unitDatas)
                 {
-                    for (int i = 0; i < item.unitPowerDatas.Length; i++)
-                    {
-                        s_unitPowerDatas.Add((item.unitKind, (UnitRank)i), item.unitPowerDatas[i]);
-                    }
+                    s_unitKindDatas.Add(item.unitKind,item);
                 }
             }
-            return s_unitPowerDatas;
+            return s_unitKindDatas;
         }
     }
 
-    static Dictionary<UnitRank, Color> s_unitRankColorDatas;
-    static public Dictionary<UnitRank, Color> UnitRankColorDatas
+    static Dictionary<UnitRank, UnitRankData> s_unitRankDatas;
+    static public Dictionary<UnitRank, UnitRankData> UnitRankDatas
     {
         get
         {
-            if (s_unitRankColorDatas == null)
+            if (s_unitRankDatas == null)
             {
-                s_unitRankColorDatas = new Dictionary<UnitRank, Color>();
-                foreach (UnitRankColorData item in UnitData.unitRankColorDatas)
+                s_unitRankDatas = new Dictionary<UnitRank, UnitRankData>();
+                foreach (UnitRankData item in UnitDatas.unitRankColorDatas)
                 {
-                    s_unitRankColorDatas.Add(item.unitRank, item.unitRankColorData);
+                    s_unitRankDatas.Add(item.unitRank, item);
                 }
             }
-            return s_unitRankColorDatas;
+            return s_unitRankDatas;
         }
     }
 }

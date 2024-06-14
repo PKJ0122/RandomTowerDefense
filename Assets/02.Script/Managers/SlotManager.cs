@@ -25,6 +25,11 @@ public class SlotManager : MonoBehaviour
         _layerMank = LayerMask.GetMask("Slot");
     }
 
+    void OnEnable()
+    {
+        UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick += () => IsVacancy();
+    }
+
     void Update()
     {
         if (Input.touchCount == 1)
@@ -34,11 +39,33 @@ public class SlotManager : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
 
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank))
+                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank) &&
+                    Slots[hit.collider.GetComponent<Slot>()] != null)
                 {
-                    
+                    UIManager.Instance.Get<UnitInfoUI>().Show(Slots[hit.collider.GetComponent<Slot>()]);
                 }
             }
         }
+    }
+
+    void OnDisable()
+    {
+        UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick -= () => IsVacancy();
+    }
+
+    /// <summary>
+    /// 유닛이 생성될 공간이 있는지 확인하고 있다면 해당 Slot을 반환해주는 함수 / 빈자리가 없다면 null을 반환
+    /// </summary>
+    Slot IsVacancy()
+    {
+        foreach (KeyValuePair<Slot,UnitBase> item in Slots)
+        {
+            if (item.Value == null)
+            {
+                return item.Key;
+            }
+        }
+
+        return null;
     }
 }

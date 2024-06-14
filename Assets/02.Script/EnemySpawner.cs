@@ -21,12 +21,12 @@ public class EnemySpawner : MonoBehaviour
 
         _waveDate = Resources.Load<WaveData>("WaveData");
 
-        GameManager.Instance.OnChangedWave += value => EnemySpawn(value);
+        GameManager.Instance.onWaveChange += value => EnemySpawn(value);
     }
 
     void OnDisable()
     {
-        GameManager.Instance.OnChangedWave -= value => EnemySpawn(value);
+        GameManager.Instance.onWaveChange -= value => EnemySpawn(value);
     }
 
     /// <summary>

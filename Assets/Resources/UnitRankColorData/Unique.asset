@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Unique
   m_EditorClassIdentifier: 
   unitRank: 3
-  unitRankColorData: {r: 1, g: 1, b: 0, a: 1}
+  unitRankName: "\uC720\uB2C8\uD06C"
+  unitRankColor: {r: 1, g: 1, b: 0, a: 1}

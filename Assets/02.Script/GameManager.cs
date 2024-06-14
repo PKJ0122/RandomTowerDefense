@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
+    const float ROUND_TIME = 60f;
+
     int _wave = -1;
     public int Wave 
     { 
@@ -12,11 +14,23 @@ public class GameManager : SingletonMonoBase<GameManager>
         set
         {
             _wave = value;
-            OnChangedWave?.Invoke(value);
+            onWaveChange?.Invoke(value);
         } 
     }
 
-    public Action<int> OnChangedWave;
+    float _time;
+    public float Time
+    {
+        get => Time;
+        set
+        {
+            _time = value;
+            onTimeChange?.Invoke(value);
+        }
+    }
+
+    public event Action<int> onWaveChange;
+    public event Action<float> onTimeChange;
 
 
     protected override void Awake()
@@ -27,8 +41,44 @@ public class GameManager : SingletonMonoBase<GameManager>
 #endif
     }
 
-    void Start()
+    YieldInstruction delay = new WaitForSeconds(1f); //딜레이로 사용할 객체
+
+    /// <summary>
+    /// 게임로직 코루틴
+    /// </summary>
+    IEnumerator C_Game()
     {
         Wave = 0;
+
+        while (Wave+1 <= 50)
+        {
+            Time = ROUND_TIME;
+
+            while (Time > 0)
+            {
+                yield return delay;
+                Time--;
+            }
+
+            Wave++;
+        }
+
+        GameClear();
+    }
+
+    /// <summary>
+    /// 게임 클리어 함수
+    /// </summary>
+    void GameClear()
+    {
+
+    }
+
+    /// <summary>
+    /// 게임 오버 함수
+    /// </summary>
+    public void GameOver()
+    {
+
     }
 }

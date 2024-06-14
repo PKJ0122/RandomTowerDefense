@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Rare
   m_EditorClassIdentifier: 
   unitRank: 1
-  unitRankColorData: {r: 0, g: 1, b: 1, a: 1}
+  unitRankName: "\uB808\uC5B4"
+  unitRankColor: {r: 0, g: 1, b: 1, a: 1}

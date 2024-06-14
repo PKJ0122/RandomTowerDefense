@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Epic
   m_EditorClassIdentifier: 
   unitRank: 2
-  unitRankColorData: {r: 0.48235294, g: 0, b: 1, a: 1}
+  unitRankName: "\uC5D0\uD53D"
+  unitRankColor: {r: 0.48235294, g: 0, b: 1, a: 1}
