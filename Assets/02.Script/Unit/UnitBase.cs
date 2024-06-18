@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitBase : MonoBehaviour
+public class UnitBase : PoolObject
 {
     const float ATTACK_RANGE = 22.5f;
 
@@ -79,14 +79,16 @@ public class UnitBase : MonoBehaviour
     /// <summary>
     /// 유닛 세팅 함수
     /// </summary>
-    public void UnitSet(UnitKind kind,UnitRank rank)
+    public UnitBase UnitSet(UnitKind kind,UnitRank rank)
     {
         _Kind = kind;
         _Rank = rank;
-        //_power = UnitRepository.UnitKindDatas[(kind, rank)];
+        _power = UnitRepository.UnitKindDatas[kind].unitPowerDatas[(int)rank];
         ParticleSystem.MainModule main = _particleSystem.main;
-        //main.startColor = UnitRepository.UnitRankDatas[rank];
+        main.startColor = UnitRepository.UnitRankDatas[rank].unitRankColor;
         _damage = 0;
+
+        return this;
     }
 
     /// <summary>

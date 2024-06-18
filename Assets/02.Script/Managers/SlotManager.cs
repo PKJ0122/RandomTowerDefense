@@ -28,6 +28,11 @@ public class SlotManager : MonoBehaviour
     void OnEnable()
     {
         UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick += () => IsVacancy();
+        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) =>
+        {
+            Slots[slot] = unit;
+            unit.gameObject.transform.position = slot.gameObject.transform.position;
+        };
     }
 
     void Update()
@@ -48,10 +53,15 @@ public class SlotManager : MonoBehaviour
         }
     }
 
-    void OnDisable()
-    {
-        UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick -= () => IsVacancy();
-    }
+    //void OnDisable()
+    //{
+    //    UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick -= () => IsVacancy();
+    //    UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess -= (slot, unit) =>
+    //    {
+    //        Slots[slot] = unit;
+    //        unit.gameObject.transform.position = slot.gameObject.transform.position;
+    //    };
+    //}
 
     /// <summary>
     /// 유닛이 생성될 공간이 있는지 확인하고 있다면 해당 Slot을 반환해주는 함수 / 빈자리가 없다면 null을 반환

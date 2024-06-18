@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Aquashine
   m_EditorClassIdentifier: 
   unitKind: 4
+  unitObject: {fileID: 3510321770800037808, guid: 207d78dbf0deb2d4fb40175a025d5313, type: 3}
   unitName: "\uC544\uCFE0\uC544\uC0E4\uC778"
   unitPowerDatas:
   - 0

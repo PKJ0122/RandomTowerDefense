@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class WaveUI : MonoBehaviour
+public class WaveUI : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    TMP_Text _wave;
+    Slider _timeS;
+    TMP_Text _timeT;
 
-    // Update is called once per frame
-    void Update()
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        _wave = transform.Find("Image/Text (TMP) - WaveText").GetComponent<TMP_Text>();
+        _timeS = transform.Find("Image/Slider - Timer").GetComponent<Slider>();
+        _timeT = transform.Find("Image/Slider - Timer/Text (TMP) - Timer").GetComponent<TMP_Text>();
+
+        GameManager.Instance.onWaveChange += value =>
+        {
+            _wave.text = $"{value + 1} Wave";
+        };
+        GameManager.Instance.onTimeChange += value =>
+        {
+            _timeS.value = value;
+            _timeT.text = value == 60f ? "01 : 00" : $"00 : {(int)value}";
+        };
     }
 }

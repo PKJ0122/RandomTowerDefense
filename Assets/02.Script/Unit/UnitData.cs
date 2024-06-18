@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitData : ScriptableObject
 {
     public UnitKind unitKind;
+    public UnitBase unitObject;
     public string unitName;
     public float[] unitPowerDatas = new float[Enum.GetValues(typeof(UnitRank)).Length];
 }

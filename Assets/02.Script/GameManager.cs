@@ -1,27 +1,28 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
     const float ROUND_TIME = 60f;
+    const int START_GOLD = 100;
+    const int INTEREST = 40;
 
     int _wave = -1;
-    public int Wave 
-    { 
-        get => _wave; 
+    public int Wave
+    {
+        get => _wave;
         set
         {
             _wave = value;
             onWaveChange?.Invoke(value);
-        } 
+        }
     }
 
     float _time;
-    public float Time
+    public float TickTime
     {
-        get => Time;
+        get => _time;
         set
         {
             _time = value;
@@ -29,8 +30,20 @@ public class GameManager : SingletonMonoBase<GameManager>
         }
     }
 
+    int _gold;
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            _gold = value;
+            onGoldChange?.Invoke(value);
+        }
+    }
+
     public event Action<int> onWaveChange;
     public event Action<float> onTimeChange;
+    public event Action<int> onGoldChange;
 
 
     protected override void Awake()
@@ -39,6 +52,14 @@ public class GameManager : SingletonMonoBase<GameManager>
 #if UNITY_ANDROID
         Application.targetFrameRate = 60;
 #endif
+
+        onWaveChange += value =>
+        {
+            if (Wave <= 0) return;
+            Gold += INTEREST + (Gold/10);
+        };
+
+        StartCoroutine(C_Game());
     }
 
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼
@@ -48,16 +69,18 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// </summary>
     IEnumerator C_Game()
     {
+        yield return delay;
+        Gold = START_GOLD;
         Wave = 0;
 
-        while (Wave+1 <= 50)
+        while (Wave + 1 <= 50)
         {
-            Time = ROUND_TIME;
+            TickTime = ROUND_TIME;
 
-            while (Time > 0)
+            while (TickTime > 0)
             {
                 yield return delay;
-                Time--;
+                TickTime--;
             }
 
             Wave++;

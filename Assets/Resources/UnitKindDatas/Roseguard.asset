@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Roseguard
   m_EditorClassIdentifier: 
   unitKind: 1
+  unitObject: {fileID: 3018661011564102467, guid: af25a7785ec3f2742ab29fbd9382892b, type: 3}
   unitName: "\uB85C\uC988\uAC00\uB4DC"
   unitPowerDatas:
   - 0

@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
 
     void OnDisable()
     {
-        GameManager.Instance.onWaveChange -= value => EnemySpawn(value);
+        //GameManager.Instance.onWaveChange -= value => EnemySpawn(value);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(C_NomalEnemySpawn(_waveDate.HpDatas[round]));
     }
 
-    YieldInstruction delay = new WaitForSeconds(1f); //딜레이에 쓸 객체
+    YieldInstruction _delay = new WaitForSeconds(1f); //딜레이에 쓸 객체
 
     /// <summary>
     /// 일반 라운드 몬스터 스폰 코루틴
@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
         {
             count++;
             Instantiate(go).GetComponent<Enemy>().Spawn(hp);
-            yield return delay;
+            yield return _delay;
         }
     }
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Emerald
   m_EditorClassIdentifier: 
   unitKind: 5
+  unitObject: {fileID: 4397559361409735019, guid: 10b788042cb462748bcca7d2c775f489, type: 3}
   unitName: "\uC5D0\uBA54\uB784\uB4DC"
   unitPowerDatas:
   - 0

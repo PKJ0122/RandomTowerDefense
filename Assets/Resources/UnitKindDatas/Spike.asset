@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Spike
   m_EditorClassIdentifier: 
   unitKind: 0
+  unitObject: {fileID: 6774660286127503366, guid: 1ea713887118b3d40a96da5ef53dc82e, type: 3}
   unitName: "\uC2A4\uD30C\uC774\uD06C"
   unitPowerDatas:
   - 0

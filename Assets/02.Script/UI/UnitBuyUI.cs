@@ -1,6 +1,9 @@
 using System;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 유닛 구매 UI / 구매처리
@@ -12,18 +15,20 @@ public class UnitBuyUI : UIBase
     Button _unitBuy;
     TMP_Text _price;
 
-    int Price
+    int _unitPrice;
+    public int UnitPrice
     {
-        get => Price;
+        get => _unitPrice;
         set
         {
-            Price = value;
+            _unitPrice = value;
             onPriceChange?.Invoke();
         }
     }
 
     public event Func<Slot> onBuyButtonClick;
     event Action onPriceChange;
+    public event Action<Slot,UnitBase> onUnitBuySuccess;
 
 
     protected override void Awake()
@@ -31,19 +36,23 @@ public class UnitBuyUI : UIBase
         base.Awake();
         GameManager.Instance.onWaveChange += v =>
         {
-            if (v == 0) Price = 20;
+            if (v == 0) UnitPrice = 20;
         };
 
         _unitBuy = transform.Find("Button - UnitBuy").GetComponent<Button>();
         _price = transform.Find("Text (TMP) - Gold").GetComponent<TMP_Text>();
 
         _unitBuy.onClick.AddListener(() => UnitBuy(onBuyButtonClick?.Invoke()));
-        onPriceChange += () => { _price.text = $"{Price}"; };
+        onPriceChange += () => { _price.text = $"{UnitPrice}"; };
     }
 
     void OnDisable()
     {
-        onPriceChange -= () => { _price.text = $"{Price}"; };
+        //GameManager.Instance.onWaveChange -= v =>
+        //{
+        //    if (v == 0) UnitPrice = 20;
+        //};
+        onPriceChange -= () => { _price.text = $"{UnitPrice}"; };
     }
 
     /// <summary>
@@ -51,9 +60,42 @@ public class UnitBuyUI : UIBase
     /// </summary>
     void UnitBuy(Slot slot)
     {
-        if (slot == null) return;
+        if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
 
-        Price += WEIGHT;
-        //todo -> 유닛 구매처리
+        UnitBase randomUnit = RandomUnit();
+        onUnitBuySuccess?.Invoke(slot,randomUnit);
+        GameManager.Instance.Gold -= UnitPrice;
+        UnitPrice += WEIGHT;
+    }
+
+    /// <summary>
+    /// 랜덤한 유닛을 반환해주는 함수
+    /// </summary>
+    UnitBase RandomUnit()
+    {
+        UnitKind unitKind = (UnitKind)Random.Range(0, Enum.GetValues(typeof(UnitKind)).Length);
+        UnitRank unitRank = RandomRank();
+
+        IObjectPool<PoolObject> pool = ObjectPoolManager.Instance.Get(unitKind);
+        UnitBase unit = pool.Get()
+                            .SetPool(pool)
+                            .GetComponent<UnitBase>()
+                            .UnitSet(unitKind, unitRank);
+
+        return unit;
+    }
+
+    /// <summary>
+    /// 랜덤한 등급을 반환해주는 함수
+    /// </summary>
+    UnitRank RandomRank()
+    {
+        int randomNumber = Random.Range(0, 100);
+
+        if (randomNumber >= 98) return UnitRank.Legendary;
+        else if (randomNumber >= 94) return UnitRank.Unique;
+        else if (randomNumber >= 86) return UnitRank.Epic;
+        else if (randomNumber >= 70) return UnitRank.Rare;
+        else return UnitRank.Nomal;
     }
 }

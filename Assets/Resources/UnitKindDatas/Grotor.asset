@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Grotor
   m_EditorClassIdentifier: 
   unitKind: 7
+  unitObject: {fileID: 1805180429781209388, guid: 0d752c7787487f94a86c45d7818bafb8, type: 3}
   unitName: "\uADF8\uB85C\uD1A0\uB974"
   unitPowerDatas:
   - 0
