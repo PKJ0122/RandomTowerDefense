@@ -1,13 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : PoolObject
 {
     const float SPEED = 0.2f;
 
     LinkedListNode<Vector3> _node;
 
     float _hp;
+    public float Hp
+    {
+        get => _hp;
+        set
+        {
+            _hp = value;
+            if (_hp <= 0)
+                Die();
+        }
+    }
 
 
     void FixedUpdate()
@@ -31,6 +41,7 @@ public class Enemy : MonoBehaviour
         transform.position = _node.Value;
         _node = _node.Next;
         _hp = hp;
+        GameManager.Instance.EnemyAmount++;
     }
 
     /// <summary>
@@ -40,7 +51,16 @@ public class Enemy : MonoBehaviour
     /// <returns>실제 준 데미지를 반환</returns>
     public float Damage(float damage)
     {
-        _hp -= damage;
-        return _hp >= 0 ? _hp : damage + _hp;
+        if (Hp <= 0) return 0;
+
+        Hp -= damage;
+        return Hp >= 0 ? damage : damage + Hp;
+    }
+
+
+    void Die()
+    {
+        GameManager.Instance.EnemyAmount--;
+        RelasePool();
     }
 }

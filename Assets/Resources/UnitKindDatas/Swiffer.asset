@@ -16,8 +16,8 @@ MonoBehaviour:
   unitObject: {fileID: 3538198776615184704, guid: e1a3db52537985744a2adc2260d39e92, type: 3}
   unitName: "\uC2A4\uC704\uD37C"
   unitPowerDatas:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 10
+  - 20
+  - 30
+  - 40
+  - 50

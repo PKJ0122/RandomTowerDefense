@@ -15,7 +15,7 @@ public class UnitInfoUI : UIBase
     Button _unitDamageReSet;
     Button _close;
 
-    UnitBase _currentUnit; //현재 선택된 유닛의 참조
+    Slot _currentSlot; //현재 선택된 유닛의 참조
 
 
     protected override void Awake()
@@ -29,31 +29,32 @@ public class UnitInfoUI : UIBase
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
         _close = transform.Find("Panel/Button - CloseButton").GetComponent<Button>();
 
-        _unitDamageReSet.onClick.AddListener(() => _currentUnit.DamageReSet());
+        _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
     }
 
-    public void Show(UnitBase unit)
+    public void Show(Slot slot)
     {
         base.Show();
-        _currentUnit = unit;
-        UnitData unitData = UnitRepository.UnitKindDatas[_currentUnit.Kind];
+        UnitBase unit = SlotManager.Slots[slot];
+        UnitData unitData = UnitRepository.UnitKindDatas[unit.Kind];
         //_unitImage.sprite = ;
         _unitName.text = $"{unitData.unitName}";
-        UnitRankData unitRankData = UnitRepository.UnitRankDatas[_currentUnit.Rank];
+        UnitRankData unitRankData = UnitRepository.UnitRankDatas[unit.Rank];
         _unitRank.text = $"{unitRankData.unitRankName}";
         _unitRank.color = unitRankData.unitRankColor;
-        _unitPower.text = $"{_currentUnit.Power}";
-        DamageSet(_currentUnit.Damage);
+        _unitPower.text = $"{unit.Power}";
+        DamageSet(unit.Damage);
 
-        _currentUnit.onDamageChange += v => DamageSet(v);
+        unit.onDamageChange += v => DamageSet(v);
     }
 
     public override void Hide()
     {
         base.Hide();
-        _currentUnit.onDamageChange -= v => DamageSet(v);
-        _currentUnit = null;
+        UnitBase unit = SlotManager.Slots[_currentSlot];
+        unit.onDamageChange -= v => DamageSet(v);
+        unit = null;
     }
 
     void DamageSet(float damage)

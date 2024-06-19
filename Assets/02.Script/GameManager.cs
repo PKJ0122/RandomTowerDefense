@@ -41,9 +41,21 @@ public class GameManager : SingletonMonoBase<GameManager>
         }
     }
 
+    int _enemyAmount;
+    public int EnemyAmount
+    {
+        get => _enemyAmount;
+        set
+        {
+            _enemyAmount = value;
+            onEnemyAmountChange?.Invoke(value);
+        }
+    }
+
     public event Action<int> onWaveChange;
     public event Action<float> onTimeChange;
     public event Action<int> onGoldChange;
+    public event Action<int> onEnemyAmountChange;
 
 
     protected override void Awake()
@@ -72,6 +84,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         yield return delay;
         Gold = START_GOLD;
         Wave = 0;
+
 
         while (Wave + 1 <= 50)
         {

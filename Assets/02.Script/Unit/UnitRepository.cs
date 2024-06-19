@@ -28,7 +28,8 @@ public class UnitRepository : MonoBehaviour
                 s_unitKindDatas = new Dictionary<UnitKind, UnitData>();
                 foreach (UnitData item in UnitDatas.unitDatas)
                 {
-                    s_unitKindDatas.Add(item.unitKind,item);
+                    s_unitKindDatas.Add(item.unitKind, item);
+                    ObjectPoolManager.Instance.CreatePool($"{item.unitKind}", item.unitObject);
                 }
             }
             return s_unitKindDatas;
@@ -50,5 +51,11 @@ public class UnitRepository : MonoBehaviour
             }
             return s_unitRankDatas;
         }
+    }
+
+
+    private void Awake()
+    {
+        var unitKindDatas = UnitKindDatas;
     }
 }

@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     static LinkedList<Vector3> s_path = new LinkedList<Vector3>(); //몬스터가 이동해야할 경로참조배열
-    public static LinkedList<Vector3> Path => s_path; 
+    public static LinkedList<Vector3> Path => s_path;
 
     WaveData _waveDate; //Resources폴더에 있는 웨이브데이터
-
 
     void Awake()
     {
@@ -20,7 +17,12 @@ public class EnemySpawner : MonoBehaviour
         }
 
         _waveDate = Resources.Load<WaveData>("WaveData");
+        PoolObject enemyObject = Resources.Load<PoolObject>("Enemy");
+        ObjectPoolManager.Instance.CreatePool($"{enemyObject.name}", enemyObject);
+    }
 
+    void Start()
+    {
         GameManager.Instance.onWaveChange += value => EnemySpawn(value);
     }
 
@@ -51,12 +53,15 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator C_NomalEnemySpawn(float hp)
     {
         int count = 0;
-        GameObject go = Resources.Load<GameObject>("Enemy");
+        
 
         while (count < 40)
         {
             count++;
-            Instantiate(go).GetComponent<Enemy>().Spawn(hp);
+            ObjectPoolManager.Instance.Get("Enemy")
+                                      .Get()
+                                      .GetComponent<Enemy>()
+                                      .Spawn(hp);
             yield return _delay;
         }
     }

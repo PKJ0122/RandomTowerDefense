@@ -27,7 +27,7 @@ public class UnitBase : PoolObject
         set
         {
             _damage = value;
-            onDamageChange?.Invoke(_damage);
+            onDamageChange?.Invoke(value);
         }
     }
 
@@ -107,6 +107,7 @@ public class UnitBase : PoolObject
         if (_targetEnemy == null)
             return;
 
-        _damage += _targetEnemy.Damage(_power);
+        Debug.Log($"{name}의 Attack 함수 호출");
+        Damage += _targetEnemy.Damage(_power);
     }
 }

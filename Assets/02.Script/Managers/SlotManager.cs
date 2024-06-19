@@ -23,9 +23,11 @@ public class SlotManager : MonoBehaviour
     void Awake()
     {
         _layerMank = LayerMask.GetMask("Slot");
+
+        Init();
     }
 
-    void OnEnable()
+    void Start()
     {
         UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick += () => IsVacancy();
         UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) =>
@@ -47,7 +49,7 @@ public class SlotManager : MonoBehaviour
                 if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank) &&
                     Slots[hit.collider.GetComponent<Slot>()] != null)
                 {
-                    UIManager.Instance.Get<UnitInfoUI>().Show(Slots[hit.collider.GetComponent<Slot>()]);
+                    UIManager.Instance.Get<UnitInfoUI>().Show(hit.collider.GetComponent<Slot>());
                 }
             }
         }
@@ -62,6 +64,15 @@ public class SlotManager : MonoBehaviour
     //        unit.gameObject.transform.position = slot.gameObject.transform.position;
     //    };
     //}
+
+    void Init()
+    {
+        Slot[] slots = transform.GetComponentsInChildren<Slot>();
+        foreach (Slot slot in slots)
+        {
+            Slots.Add(slot, null);
+        }
+    }
 
     /// <summary>
     /// 유닛이 생성될 공간이 있는지 확인하고 있다면 해당 Slot을 반환해주는 함수 / 빈자리가 없다면 null을 반환

@@ -1,20 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Pool;
 
 public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
 {
-    static Dictionary<UnitKind, IObjectPool<PoolObject>> s_pool;
+    static Dictionary<string, IObjectPool<PoolObject>> s_pool;
 
-    public static Dictionary<UnitKind, IObjectPool<PoolObject>> Pool
+    public static Dictionary<string, IObjectPool<PoolObject>> Pool
     {
         get
         {
             if (s_pool == null)
             {
-                s_pool = new Dictionary<UnitKind, IObjectPool<PoolObject>>();
+                s_pool = new Dictionary<string, IObjectPool<PoolObject>>();
             }
             return s_pool;
         }
@@ -23,20 +20,17 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
     /// <summary>
     /// 오브젝트 풀 반환 함수
     /// </summary>
-    public IObjectPool<PoolObject> Get(UnitKind unitKind)
+    public IObjectPool<PoolObject> Get(string Key)
     {
-        if (!Pool.ContainsKey(unitKind))
-            CreatePool(unitKind);
-
-        return Pool[unitKind];
+        return Pool[Key];
     }
 
     /// <summary>
-    /// UnitKind를 키값으로 유닛 프리펩 Pool을 생성 그리고 딕셔너리에 등록
+    /// string를 키값으로 유닛 프리펩 Pool을 생성 그리고 딕셔너리에 등록
     /// </summary>
-    public void CreatePool(UnitKind unit)
+    public void CreatePool(string key,PoolObject poolObject)
     {
-        IObjectPool<PoolObject> pool = new ObjectPool<PoolObject>(() => Create(unit),
+        IObjectPool<PoolObject> pool = new ObjectPool<PoolObject>(() => Create(key, poolObject),
                                                                 OnPoolItem,
                                                                 OnRelaseItem,
                                                                 OnDestroyItem,
@@ -44,14 +38,13 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
                                                                 10,
                                                                 30
                                                                 );
-        Pool.Add(unit, pool);
+        Pool.Add(key, pool);
     }
 
-    PoolObject Create(UnitKind unitKind)
+    PoolObject Create(string key,PoolObject poolObject)
     {
-        PoolObject poolitem = UnitRepository.UnitKindDatas[unitKind].unitObject.GetComponent<PoolObject>();
-        poolitem.SetPool(Pool[unitKind]);
-        return Instantiate(poolitem);
+        poolObject.SetPool(Pool[key]);
+        return Instantiate(poolObject);
     }
 
     public void OnPoolItem(PoolObject item)
@@ -66,6 +59,6 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
 
     public void OnDestroyItem(PoolObject item)
     {
-       Destroy(item.gameObject);
+        Destroy(item.gameObject);
     }
 }
