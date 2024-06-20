@@ -1,12 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SlotManager : MonoBehaviour
 {
     static Dictionary<Slot, UnitBase> s_slots;
-    static public Dictionary<Slot,UnitBase> Slots
+    static public Dictionary<Slot, UnitBase> Slots
     {
         get
         {
@@ -19,6 +17,7 @@ public class SlotManager : MonoBehaviour
 
     LayerMask _layerMank;
 
+    bool _isClickPossible = true;
 
     void Awake()
     {
@@ -35,10 +34,14 @@ public class SlotManager : MonoBehaviour
             Slots[slot] = unit;
             unit.gameObject.transform.position = slot.gameObject.transform.position;
         };
+        UIManager.Instance.onUIChange += value => _isClickPossible = value;
     }
 
     void Update()
     {
+        if (!_isClickPossible)
+            return;
+
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -51,6 +54,16 @@ public class SlotManager : MonoBehaviour
                 {
                     UIManager.Instance.Get<UnitInfoUI>().Show(hit.collider.GetComponent<Slot>());
                 }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank) &&
+                Slots[hit.collider.GetComponent<Slot>()] != null)
+            {
+                UIManager.Instance.Get<UnitInfoUI>().Show(hit.collider.GetComponent<Slot>());
             }
         }
     }
@@ -79,7 +92,7 @@ public class SlotManager : MonoBehaviour
     /// </summary>
     Slot IsVacancy()
     {
-        foreach (KeyValuePair<Slot,UnitBase> item in Slots)
+        foreach (KeyValuePair<Slot, UnitBase> item in Slots)
         {
             if (item.Value == null)
             {

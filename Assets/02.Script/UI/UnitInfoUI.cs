@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -13,10 +14,15 @@ public class UnitInfoUI : UIBase
     TMP_Text _unitPower;
     TMP_Text _unitDamage;
     Button _unitDamageReSet;
-    Button _close;
 
     Slot _currentSlot; //현재 선택된 유닛의 참조
 
+    Button _unitSell;
+    TMP_Text _unitSellPrice;
+
+    Button _close;
+
+    Action<float> _onDamageChangeHandler;
 
     protected override void Awake()
     {
@@ -27,16 +33,30 @@ public class UnitInfoUI : UIBase
         _unitPower = transform.Find("Panel/Panel - UnitPower/Text (TMP) - UnitPower").GetComponent<TMP_Text>();
         _unitDamage = transform.Find("Panel/Panel - UnitDamage/Text (TMP) - UnitDamage").GetComponent<TMP_Text>();
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
+        
+        _unitSell = transform.Find("Panel/Image - UnitInfo/Button - UnitSell").GetComponent<Button>();
+        _unitSellPrice = transform.Find("Panel/Image - UnitInfo/Button - UnitSell/Text (TMP) - SellPrice").GetComponent<TMP_Text>();
+
         _close = transform.Find("Panel/Button - CloseButton").GetComponent<Button>();
 
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
+
+        _onDamageChangeHandler += value => _unitDamage.text = $"{value}";
+
+        onInputActionEnableChange += value =>
+        {
+            _unitDamageReSet.interactable = value;
+            _unitSell.interactable = value;
+            _close.interactable = value;
+        };
     }
 
     public void Show(Slot slot)
     {
         base.Show();
-        UnitBase unit = SlotManager.Slots[slot];
+        _currentSlot = slot;
+        UnitBase unit = SlotManager.Slots[_currentSlot];
         UnitData unitData = UnitRepository.UnitKindDatas[unit.Kind];
         //_unitImage.sprite = ;
         _unitName.text = $"{unitData.unitName}";
@@ -44,21 +64,23 @@ public class UnitInfoUI : UIBase
         _unitRank.text = $"{unitRankData.unitRankName}";
         _unitRank.color = unitRankData.unitRankColor;
         _unitPower.text = $"{unit.Power}";
-        DamageSet(unit.Damage);
-
-        unit.onDamageChange += v => DamageSet(v);
+        _unitSellPrice.text = UnitSellPrice().ToString();
+        
+        _onDamageChangeHandler?.Invoke(unit.Damage);
+        unit.onDamageChange += _onDamageChangeHandler;
     }
 
     public override void Hide()
     {
         base.Hide();
         UnitBase unit = SlotManager.Slots[_currentSlot];
-        unit.onDamageChange -= v => DamageSet(v);
-        unit = null;
+        unit.onDamageChange -= _onDamageChangeHandler;
+        _currentSlot = null;
     }
 
-    void DamageSet(float damage)
+    int UnitSellPrice()
     {
-        _unitDamage.text = $"{damage}";
+        UnitBase unit = SlotManager.Slots[_currentSlot];
+        return (int)(Mathf.Pow(3, (int)unit.Rank) * UIManager.Instance.Get<UnitBuyUI>().UnitPrice / 2);
     }
 }

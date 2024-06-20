@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitBase : PoolObject
 {
     const float ATTACK_RANGE = 22.5f;
+    const int MP_RECOVERY_AMOUNT = 10;
 
     LayerMask _targetMask;
     Animator _animator;
@@ -16,11 +15,14 @@ public class UnitBase : PoolObject
     UnitRank _Rank;
     float _power;
     float _damage;
+    SkillBase _skill;
+    int _mp;
+    int _skillNeedMp;
     ParticleSystem _particleSystem;
 
-    public UnitKind Kind { get => _Kind;}
-    public UnitRank Rank { get => _Rank;}
-    public float Power { get => _power;}
+    public UnitKind Kind { get => _Kind; }
+    public UnitRank Rank { get => _Rank; }
+    public float Power { get => _power; }
     public float Damage
     {
         get => _damage;
@@ -58,7 +60,7 @@ public class UnitBase : PoolObject
             _targetEnemy = null;
             return;
         }
-        
+
         foreach (Collider target in targets)
         {
             if (_targetEnemy == null)
@@ -68,7 +70,7 @@ public class UnitBase : PoolObject
             }
             if (Vector3.SqrMagnitude(_targetEnemy.transform.position - transform.position) >
                 Vector3.SqrMagnitude(target.transform.position - transform.position))
-                //현재 타겟으로 등록된 몬스터보다 더 가까운 유닛이 있는지 체크하고 있다면 타겟 변경
+            //현재 타겟으로 등록된 몬스터보다 더 가까운 유닛이 있는지 체크하고 있다면 타겟 변경
             {
                 _targetEnemy = target.GetComponent<Enemy>();
             }
@@ -79,11 +81,15 @@ public class UnitBase : PoolObject
     /// <summary>
     /// 유닛 세팅 함수
     /// </summary>
-    public UnitBase UnitSet(UnitKind kind,UnitRank rank)
+    public UnitBase UnitSet(UnitKind kind, UnitRank rank)
     {
         _Kind = kind;
         _Rank = rank;
-        _power = UnitRepository.UnitKindDatas[kind].unitPowerDatas[(int)rank];
+        UnitData data = UnitRepository.UnitKindDatas[kind];
+        _power = data.unitPowerDatas[(int)rank];
+        _skill = data.skill;
+        _skillNeedMp = data.skill.needMp;
+        _mp = 0;
         ParticleSystem.MainModule main = _particleSystem.main;
         main.startColor = UnitRepository.UnitRankDatas[rank].unitRankColor;
         _damage = 0;
@@ -107,7 +113,19 @@ public class UnitBase : PoolObject
         if (_targetEnemy == null)
             return;
 
-        Debug.Log($"{name}의 Attack 함수 호출");
+        if (_mp >= _skillNeedMp)
+        {
+            Skill();
+            return;
+        }
+
+        _mp += MP_RECOVERY_AMOUNT;
         Damage += _targetEnemy.Damage(_power);
+    }
+
+    void Skill()
+    {
+        _mp = 0;
+        _skill.Skill(this);
     }
 }

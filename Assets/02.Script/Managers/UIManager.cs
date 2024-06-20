@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// </summary>
     Stack<UIBase> _ui = new Stack<UIBase>();
 
+    public event Action<bool> onUIChange;
 
     /// <summary>
     /// UIManager에 UI를 등록하는 함수
@@ -45,8 +47,15 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// </summary>
     public void PushUI(UIBase ui)
     {
+        if (_ui.Count != 0)
+        {
+            _ui.Peek().InputActionEnable = false;
+        }
+
         _ui.Push(ui);
+        ui.InputActionEnable = true;
         ui.SortingOrder = _ui.Count;
+        onUIChange?.Invoke(_ui.Count == 0);
     }
 
     /// <summary>
@@ -60,5 +69,10 @@ public class UIManager : SingletonMonoBase<UIManager>
             return;
         }
         _ui.Pop();
+        onUIChange?.Invoke(_ui.Count == 0);
+        if (_ui.Count != 0)
+        {
+            _ui.Peek().InputActionEnable = true;
+        }
     }
 }

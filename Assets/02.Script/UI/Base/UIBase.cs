@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,19 @@ public abstract class UIBase : MonoBehaviour
         get => _canvas.sortingOrder;
         set => _canvas.sortingOrder = value;
     }
+
+    bool _inputActionEnable;
+    public bool InputActionEnable
+    {
+        get => _inputActionEnable;
+        set
+        {
+            _inputActionEnable = value;
+            onInputActionEnableChange?.Invoke(value);
+        }
+    }
+
+    public event Action<bool> onInputActionEnableChange;
 
     Canvas _canvas;
 
