@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: BulletRain
   m_EditorClassIdentifier: 
   skillname: "\uCD1D\uC54C \uBE44"
-  description: "\uD558\uB298 \uB192\uC774 \uCD1D\uC54C\uC744 \uBC1C\uC0AC\uD574 \uC77C\uC815
-    \uC9C0\uC5ED\uC5D0 \uCD1D\uC54C \uBE44\uB97C \uB0B4\uB9AC\uACE0\n\uC2AC\uB85C\uC6B0\uB97C
-    \uC785\uD799\uB2C8\uB2E4."
+  description: "\uD558\uB298 \uB192\uC774 \uCD1D\uC54C\uC744 \uBC1C\uC0AC\uD574 \uC77C\uBD80\uC9C0\uC5ED\uC5D0
+    \uCD1D\uC54C\uBE44\uB97C \uB0B4\uB9BD\uB2C8\uB2E4.\n\uACF5\uACA9 \uBC1B\uC740
+    \uC801\uC740 \uB370\uBBF8\uC9C0\uB97C \uC785\uACE0 \uC774\uB3D9\uC18D\uB3C4\uAC00
+    \uAC10\uC18C\uD569\uB2C8\uB2E4."
   skillImg: {fileID: 0}
-  needMp: 0
+  needMp: 200
   coefficient: 0
+  effetObject: {fileID: 3673365151520554553, guid: 2cc0ce0cac51dde4780b535ebc2fb709, type: 3}

@@ -22,7 +22,7 @@ public class UnitBase : PoolObject
 
     public UnitKind Kind { get => _Kind; }
     public UnitRank Rank { get => _Rank; }
-    public float Power { get => _power; }
+    public float Power { get => _power; set => _power = value; }
     public float Damage
     {
         get => _damage;
@@ -126,6 +126,6 @@ public class UnitBase : PoolObject
     void Skill()
     {
         _mp = 0;
-        _skill.Skill(this);
+        _skill.Skill(this, _targetEnemy, _power);
     }
 }

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PowerofNature
   m_EditorClassIdentifier: 
   skillname: "\uC790\uC5F0\uC758 \uD798"
-  description: "\uC790\uC5F0\uC758 \uD798\uC73C\uB85C \uACE8\uB4DC\uB97C \uC0DD\uC131\uD574
+  description: "\uC790\uC5F0\uC758 \uD798\uC73C\uB85C 10\uACE8\uB4DC\uB97C \uC0DD\uC131\uD574
     \uB0C5\uB2C8\uB2E4."
   skillImg: {fileID: 0}
-  NeedMp: 0
+  needMp: 1000
+  coefficient: 0
+  effetObject: {fileID: 0}

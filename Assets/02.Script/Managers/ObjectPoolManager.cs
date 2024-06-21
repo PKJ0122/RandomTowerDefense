@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.LowLevel;
 using UnityEngine.Pool;
 
 public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
@@ -30,21 +31,21 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
     /// </summary>
     public void CreatePool(string key,PoolObject poolObject)
     {
+        Pool.Add(key, null);
         IObjectPool<PoolObject> pool = new ObjectPool<PoolObject>(() => Create(key, poolObject),
                                                                 OnPoolItem,
-                                                                OnRelaseItem,
+                                                                OnReleaseItem,
                                                                 OnDestroyItem,
                                                                 true,
                                                                 10,
                                                                 30
                                                                 );
-        Pool.Add(key, pool);
+        Pool[key] = pool;
     }
 
     PoolObject Create(string key,PoolObject poolObject)
     {
-        poolObject.SetPool(Pool[key]);
-        return Instantiate(poolObject);
+        return Instantiate(poolObject).SetPool(Pool[key]);
     }
 
     public void OnPoolItem(PoolObject item)
@@ -52,7 +53,7 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
         item.gameObject.SetActive(true);
     }
 
-    public void OnRelaseItem(PoolObject item)
+    public void OnReleaseItem(PoolObject item)
     {
         item.gameObject.SetActive(false);
     }

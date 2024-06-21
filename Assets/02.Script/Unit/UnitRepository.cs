@@ -30,6 +30,7 @@ public class UnitRepository : MonoBehaviour
                 {
                     s_unitKindDatas.Add(item.unitKind, item);
                     ObjectPoolManager.Instance.CreatePool($"{item.unitKind}", item.unitObject);
+                    item.skill.PoolSet();
                 }
             }
             return s_unitKindDatas;

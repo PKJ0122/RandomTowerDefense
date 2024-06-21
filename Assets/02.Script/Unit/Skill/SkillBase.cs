@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 [Serializable]
 public abstract class SkillBase : ScriptableObject
@@ -12,5 +11,21 @@ public abstract class SkillBase : ScriptableObject
     public int needMp;
     public float coefficient;
 
-    public abstract void Skill(UnitBase caster);
+    public PoolObject effetObject;
+
+    public virtual void Skill(UnitBase caster, Enemy target,float power)
+    {
+        ObjectPoolManager.Instance.Get(skillname)
+                                  .Get()
+                                  .GetComponent<SkillObject>()
+                                  .ObjectSet(caster, target, power * coefficient);
+    }
+
+    public virtual void PoolSet()
+    {
+        if (effetObject == null)
+            return;
+
+        ObjectPoolManager.Instance.CreatePool(skillname, effetObject);
+    }
 }

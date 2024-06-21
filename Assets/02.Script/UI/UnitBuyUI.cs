@@ -76,11 +76,10 @@ public class UnitBuyUI : UIBase
         UnitKind unitKind = (UnitKind)Random.Range(0, Enum.GetValues(typeof(UnitKind)).Length);
         UnitRank unitRank = RandomRank();
 
-        IObjectPool<PoolObject> pool = ObjectPoolManager.Instance.Get(unitKind.ToString());
-        UnitBase unit = pool.Get()
-                            .SetPool(pool)
-                            .GetComponent<UnitBase>()
-                            .UnitSet(unitKind, unitRank);
+        UnitBase unit = ObjectPoolManager.Instance.Get(unitKind.ToString())
+                                                  .Get()
+                                                  .GetComponent<UnitBase>()
+                                                  .UnitSet(unitKind, unitRank);
 
         return unit;
     }

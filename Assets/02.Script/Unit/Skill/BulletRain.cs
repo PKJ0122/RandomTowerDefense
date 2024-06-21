@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class BulletRain : SkillBase
 {
-    public override void Skill(UnitBase caster)
-    {
-        throw new System.NotImplementedException();
-    }
+
 }

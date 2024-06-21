@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Enemy : PoolObject
 {
-    const float SPEED = 0.2f;
+    const float DEFAULT_SPEED = 0.2f;
 
     LinkedListNode<Vector3> _node;
 
@@ -19,11 +19,22 @@ public class Enemy : PoolObject
         }
     }
 
+    float _speed;
+
+    public float Speed
+    {
+        get => _speed;
+        set
+        {
+            _speed = value;
+        }
+    }
+
 
     void FixedUpdate()
     {
         Vector3 direction = (_node.Value - transform.position).normalized;
-        transform.position += direction * SPEED;
+        transform.position += direction * Speed;
         transform.LookAt(_node.Value);
 
         if (Vector3.Distance(transform.position, _node.Value) <= 0.2)
@@ -40,7 +51,8 @@ public class Enemy : PoolObject
         _node = EnemySpawner.Path.First;
         transform.position = _node.Value;
         _node = _node.Next;
-        _hp = hp;
+        Hp = hp;
+        Speed = DEFAULT_SPEED;
         GameManager.Instance.EnemyAmount++;
     }
 

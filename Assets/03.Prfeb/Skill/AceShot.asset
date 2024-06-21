@@ -16,4 +16,6 @@ MonoBehaviour:
   description: "\uB2E8\uC77C \uC801\uC5D0\uAC8C \uBE44\uC7A5\uC758 \uD55C\uBC1C\uC744
     \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
   skillImg: {fileID: 0}
-  NeedMp: 0
+  needMp: 30
+  coefficient: 0
+  effetObject: {fileID: -6489888205805980672, guid: ea96e021be4630a43ad0d092a15f76ca, type: 3}

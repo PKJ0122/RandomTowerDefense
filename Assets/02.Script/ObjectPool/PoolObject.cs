@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public abstract class PoolObject : MonoBehaviour
 {
     IObjectPool<PoolObject> _myPool;
-    public IObjectPool<PoolObject> myPool
+    public IObjectPool<PoolObject> MyPool
     {
         get => _myPool;
         set => _myPool = value;
@@ -15,18 +15,12 @@ public abstract class PoolObject : MonoBehaviour
 
     public PoolObject SetPool(IObjectPool<PoolObject> pool)
     {
-        _myPool = pool;
+        MyPool = pool;
         return this;
     }
 
     public virtual void RelasePool()
     {
-        if (myPool == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        _myPool.Release(this);
+        MyPool.Release(this);
     }
 }

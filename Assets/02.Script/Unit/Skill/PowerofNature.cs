@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PowerofNature : SkillBase
 {
-    public override void Skill(UnitBase caster)
+    const int Skill_AMOUNT = 50;
+
+    public override void Skill(UnitBase caster, Enemy target, float power)
     {
-        throw new System.NotImplementedException();
+        GameManager.Instance.Gold += Skill_AMOUNT;
     }
 }

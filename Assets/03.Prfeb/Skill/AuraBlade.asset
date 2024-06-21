@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: AuraBlade
   m_EditorClassIdentifier: 
   skillname: "\uC624\uB77C \uBE14\uB808\uC774\uB4DC"
-  description: "\uCE7C\uC744 \uD06C\uAC8C \uD718\uB458\uB7EC \uC624\uB77C\uB97C \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
+  description: "\uB2E8\uC77C \uC801\uC5D0\uAC8C \uAC80\uC744 \uAC15\uD558\uAC8C \uD718\uB458\uB7EC
+    \uACF5\uACA9\uD569\uB2C8\uB2E4."
   skillImg: {fileID: 0}
-  NeedMp: 0
+  needMp: 30
+  coefficient: 0
+  effetObject: {fileID: 9081341215767729416, guid: 80bdb0a5407e08d45aebfc7b5d74da98, type: 3}
