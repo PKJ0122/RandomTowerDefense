@@ -17,11 +17,12 @@ public class SlotManager : MonoBehaviour
 
     LayerMask _layerMank;
 
-    bool _isClickPossible = true;
+    bool _isClickPossible;
 
     void Awake()
     {
         _layerMank = LayerMask.GetMask("Slot");
+        _isClickPossible = true;
 
         Init();
     }

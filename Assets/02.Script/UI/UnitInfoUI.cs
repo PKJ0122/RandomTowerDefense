@@ -15,6 +15,12 @@ public class UnitInfoUI : UIBase
     TMP_Text _unitDamage;
     Button _unitDamageReSet;
 
+    Image _unitSkillImage;
+    TMP_Text _unitSkillName;
+    TMP_Text _unitSkillDisciption;
+    Slider _unitSkillMpS;
+    TMP_Text _unitSkillMpT;
+
     Slot _currentSlot; //현재 선택된 유닛의 참조
 
     Button _unitSell;
@@ -23,6 +29,7 @@ public class UnitInfoUI : UIBase
     Button _close;
 
     Action<float> _onDamageChangeHandler;
+    Action<int, int> _onMpChangeHandler;
 
     protected override void Awake()
     {
@@ -33,7 +40,13 @@ public class UnitInfoUI : UIBase
         _unitPower = transform.Find("Panel/Panel - UnitPower/Text (TMP) - UnitPower").GetComponent<TMP_Text>();
         _unitDamage = transform.Find("Panel/Panel - UnitDamage/Text (TMP) - UnitDamage").GetComponent<TMP_Text>();
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
-        
+
+        _unitSkillImage = transform.Find("Panel/Image - UnitSkill/Image - Skill").GetComponent<Image>();
+        _unitSkillName = transform.Find("Panel/Image - UnitSkill/Text (TMP) - SkillName").GetComponent<TMP_Text>();
+        _unitSkillDisciption = transform.Find("Panel/Image - UnitSkill/Text (TMP) - SkillDiscription").GetComponent<TMP_Text>();
+        _unitSkillMpS = transform.Find("Panel/Image - UnitSkill/Slider - Mp").GetComponent<Slider>();
+        _unitSkillMpT = transform.Find("Panel/Image - UnitSkill/Slider - Mp/Text (TMP) - Mp").GetComponent<TMP_Text>();
+
         _unitSell = transform.Find("Panel/Image - UnitInfo/Button - UnitSell").GetComponent<Button>();
         _unitSellPrice = transform.Find("Panel/Image - UnitInfo/Button - UnitSell/Text (TMP) - SellPrice").GetComponent<TMP_Text>();
 
@@ -42,8 +55,15 @@ public class UnitInfoUI : UIBase
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
 
-        _onDamageChangeHandler += value => _unitDamage.text = $"{value}";
-
+        _onDamageChangeHandler += value =>
+        {
+            _unitDamage.text = $"{value}";
+        };
+        _onMpChangeHandler += (mp, skillNeedMp) =>
+        {
+            _unitSkillMpS.value = mp;
+            _unitSkillMpT.text = $"{mp} / {skillNeedMp}";
+        };
         onInputActionEnableChange += value =>
         {
             _unitDamageReSet.interactable = value;
@@ -65,9 +85,18 @@ public class UnitInfoUI : UIBase
         _unitRank.color = unitRankData.unitRankColor;
         _unitPower.text = $"{unit.Power}";
         _unitSellPrice.text = UnitSellPrice().ToString();
-        
-        _onDamageChangeHandler?.Invoke(unit.Damage);
+
+        SkillBase skill = unitData.skill;
+        //_unitSkillImage.sprite = ;
+        _unitSkillName.text = $"{skill.skillname}";
+        _unitSkillDisciption.text = $"{skill.description}";
+        _unitSkillMpS.maxValue = skill.needMp;
+
         unit.onDamageChange += _onDamageChangeHandler;
+        _onDamageChangeHandler?.Invoke(unit.Damage);
+
+        unit.onMpChange += _onMpChangeHandler;
+        _onMpChangeHandler?.Invoke(unit.Mp, skill.needMp);
     }
 
     public override void Hide()
@@ -75,6 +104,7 @@ public class UnitInfoUI : UIBase
         base.Hide();
         UnitBase unit = SlotManager.Slots[_currentSlot];
         unit.onDamageChange -= _onDamageChangeHandler;
+        unit.onMpChange -= _onMpChangeHandler;
         _currentSlot = null;
     }
 

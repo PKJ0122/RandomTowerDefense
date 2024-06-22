@@ -28,9 +28,4 @@ public class SkillObject : PoolObject
     {
         _caster.Damage += _target.Damage(_damage);
     }
-
-    private void OnDestroy()
-    {
-        Debug.Log($"{name}이 Destroy 되었습니다.");
-    }
 }

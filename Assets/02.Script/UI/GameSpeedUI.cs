@@ -19,7 +19,7 @@ public class GameSpeedUI : UIBase
         set
         {
             _gameSpeed = value > MAX_SPEED ? MIN_SPEED : value;
-            _gameSpeedT.text = $"X {_gameSpeed}";
+            _gameSpeedT.text = $"{_gameSpeed}¹è¼Ó";
             Time.timeScale = _gameSpeed;
         }
     }

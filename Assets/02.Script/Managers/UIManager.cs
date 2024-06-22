@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -13,21 +10,22 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// <summary>
     /// 모든 UI가 등록되어있는 Dictionary
     /// </summary>
-    static Dictionary<Type,UIBase> s_UIs = new Dictionary<Type,UIBase>();
+    static Dictionary<Type, UIBase> s_UIs = new Dictionary<Type, UIBase>();
 
     /// <summary>
     /// 현재 활성화중인 UI
     /// </summary>
-    Stack<UIBase> _ui = new Stack<UIBase>();
+    public Stack<UIBase> _ui = new Stack<UIBase>();
 
     public event Action<bool> onUIChange;
+
 
     /// <summary>
     /// UIManager에 UI를 등록하는 함수
     /// </summary>
     public void RegisterUI(UIBase ui)
     {
-        if(!s_UIs.TryAdd(ui.GetType(),ui))
+        if (!s_UIs.TryAdd(ui.GetType(), ui))
         {
             Debug.LogWarning("이미 등록된 UI입니다.");
         }

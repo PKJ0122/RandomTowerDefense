@@ -32,8 +32,18 @@ public class UnitBase : PoolObject
             onDamageChange?.Invoke(value);
         }
     }
+    public int Mp
+    {
+        get => _mp;
+        set
+        {
+            _mp = value;
+            onMpChange?.Invoke(value,_skillNeedMp);
+        }
+    }
 
     public event Action<float> onDamageChange;
+    public event Action<int,int> onMpChange;
 
 
     private void Awake()
@@ -55,7 +65,7 @@ public class UnitBase : PoolObject
 
         Collider[] targets = Physics.OverlapSphere(transform.position, ATTACK_RANGE, _targetMask);
 
-        if (targets == null)
+        if (targets.Length == 0)
         {
             _targetEnemy = null;
             return;
@@ -74,7 +84,6 @@ public class UnitBase : PoolObject
             {
                 _targetEnemy = target.GetComponent<Enemy>();
             }
-            transform.LookAt(_targetEnemy.transform);
         }
     }
 
@@ -89,10 +98,10 @@ public class UnitBase : PoolObject
         _power = data.unitPowerDatas[(int)rank];
         _skill = data.skill;
         _skillNeedMp = data.skill.needMp;
-        _mp = 0;
+        Mp = 0;
         ParticleSystem.MainModule main = _particleSystem.main;
         main.startColor = UnitRepository.UnitRankDatas[rank].unitRankColor;
-        _damage = 0;
+        Damage = 0;
 
         return this;
     }
@@ -113,19 +122,21 @@ public class UnitBase : PoolObject
         if (_targetEnemy == null)
             return;
 
+        transform.LookAt(_targetEnemy.transform);
+
         if (_mp >= _skillNeedMp)
         {
             Skill();
             return;
         }
 
-        _mp += MP_RECOVERY_AMOUNT;
+        Mp += MP_RECOVERY_AMOUNT;
         Damage += _targetEnemy.Damage(_power);
     }
 
     void Skill()
     {
-        _mp = 0;
+        Mp = 0;
         _skill.Skill(this, _targetEnemy, _power);
     }
 }

@@ -73,6 +73,8 @@ public class Enemy : PoolObject
     void Die()
     {
         GameManager.Instance.EnemyAmount--;
+        GameManager.Instance.Gold++;
+        transform.position = Vector3.zero;
         RelasePool();
     }
 }

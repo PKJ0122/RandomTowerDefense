@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
+    Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>();
+    public Dictionary<UnitKind, List<UnitBase>> units { get => _units; }
+
     const float ROUND_TIME = 60f;
     const int START_GOLD = 100;
     const int INTEREST = 40;
@@ -74,6 +78,11 @@ public class GameManager : SingletonMonoBase<GameManager>
         StartCoroutine(C_Game());
     }
 
+    private void Start()
+    {
+        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) => RegisterUnit(unit);
+    }
+
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼
 
     /// <summary>
@@ -100,6 +109,20 @@ public class GameManager : SingletonMonoBase<GameManager>
         }
 
         GameClear();
+    }
+
+    /// <summary>
+    /// À¯´ÖÀ» À¯´Ö µñ¼Å³Ê¸®¿¡ µî·ÏÇÏ´Â ÇÔ¼ö
+    /// </summary>
+    /// <param name="unit"></param>
+    void RegisterUnit(UnitBase unit)
+    {
+        if (!units.TryGetValue(unit.Kind,out List<UnitBase> list))
+        {
+            list = new List<UnitBase>();
+            units.Add(unit.Kind, list);
+        }
+        list.Add(unit);
     }
 
     /// <summary>

@@ -44,6 +44,8 @@ public abstract class UIBase : MonoBehaviour
     /// </summary>
     public virtual void Show()
     {
+        if (_canvas.enabled) return;
+
         UIManager.Instance.PushUI(this);
         _canvas.enabled = true;
     }
@@ -53,6 +55,8 @@ public abstract class UIBase : MonoBehaviour
     /// </summary>
     public virtual void Hide()
     {
+        if (!_canvas.enabled) return;
+
         UIManager.Instance.PopUI(this);
         _canvas.enabled = false;
     }

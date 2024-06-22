@@ -31,16 +31,15 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
     /// </summary>
     public void CreatePool(string key,PoolObject poolObject)
     {
-        Pool.Add(key, null);
         IObjectPool<PoolObject> pool = new ObjectPool<PoolObject>(() => Create(key, poolObject),
                                                                 OnPoolItem,
                                                                 OnReleaseItem,
                                                                 OnDestroyItem,
                                                                 true,
                                                                 10,
-                                                                30
+                                                                99
                                                                 );
-        Pool[key] = pool;
+        Pool.Add(key, pool);
     }
 
     PoolObject Create(string key,PoolObject poolObject)
