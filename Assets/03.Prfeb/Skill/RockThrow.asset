@@ -15,7 +15,7 @@ MonoBehaviour:
   skillname: "\uBC14\uC704 \uB358\uC9C0\uAE30"
   description: "\uAC70\uB300\uD55C \uBC14\uC704\uB97C \uB358\uC838 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4.\n\uACF5\uACA9\uB2F9\uD55C
     \uC801\uC740 \uB370\uBBF8\uC9C0\uB97C \uC785\uACE0 \uAE30\uC808\uD569\uB2C8\uB2E4."
-  skillImg: {fileID: 0}
+  skillImg: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3, type: 3}
   needMp: 80
   coefficient: 0
   effetObject: {fileID: 7066023931553917730, guid: 27b2d0bb64718c04da1e5d55137e0d59, type: 3}

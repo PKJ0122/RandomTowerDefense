@@ -78,7 +78,7 @@ public class UnitInfoUI : UIBase
         _currentSlot = slot;
         UnitBase unit = SlotManager.Slots[_currentSlot];
         UnitData unitData = UnitRepository.UnitKindDatas[unit.Kind];
-        //_unitImage.sprite = ;
+        _unitImage.sprite = unitData.unitImg;
         _unitName.text = $"{unitData.unitName}";
         UnitRankData unitRankData = UnitRepository.UnitRankDatas[unit.Rank];
         _unitRank.text = $"{unitRankData.unitRankName}";
@@ -87,7 +87,7 @@ public class UnitInfoUI : UIBase
         _unitSellPrice.text = UnitSellPrice().ToString();
 
         SkillBase skill = unitData.skill;
-        //_unitSkillImage.sprite = ;
+        _unitSkillImage.sprite = skill.skillImg;
         _unitSkillName.text = $"{skill.skillname}";
         _unitSkillDisciption.text = $"{skill.description}";
         _unitSkillMpS.maxValue = skill.needMp;

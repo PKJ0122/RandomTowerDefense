@@ -35,7 +35,7 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
                                                                 OnPoolItem,
                                                                 OnReleaseItem,
                                                                 OnDestroyItem,
-                                                                true,
+                                                                false,
                                                                 10,
                                                                 99
                                                                 );

@@ -12,5 +12,9 @@ public class UnitLevelUpSlot : MonoBehaviour
 
     void Awake()
     {
+        levelUp = GetComponent<Button>();
+        unitImg = transform.Find("Image - Unit").GetComponent<Image>();
+        level = transform.Find("Text (TMP) - Level").GetComponent<TMP_Text>();
+        levelUpNeedGold = transform.Find("Text (TMP) - LevelUpGold").GetComponent<TMP_Text>();
     }
 }

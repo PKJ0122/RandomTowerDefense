@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : SingletonMonoBase<GameManager>
 {
     Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>();
-    public Dictionary<UnitKind, List<UnitBase>> units { get => _units; }
+    public Dictionary<UnitKind, List<UnitBase>> Units { get => _units; }
 
     const float ROUND_TIME = 60f;
     const int START_GOLD = 100;
@@ -117,10 +117,10 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// <param name="unit"></param>
     void RegisterUnit(UnitBase unit)
     {
-        if (!units.TryGetValue(unit.Kind,out List<UnitBase> list))
+        if (!Units.TryGetValue(unit.Kind,out List<UnitBase> list))
         {
             list = new List<UnitBase>();
-            units.Add(unit.Kind, list);
+            Units.Add(unit.Kind, list);
         }
         list.Add(unit);
     }
