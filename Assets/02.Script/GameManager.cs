@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
-    Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>();
-    public Dictionary<UnitKind, List<UnitBase>> Units { get => _units; }
+    Dictionary<UnitKind, List<Slot>> _units = new Dictionary<UnitKind, List<Slot>>();
+    public Dictionary<UnitKind, List<Slot>> Units { get => _units; }
 
     const float ROUND_TIME = 60f;
-    const int START_GOLD = 100;
+    const int START_GOLD = 10000;
     const int INTEREST = 40;
 
     int _wave = -1;
@@ -80,7 +80,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 
     private void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) => RegisterUnit(unit);
+        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) => RegisterUnit(slot, unit);
     }
 
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼
@@ -115,14 +115,14 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// À¯´ÖÀ» À¯´Ö µñ¼Å³Ê¸®¿¡ µî·ÏÇÏ´Â ÇÔ¼ö
     /// </summary>
     /// <param name="unit"></param>
-    void RegisterUnit(UnitBase unit)
+    void RegisterUnit(Slot slot,UnitBase unit)
     {
-        if (!Units.TryGetValue(unit.Kind,out List<UnitBase> list))
+        if (!Units.TryGetValue(unit.Kind,out List<Slot> list))
         {
-            list = new List<UnitBase>();
+            list = new List<Slot>();
             Units.Add(unit.Kind, list);
         }
-        list.Add(unit);
+        list.Add(slot);
     }
 
     /// <summary>

@@ -9,6 +9,7 @@ public class UnitBase : PoolObject
     LayerMask _targetMask;
     Animator _animator;
 
+    Slot _slot;
     Enemy _targetEnemy; //현재 공격중인 타겟몬스터 참조
 
     UnitKind _Kind;
@@ -22,7 +23,15 @@ public class UnitBase : PoolObject
 
     public UnitKind Kind { get => _Kind; }
     public UnitRank Rank { get => _Rank; }
-    public float Power { get => _power; set => _power = value; }
+    public float Power 
+    { 
+        get => _power; 
+        set
+        {
+            _power = value;
+            onPowerChange?.Invoke(value);
+        }
+    }
     public float Damage
     {
         get => _damage;
@@ -42,8 +51,10 @@ public class UnitBase : PoolObject
         }
     }
 
+    public event Action<float> onPowerChange;
     public event Action<float> onDamageChange;
     public event Action<int,int> onMpChange;
+    public event Action onDisable;
 
 
     private void Awake()
@@ -90,8 +101,9 @@ public class UnitBase : PoolObject
     /// <summary>
     /// 유닛 세팅 함수
     /// </summary>
-    public UnitBase UnitSet(UnitKind kind, UnitRank rank)
+    public UnitBase UnitSet(Slot slot, UnitKind kind, UnitRank rank)
     {
+        _slot = slot;
         _Kind = kind;
         _Rank = rank;
         UnitData data = UnitRepository.UnitKindDatas[kind];
@@ -138,5 +150,12 @@ public class UnitBase : PoolObject
     {
         Mp = 0;
         _skill.Skill(this, _targetEnemy, _power);
+    }
+
+    public override void RelasePool()
+    {
+        onDisable?.Invoke();
+        base.RelasePool();
+        GameManager.Instance.Units[Kind].Remove(_slot);
     }
 }

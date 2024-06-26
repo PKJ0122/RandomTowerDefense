@@ -72,13 +72,14 @@ public class UnitLevelUpUI : UIBase
     /// </summary>
     void PurchasedUnitApply(UnitKind unitKind)
     {
-        if (!GameManager.Instance.Units.TryGetValue(unitKind, out List<UnitBase> units)) return;
+        if (!GameManager.Instance.Units.TryGetValue(unitKind, out List<Slot> units)) return;
 
         float[] unitPowerDatas = UnitRepository.UnitKindDatas[unitKind].unitPowerDatas;
         float powerWeight = _unitLevels[unitKind] * POWER_WEIGHT;
 
-        foreach (UnitBase unit in units)
+        foreach (Slot slot in units)
         {
+            UnitBase unit = SlotManager.Slots[slot];
             float unitBasePower = unitPowerDatas[(int)unit.Rank];
             unit.Power = unitBasePower + (unitBasePower * powerWeight);
         }

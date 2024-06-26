@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,13 +23,16 @@ public class UnitInfoUI : UIBase
     Slider _unitSkillMpS;
     TMP_Text _unitSkillMpT;
 
-    Slot _currentSlot; //현재 선택된 유닛의 참조
-
     Button _unitSell;
     TMP_Text _unitSellPrice;
+    Button _unitMove;
+    Button _unitMix;
 
     Button _close;
 
+    Slot _currentSlot; //현재 선택된 유닛의 참조
+
+    Action<float> _onPowerChangeHandler;
     Action<float> _onDamageChangeHandler;
     Action<int, int> _onMpChangeHandler;
 
@@ -49,12 +54,20 @@ public class UnitInfoUI : UIBase
 
         _unitSell = transform.Find("Panel/Image - UnitInfo/Button - UnitSell").GetComponent<Button>();
         _unitSellPrice = transform.Find("Panel/Image - UnitInfo/Button - UnitSell/Text (TMP) - SellPrice").GetComponent<TMP_Text>();
+        _unitSell.onClick.AddListener(UnitSell);
+        _unitMove = transform.Find("Panel/Image - UnitInfo/Button - UnitMove").GetComponent<Button>();
+        _unitMix = transform.Find("Panel/Image - UnitInfo/Button - UnitMix").GetComponent<Button>();
+        _unitMix.onClick.AddListener(UnitMix);
 
         _close = transform.Find("Panel/Button - CloseButton").GetComponent<Button>();
 
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
 
+        _onPowerChangeHandler += value =>
+        {
+            _unitPower.text = $"{value}";
+        };
         _onDamageChangeHandler += value =>
         {
             _unitDamage.text = $"{value}";
@@ -68,8 +81,19 @@ public class UnitInfoUI : UIBase
         {
             _unitDamageReSet.interactable = value;
             _unitSell.interactable = value;
+            _unitMove.interactable = value;
+            _unitMix.interactable = value;
             _close.interactable = value;
         };
+    }
+
+    private void Start()
+    {
+        _unitMove.onClick.AddListener(() =>
+        {
+            Hide();
+            UIManager.Instance.Get<UnitMoveUI>().Show(_currentSlot);
+        });
     }
 
     public void Show(Slot slot)
@@ -92,9 +116,9 @@ public class UnitInfoUI : UIBase
         _unitSkillDisciption.text = $"{skill.description}";
         _unitSkillMpS.maxValue = skill.needMp;
 
+        unit.onPowerChange += _onPowerChangeHandler;
         unit.onDamageChange += _onDamageChangeHandler;
         _onDamageChangeHandler?.Invoke(unit.Damage);
-
         unit.onMpChange += _onMpChangeHandler;
         _onMpChangeHandler?.Invoke(unit.Mp, skill.needMp);
     }
@@ -103,14 +127,62 @@ public class UnitInfoUI : UIBase
     {
         base.Hide();
         UnitBase unit = SlotManager.Slots[_currentSlot];
+        unit.onPowerChange -= _onPowerChangeHandler;
         unit.onDamageChange -= _onDamageChangeHandler;
         unit.onMpChange -= _onMpChangeHandler;
-        _currentSlot = null;
+    }
+
+    void UnitSell()
+    {
+        Hide();
+        SlotManager.Slots[_currentSlot].RelasePool();
+        GameManager.Instance.Gold += UnitSellPrice();
+        SlotManager.Slots[_currentSlot] = null;
     }
 
     int UnitSellPrice()
     {
         UnitBase unit = SlotManager.Slots[_currentSlot];
         return (int)(Mathf.Pow(3, (int)unit.Rank) * UIManager.Instance.Get<UnitBuyUI>().UnitPrice / 2);
+    }
+
+    void UnitMix()
+    {
+        UnitBase baseUnit = SlotManager.Slots[_currentSlot];
+        UnitKind unitKind = baseUnit.Kind;
+        UnitRank unitRank = baseUnit.Rank;
+
+        if (unitRank == UnitRank.Legendary) return;
+
+        List<Slot> mixUnits = new List<Slot>(3) { _currentSlot };
+
+
+        List<Slot> units = GameManager.Instance.Units[unitKind];
+
+        if (units.Count < 3) return;
+
+        foreach (Slot slot in units)
+        {
+            UnitBase unit = SlotManager.Slots[slot];
+            if (unit.Rank == unitRank && slot != _currentSlot)
+            {
+                mixUnits.Add(slot);
+                if (mixUnits.Count >= 3) break;
+            }
+        }
+
+        if (mixUnits.Count < 3) return;
+
+        Hide();
+
+        foreach (Slot slot in mixUnits)
+        {
+            SlotManager.Slots[slot].RelasePool();
+            SlotManager.Slots[slot] = null;
+        }
+
+        UnitBase mixUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(_currentSlot,unitRank);
+        SlotManager.Slots[_currentSlot] = mixUnit;
+        mixUnit.transform.position = _currentSlot.transform.position;
     }
 }

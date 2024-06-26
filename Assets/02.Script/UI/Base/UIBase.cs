@@ -28,7 +28,7 @@ public abstract class UIBase : MonoBehaviour
 
     public event Action<bool> onInputActionEnableChange;
 
-    Canvas _canvas;
+    protected Canvas _canvas;
 
     /// <summary>
     /// Awake에서 UIManager Dictionary에 등록 / virtual
