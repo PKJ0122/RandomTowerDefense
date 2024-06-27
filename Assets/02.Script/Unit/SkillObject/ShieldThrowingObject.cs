@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ShieldThrowingObject : SkillObject
 {
@@ -14,7 +13,7 @@ public class ShieldThrowingObject : SkillObject
             return;
 
         _tick += Time.deltaTime;
-        transform.position = Vector3.Lerp(_caster.transform.position, _target.transform.position, _tick/ ARRIVAL_TIME);
+        transform.position = Vector3.Lerp(_caster.transform.position, _target.transform.position, _tick / ARRIVAL_TIME);
         transform.LookAt(_target.transform.position);
 
         if (_tick >= ARRIVAL_TIME)
