@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MissionData", menuName = "ScriptableObject/MissionData")]
 [Serializable]
-public class MissionData : ScriptableObject
+public class MissionBase : ScriptableObject
 {
+    public string missionName;
     public string detail;
     public int condition;
 
@@ -19,13 +19,15 @@ public class MissionData : ScriptableObject
         }
     }
 
-    bool isClear;
+    bool _isClear;
     public bool IsClear
     {
-        get => isClear;
+        get => _isClear;
         set
         {
-            isClear = value;
+            if (_isClear == value) return;
+
+            _isClear = value;
             onIsClearChange?.Invoke(value);
         }
     }
@@ -37,6 +39,6 @@ public class MissionData : ScriptableObject
     public virtual void Init()
     {
         Progress = 0;
-        isClear = false;
+        _isClear = false;
     }
 }

@@ -8,5 +8,5 @@ using UnityEngine;
 public class MissionDatas : ScriptableObject
 {
     public GameObject missionPrefeb;
-    public MissionData[] missionDatas;
+    public MissionBase[] missionDatas;
 }

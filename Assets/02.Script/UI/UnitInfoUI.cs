@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +34,8 @@ public class UnitInfoUI : UIBase
     Action<float> _onPowerChangeHandler;
     Action<float> _onDamageChangeHandler;
     Action<int, int> _onMpChangeHandler;
+
+    public event Action<UnitBase> onUnitMix;
 
     protected override void Awake()
     {
@@ -135,9 +136,8 @@ public class UnitInfoUI : UIBase
     void UnitSell()
     {
         Hide();
-        SlotManager.Slots[_currentSlot].RelasePool();
         GameManager.Instance.Gold += UnitSellPrice();
-        SlotManager.Slots[_currentSlot] = null;
+        SlotManager.Slots[_currentSlot].RelasePool();
     }
 
     int UnitSellPrice()
@@ -154,19 +154,18 @@ public class UnitInfoUI : UIBase
 
         if (unitRank == UnitRank.Legendary) return;
 
-        List<Slot> mixUnits = new List<Slot>(3) { _currentSlot };
+        List<UnitBase> mixUnits = new List<UnitBase>(3) { baseUnit };
 
 
-        List<Slot> units = GameManager.Instance.Units[unitKind];
+        List<UnitBase> units = GameManager.Instance.Units[unitKind];
 
         if (units.Count < 3) return;
 
-        foreach (Slot slot in units)
+        foreach (UnitBase unit in units)
         {
-            UnitBase unit = SlotManager.Slots[slot];
-            if (unit.Rank == unitRank && slot != _currentSlot)
+            if (unit.Rank == unitRank && unit != baseUnit)
             {
-                mixUnits.Add(slot);
+                mixUnits.Add(unit);
                 if (mixUnits.Count >= 3) break;
             }
         }
@@ -175,14 +174,14 @@ public class UnitInfoUI : UIBase
 
         Hide();
 
-        foreach (Slot slot in mixUnits)
+        foreach (UnitBase unit in mixUnits)
         {
-            SlotManager.Slots[slot].RelasePool();
-            SlotManager.Slots[slot] = null;
+            unit.RelasePool();
         }
 
-        UnitBase mixUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(_currentSlot,unitRank);
-        SlotManager.Slots[_currentSlot] = mixUnit;
-        mixUnit.transform.position = _currentSlot.transform.position;
+        UnitRank mixUnitRank = (UnitRank)((int)unitRank + 1);
+        UnitBase mixUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(_currentSlot);
+        mixUnit.UnitSet(_currentSlot, mixUnit.Kind, mixUnitRank);
+        onUnitMix?.Invoke(mixUnit);
     }
 }

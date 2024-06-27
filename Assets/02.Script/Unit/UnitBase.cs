@@ -21,6 +21,7 @@ public class UnitBase : PoolObject
     int _skillNeedMp;
     ParticleSystem _particleSystem;
 
+    public Slot Slot { get => _slot; set => _slot = value; }
     public UnitKind Kind { get => _Kind; }
     public UnitRank Rank { get => _Rank; }
     public float Power 
@@ -104,6 +105,8 @@ public class UnitBase : PoolObject
     public UnitBase UnitSet(Slot slot, UnitKind kind, UnitRank rank)
     {
         _slot = slot;
+        SlotManager.Slots[slot] = this;
+        transform.position = slot.transform.position;
         _Kind = kind;
         _Rank = rank;
         UnitData data = UnitRepository.UnitKindDatas[kind];
@@ -155,7 +158,8 @@ public class UnitBase : PoolObject
     public override void RelasePool()
     {
         onDisable?.Invoke();
+        GameManager.Instance.Units[Kind].Remove(this);
+        SlotManager.Slots[Slot] = null;
         base.RelasePool();
-        GameManager.Instance.Units[Kind].Remove(_slot);
     }
 }

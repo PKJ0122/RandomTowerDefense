@@ -39,7 +39,7 @@ public class UnitLevelUpUI : UIBase
                 PurchasedUnitApply(unitKind);
             });
         }
-        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (slot, unit) => BuyUnitApply(unit);
+        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (unit) => BuyUnitApply(unit);
     }
 
     /// <summary>
@@ -72,14 +72,13 @@ public class UnitLevelUpUI : UIBase
     /// </summary>
     void PurchasedUnitApply(UnitKind unitKind)
     {
-        if (!GameManager.Instance.Units.TryGetValue(unitKind, out List<Slot> units)) return;
+        if (!GameManager.Instance.Units.TryGetValue(unitKind, out List<UnitBase> units)) return;
 
         float[] unitPowerDatas = UnitRepository.UnitKindDatas[unitKind].unitPowerDatas;
         float powerWeight = _unitLevels[unitKind] * POWER_WEIGHT;
 
-        foreach (Slot slot in units)
+        foreach (UnitBase unit in units)
         {
-            UnitBase unit = SlotManager.Slots[slot];
             float unitBasePower = unitPowerDatas[(int)unit.Rank];
             unit.Power = unitBasePower + (unitBasePower * powerWeight);
         }

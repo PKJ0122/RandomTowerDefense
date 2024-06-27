@@ -28,7 +28,7 @@ public class UnitBuyUI : UIBase
 
     public event Func<Slot> onBuyButtonClick;
     event Action onPriceChange;
-    public event Action<Slot,UnitBase> onUnitBuySuccess;
+    public event Action<UnitBase> onUnitBuySuccess;
 
 
     protected override void Awake()
@@ -63,7 +63,7 @@ public class UnitBuyUI : UIBase
         if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
 
         UnitBase randomUnit = RandomUnit(slot);
-        onUnitBuySuccess?.Invoke(slot,randomUnit);
+        onUnitBuySuccess?.Invoke(randomUnit);
         GameManager.Instance.Gold -= UnitPrice;
         UnitPrice += WEIGHT;
     }
@@ -71,7 +71,7 @@ public class UnitBuyUI : UIBase
     /// <summary>
     /// 랜덤한 유닛을 반환해주는 함수
     /// </summary>
-    UnitBase RandomUnit(Slot slot)
+    public UnitBase RandomUnit(Slot slot)
     {
         UnitKind unitKind = (UnitKind)Random.Range(0, Enum.GetValues(typeof(UnitKind)).Length);
         UnitRank unitRank = RandomRank();
@@ -80,19 +80,6 @@ public class UnitBuyUI : UIBase
                                                   .Get()
                                                   .GetComponent<UnitBase>()
                                                   .UnitSet(slot,unitKind, unitRank);
-
-        return unit;
-    }
-
-    public UnitBase RandomUnit(Slot slot, UnitRank unitRank)
-    {
-        UnitKind unitKind = (UnitKind)Random.Range(0, Enum.GetValues(typeof(UnitKind)).Length);
-        UnitRank spawnUnitRank = (UnitRank)((int)unitRank + 1);
-
-        UnitBase unit = ObjectPoolManager.Instance.Get(unitKind.ToString())
-                                                  .Get()
-                                                  .GetComponent<UnitBase>()
-                                                  .UnitSet(slot, unitKind, spawnUnitRank);
 
         return unit;
     }
