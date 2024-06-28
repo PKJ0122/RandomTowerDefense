@@ -39,12 +39,12 @@ public class MissionUI : UIBase
             Transform clear = missionObject.transform.Find("MissionClear").GetComponent<Transform>();
             name.text = missionData.missionName;
             detail.text = missionData.detail;
-            missionData.onProgressChange += value =>
+            missionData.OnProgressChange += value =>
             {
                 condition.text = $"( {value} / {missionData.condition} )";
                 if (missionData.Progress >= missionData.condition) missionData.IsClear = true ;
             };
-            missionData.onIsClearChange += value =>
+            missionData.OnIsClearChange += value =>
             {
                 clear.gameObject.SetActive(value);
                 if (value) GameManager.Instance.Gold += CLEAR_GOLD;

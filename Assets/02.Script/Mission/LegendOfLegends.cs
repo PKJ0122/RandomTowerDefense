@@ -6,7 +6,7 @@ public class LegendOfLegends : MissionBase
     public override void Init()
     {
         base.Init();
-        UIManager.Instance.Get<UnitInfoUI>().onUnitMix += unit =>
+        UIManager.Instance.Get<UnitInfoUI>().OnUnitMix += unit =>
         {
             if (unit.Rank == UnitRank.Legendary) Progress++;
         };

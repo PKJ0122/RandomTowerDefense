@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.LowLevel;
 using UnityEngine.Pool;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
 {
@@ -29,15 +31,17 @@ public class ObjectPoolManager : SingletonMonoBase<ObjectPoolManager>
     /// <summary>
     /// string를 키값으로 유닛 프리펩 Pool을 생성 그리고 딕셔너리에 등록
     /// </summary>
-    public void CreatePool(string key,PoolObject poolObject)
+    public void CreatePool(string key,PoolObject poolObject,int maxSize)
     {
+        int capacity = Mathf.Min(maxSize, 20);
+
         IObjectPool<PoolObject> pool = new ObjectPool<PoolObject>(() => Create(key, poolObject),
                                                                 OnPoolItem,
                                                                 OnReleaseItem,
                                                                 OnDestroyItem,
                                                                 false,
-                                                                10,
-                                                                99
+                                                                capacity,
+                                                                maxSize
                                                                 );
         Pool.Add(key, pool);
     }

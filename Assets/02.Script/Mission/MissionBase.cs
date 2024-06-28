@@ -15,7 +15,7 @@ public class MissionBase : ScriptableObject
         set
         {
             _progress = value;
-            onProgressChange?.Invoke(value);
+            OnProgressChange?.Invoke(value);
         }
     }
 
@@ -28,12 +28,12 @@ public class MissionBase : ScriptableObject
             if (_isClear == value) return;
 
             _isClear = value;
-            onIsClearChange?.Invoke(value);
+            OnIsClearChange?.Invoke(value);
         }
     }
 
-    public event Action<int> onProgressChange;
-    public event Action<bool> onIsClearChange;
+    public event Action<int> OnProgressChange;
+    public event Action<bool> OnIsClearChange;
 
 
     public virtual void Init()

@@ -7,7 +7,7 @@ public class TheRealStart : MissionBase
     public override void Init()
     {
         base.Init();
-        GameManager.Instance.onEnemyAmountChange += value =>
+        GameManager.Instance.OnEnemyAmountChange += value =>
         {
             Progress = value;
         };

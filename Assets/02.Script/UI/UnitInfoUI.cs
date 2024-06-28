@@ -35,7 +35,7 @@ public class UnitInfoUI : UIBase
     Action<float> _onDamageChangeHandler;
     Action<int, int> _onMpChangeHandler;
 
-    public event Action<UnitBase> onUnitMix;
+    public event Action<UnitBase> OnUnitMix;
 
     protected override void Awake()
     {
@@ -78,7 +78,7 @@ public class UnitInfoUI : UIBase
             _unitSkillMpS.value = mp;
             _unitSkillMpT.text = $"{mp} / {skillNeedMp}";
         };
-        onInputActionEnableChange += value =>
+        OnInputActionEnableChange += value =>
         {
             _unitDamageReSet.interactable = value;
             _unitSell.interactable = value;
@@ -117,10 +117,10 @@ public class UnitInfoUI : UIBase
         _unitSkillDisciption.text = $"{skill.description}";
         _unitSkillMpS.maxValue = skill.needMp;
 
-        unit.onPowerChange += _onPowerChangeHandler;
-        unit.onDamageChange += _onDamageChangeHandler;
+        unit.OnPowerChange += _onPowerChangeHandler;
+        unit.OnDamageChange += _onDamageChangeHandler;
         _onDamageChangeHandler?.Invoke(unit.Damage);
-        unit.onMpChange += _onMpChangeHandler;
+        unit.OnMpChange += _onMpChangeHandler;
         _onMpChangeHandler?.Invoke(unit.Mp, skill.needMp);
     }
 
@@ -128,9 +128,9 @@ public class UnitInfoUI : UIBase
     {
         base.Hide();
         UnitBase unit = SlotManager.Slots[_currentSlot];
-        unit.onPowerChange -= _onPowerChangeHandler;
-        unit.onDamageChange -= _onDamageChangeHandler;
-        unit.onMpChange -= _onMpChangeHandler;
+        unit.OnPowerChange -= _onPowerChangeHandler;
+        unit.OnDamageChange -= _onDamageChangeHandler;
+        unit.OnMpChange -= _onMpChangeHandler;
     }
 
     void UnitSell()
@@ -182,6 +182,6 @@ public class UnitInfoUI : UIBase
         UnitRank mixUnitRank = (UnitRank)((int)unitRank + 1);
         UnitBase mixUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(_currentSlot);
         mixUnit.UnitSet(_currentSlot, mixUnit.Kind, mixUnitRank);
-        onUnitMix?.Invoke(mixUnit);
+        OnUnitMix?.Invoke(mixUnit);
     }
 }

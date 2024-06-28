@@ -22,19 +22,19 @@ public class UnitBuyUI : UIBase
         set
         {
             _unitPrice = value;
-            onPriceChange?.Invoke();
+            OnPriceChange?.Invoke();
         }
     }
 
-    public event Func<Slot> onBuyButtonClick;
-    event Action onPriceChange;
-    public event Action<UnitBase> onUnitBuySuccess;
+    public event Func<Slot> OnBuyButtonClick;
+    event Action OnPriceChange;
+    public event Action<UnitBase> OnUnitBuySuccess;
 
 
     protected override void Awake()
     {
         base.Awake();
-        GameManager.Instance.onWaveChange += v =>
+        GameManager.Instance.OnWaveChange += v =>
         {
             if (v == 0) UnitPrice = 20;
         };
@@ -42,8 +42,8 @@ public class UnitBuyUI : UIBase
         _unitBuy = transform.Find("Button - UnitBuy").GetComponent<Button>();
         _price = transform.Find("Text (TMP) - Gold").GetComponent<TMP_Text>();
 
-        _unitBuy.onClick.AddListener(() => UnitBuy(onBuyButtonClick?.Invoke()));
-        onPriceChange += () => { _price.text = $"{UnitPrice}"; };
+        _unitBuy.onClick.AddListener(() => UnitBuy(OnBuyButtonClick?.Invoke()));
+        OnPriceChange += () => { _price.text = $"{UnitPrice}"; };
     }
 
     void OnDisable()
@@ -52,7 +52,7 @@ public class UnitBuyUI : UIBase
         //{
         //    if (v == 0) UnitPrice = 20;
         //};
-        onPriceChange -= () => { _price.text = $"{UnitPrice}"; };
+        OnPriceChange -= () => { _price.text = $"{UnitPrice}"; };
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class UnitBuyUI : UIBase
         if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
 
         UnitBase randomUnit = RandomUnit(slot);
-        onUnitBuySuccess?.Invoke(randomUnit);
+        OnUnitBuySuccess?.Invoke(randomUnit);
         GameManager.Instance.Gold -= UnitPrice;
         UnitPrice += WEIGHT;
     }

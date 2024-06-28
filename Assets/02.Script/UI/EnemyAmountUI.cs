@@ -17,7 +17,7 @@ public class EnemyAmountUI : UIBase
         _enemyAmountS = transform.Find("Slider - EnemyAmount").GetComponent<Slider>();
         _enemyAmountT = transform.Find("Slider - EnemyAmount/Text (TMP) - EnemyAmount").GetComponent<TMP_Text>();
 
-        GameManager.Instance.onEnemyAmountChange += value =>
+        GameManager.Instance.OnEnemyAmountChange += value =>
         {
             _enemyAmountS.value = value;
             _enemyAmountT.text = $"{value} / {DIE_AMOUNT}";

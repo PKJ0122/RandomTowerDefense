@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TheFirstStep
   m_EditorClassIdentifier: 
   missionName: "\uCCAB \uB2E8\uCD94"
-  detail: "10\uC6E8\uC774\uBE0C \uC774\uC804\uC5D0 \uACE8\uB4DC \uBCF4\uC2A4 \uCC98\uCE58"
+  detail: "10\uC6E8\uC774\uBE0C \uC774\uC804\uC5D0 \uACE8\uB4DC\uBCF4\uC2A4 \uC18C\uD658"
   condition: 1

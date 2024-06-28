@@ -8,13 +8,13 @@ public class SkillObject : PoolObject
     protected float _damage;
     protected LayerMask _targetMask;
 
-    public event Action onDisableHandler;
+    public event Action OnDisableHandler;
 
     protected virtual void Awake()
     {
         _targetMask = LayerMask.GetMask("Enemy");
 
-        onDisableHandler += () => RelasePool();
+        OnDisableHandler += () => RelasePool();
     }
 
     protected virtual void OnParticleSystemStopped()
@@ -27,7 +27,7 @@ public class SkillObject : PoolObject
         _caster = caster;
         _target = target;
         _damage = damage;
-        _caster.onDisable += onDisableHandler;
+        _caster.OnDisable += OnDisableHandler;
     }
 
     protected virtual void Damage()
@@ -37,7 +37,7 @@ public class SkillObject : PoolObject
 
     public override void RelasePool()
     {
-        _caster.onDisable -= onDisableHandler;
+        _caster.OnDisable -= OnDisableHandler;
         base.RelasePool();
     }
 }

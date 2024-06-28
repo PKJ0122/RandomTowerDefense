@@ -22,11 +22,11 @@ public abstract class UIBase : MonoBehaviour
         set
         {
             _inputActionEnable = value;
-            onInputActionEnableChange?.Invoke(value);
+            OnInputActionEnableChange?.Invoke(value);
         }
     }
 
-    public event Action<bool> onInputActionEnableChange;
+    public event Action<bool> OnInputActionEnableChange;
 
     protected Canvas _canvas;
 

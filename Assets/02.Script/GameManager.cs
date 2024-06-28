@@ -19,7 +19,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         set
         {
             _wave = value;
-            onWaveChange?.Invoke(value);
+            OnWaveChange?.Invoke(value);
         }
     }
 
@@ -30,7 +30,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         set
         {
             _time = value;
-            onTimeChange?.Invoke(value);
+            OnTimeChange?.Invoke(value);
         }
     }
 
@@ -41,7 +41,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         set
         {
             _gold = value;
-            onGoldChange?.Invoke(value);
+            OnGoldChange?.Invoke(value);
         }
     }
 
@@ -52,14 +52,14 @@ public class GameManager : SingletonMonoBase<GameManager>
         set
         {
             _enemyAmount = value;
-            onEnemyAmountChange?.Invoke(value);
+            OnEnemyAmountChange?.Invoke(value);
         }
     }
 
-    public event Action<int> onWaveChange;
-    public event Action<float> onTimeChange;
-    public event Action<int> onGoldChange;
-    public event Action<int> onEnemyAmountChange;
+    public event Action<int> OnWaveChange;
+    public event Action<float> OnTimeChange;
+    public event Action<int> OnGoldChange;
+    public event Action<int> OnEnemyAmountChange;
 
 
     protected override void Awake()
@@ -69,7 +69,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         Application.targetFrameRate = 60;
 #endif
 
-        onWaveChange += value =>
+        OnWaveChange += value =>
         {
             if (Wave <= 0) return;
             Gold += INTEREST + (Gold/10);
@@ -80,7 +80,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 
     private void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (unit) => RegisterUnit(unit);
+        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => RegisterUnit(unit);
     }
 
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼

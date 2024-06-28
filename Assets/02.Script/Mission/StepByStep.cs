@@ -7,7 +7,7 @@ public class StepByStep : MissionBase
     public override void Init()
     {
         base.Init();
-        GameManager.Instance.onGoldChange += value =>
+        GameManager.Instance.OnGoldChange += value =>
         {
             Progress = value;
         }; ;

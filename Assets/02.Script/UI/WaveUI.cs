@@ -18,11 +18,11 @@ public class WaveUI : UIBase
         _timeS = transform.Find("Image/Slider - Timer").GetComponent<Slider>();
         _timeT = transform.Find("Image/Slider - Timer/Text (TMP) - Timer").GetComponent<TMP_Text>();
 
-        GameManager.Instance.onWaveChange += value =>
+        GameManager.Instance.OnWaveChange += value =>
         {
             _wave.text = $"{value + 1} Wave";
         };
-        GameManager.Instance.onTimeChange += value =>
+        GameManager.Instance.OnTimeChange += value =>
         {
             _timeS.value = value;
             _timeT.text = value == 60f ? "01 : 00" : $"00 : {(int)value}";

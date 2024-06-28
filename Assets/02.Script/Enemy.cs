@@ -70,7 +70,7 @@ public class Enemy : PoolObject
     }
 
 
-    void Die()
+    protected virtual void Die()
     {
         GameManager.Instance.EnemyAmount--;
         GameManager.Instance.Gold++;

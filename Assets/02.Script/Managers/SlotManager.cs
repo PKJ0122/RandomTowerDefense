@@ -29,8 +29,8 @@ public class SlotManager : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick += () => IsVacancy();
-        UIManager.Instance.onUIChange += value => _isClickPossible = value;
+        UIManager.Instance.Get<UnitBuyUI>().OnBuyButtonClick += () => IsVacancy();
+        UIManager.Instance.OnUIChange += value => _isClickPossible = value;
     }
 
     void Update()

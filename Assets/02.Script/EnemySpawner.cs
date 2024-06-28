@@ -9,21 +9,39 @@ public class EnemySpawner : MonoBehaviour
 
     WaveData _waveDate; //Resources폴더에 있는 웨이브데이터
 
+    Enemy[] _nomalEnemyPrefab;
+    Boss[] _bossEnemyPrefab;
+    Boss _goldBossPrefab;
+
+    int nomalEnemycount;
+    int bossEnemycount;
+
+
     void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             s_path.AddLast(transform.GetChild(i).position);
         }
-
         _waveDate = Resources.Load<WaveData>("WaveData");
-        PoolObject enemyObject = Resources.Load<PoolObject>("Enemy");
-        ObjectPoolManager.Instance.CreatePool($"{enemyObject.name}", enemyObject);
+        _nomalEnemyPrefab = _waveDate.nomalEnemyPrefab;
+        _bossEnemyPrefab = _waveDate.bossEnemyPrefab;
+        _goldBossPrefab = _waveDate.goldBossPrefab;
+        foreach (Enemy prefab in _nomalEnemyPrefab)
+        {
+            ObjectPoolManager.Instance.CreatePool($"{prefab.name}", prefab,99);
+        }
+        foreach (Boss prefab in _bossEnemyPrefab)
+        {
+            ObjectPoolManager.Instance.CreatePool($"{prefab.name}", prefab, 2);
+        }
+        ObjectPoolManager.Instance.CreatePool($"{_goldBossPrefab.name}", _goldBossPrefab, 2);
     }
 
     void Start()
     {
-        GameManager.Instance.onWaveChange += value => EnemySpawn(value);
+        GameManager.Instance.OnWaveChange += value => EnemySpawn(value);
+        UIManager.Instance.Get<GoldBossUI>().OnBossSpawnButtonClick += GoldBossSpawn;
     }
 
     void OnDisable()
@@ -39,10 +57,8 @@ public class EnemySpawner : MonoBehaviour
     {
         int r = (round + 1) % 10;
 
-        if (r == 0)
-            StartCoroutine(C_BossEnemySpawn(_waveDate.HpDatas[round]));
-        else
-            StartCoroutine(C_NomalEnemySpawn(_waveDate.HpDatas[round]));
+        if (r == 0) BossEnemySpawn(_waveDate.HpDatas[round]);
+        else StartCoroutine(C_NomalEnemySpawn(_waveDate.HpDatas[round]));
     }
 
     YieldInstruction _delay = new WaitForSeconds(1f); //딜레이에 쓸 객체
@@ -54,11 +70,10 @@ public class EnemySpawner : MonoBehaviour
     {
         int count = 0;
         
-
         while (count < 40)
         {
             count++;
-            ObjectPoolManager.Instance.Get("Enemy")
+            ObjectPoolManager.Instance.Get($"{_nomalEnemyPrefab[nomalEnemycount].name}")
                                       .Get()
                                       .GetComponent<Enemy>()
                                       .Spawn(hp);
@@ -67,11 +82,24 @@ public class EnemySpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// 보스 라운드 몬스터 스폰 코루틴
+    /// 보스 라운드 몬스터 스폰 함수
     /// </summary>
-    IEnumerator C_BossEnemySpawn(float hp)
+    void BossEnemySpawn(float hp)
     {
-        // todo => 보스 리스폰
-        yield return null;
+        ObjectPoolManager.Instance.Get($"{_bossEnemyPrefab[bossEnemycount].name}")
+                          .Get()
+                          .GetComponent<Enemy>()
+                          .Spawn(hp);
+
+        if (nomalEnemycount++ >= _nomalEnemyPrefab.Length) nomalEnemycount = 0;
+        if (bossEnemycount++ >= _bossEnemyPrefab.Length) bossEnemycount = 0;
+    }
+
+    void GoldBossSpawn()
+    {
+        ObjectPoolManager.Instance.Get($"{_goldBossPrefab.name}")
+                                  .Get()
+                                  .GetComponent<Enemy>()
+                                  .Spawn(1);
     }
 }

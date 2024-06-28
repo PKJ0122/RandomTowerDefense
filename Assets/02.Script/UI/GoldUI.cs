@@ -11,7 +11,7 @@ public class GoldUI : UIBase
     {
         base.Awake();
         _gold = transform.Find("Panel/Text (TMP) - Gold").GetComponent<TMP_Text>();
-        GameManager.Instance.onGoldChange += value =>
+        GameManager.Instance.OnGoldChange += value =>
         {
             _gold.text = value.ToString();
         };

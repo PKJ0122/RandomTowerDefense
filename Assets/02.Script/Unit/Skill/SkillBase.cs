@@ -26,6 +26,6 @@ public abstract class SkillBase : ScriptableObject
         if (effetObject == null)
             return;
 
-        ObjectPoolManager.Instance.CreatePool(skillname, effetObject);
+        ObjectPoolManager.Instance.CreatePool(skillname, effetObject,50);
     }
 }

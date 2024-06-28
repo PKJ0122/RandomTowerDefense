@@ -30,7 +30,7 @@ public class UnitBase : PoolObject
         set
         {
             _power = value;
-            onPowerChange?.Invoke(value);
+            OnPowerChange?.Invoke(value);
         }
     }
     public float Damage
@@ -39,7 +39,7 @@ public class UnitBase : PoolObject
         set
         {
             _damage = value;
-            onDamageChange?.Invoke(value);
+            OnDamageChange?.Invoke(value);
         }
     }
     public int Mp
@@ -48,14 +48,14 @@ public class UnitBase : PoolObject
         set
         {
             _mp = value;
-            onMpChange?.Invoke(value,_skillNeedMp);
+            OnMpChange?.Invoke(value,_skillNeedMp);
         }
     }
 
-    public event Action<float> onPowerChange;
-    public event Action<float> onDamageChange;
-    public event Action<int,int> onMpChange;
-    public event Action onDisable;
+    public event Action<float> OnPowerChange;
+    public event Action<float> OnDamageChange;
+    public event Action<int,int> OnMpChange;
+    public event Action OnDisable;
 
 
     private void Awake()
@@ -157,7 +157,7 @@ public class UnitBase : PoolObject
 
     public override void RelasePool()
     {
-        onDisable?.Invoke();
+        OnDisable?.Invoke();
         GameManager.Instance.Units[Kind].Remove(this);
         SlotManager.Slots[Slot] = null;
         base.RelasePool();

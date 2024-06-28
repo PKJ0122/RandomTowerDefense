@@ -39,7 +39,7 @@ public class UnitLevelUpUI : UIBase
                 PurchasedUnitApply(unitKind);
             });
         }
-        UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess += (unit) => BuyUnitApply(unit);
+        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => BuyUnitApply(unit);
     }
 
     /// <summary>
