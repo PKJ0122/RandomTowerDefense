@@ -21,6 +21,8 @@ public class EnemyAmountUI : UIBase
         {
             _enemyAmountS.value = value;
             _enemyAmountT.text = $"{value} / {DIE_AMOUNT}";
+
+            if (value == 100) GameManager.Instance.GameEnd();
         };
     }
 }

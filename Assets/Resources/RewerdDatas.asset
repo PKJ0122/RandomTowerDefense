@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cff5b1f3043c4b479adb47b4e9d5ee4, type: 3}
+  m_Name: RewerdDatas
+  m_EditorClassIdentifier: 
+  rewerdDatas:
+  - {fileID: 11400000, guid: 800d481a60710024986805da851d5d6b, type: 2}
+  - {fileID: 11400000, guid: 6127cbf843aa73a439b70437385efbdc, type: 2}
+  - {fileID: 11400000, guid: 2ff941b2e1a40d14581549d197c19c3e, type: 2}
+  - {fileID: 11400000, guid: 0e07a7425de59e94fbc139d0e8f0366d, type: 2}
+  - {fileID: 11400000, guid: 5d3c29d3cdbd18b4c8f35d276344091c, type: 2}

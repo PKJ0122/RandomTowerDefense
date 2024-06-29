@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f2be422c223c64785d24d3b2f930fe, type: 3}
+  m_Name: Devil
+  m_EditorClassIdentifier: 
+  rewerdRank: 4
+  rewerPrefab: {fileID: 5169957452657236171, guid: 06bd50b672f56db45b7880eee8f1c9cf, type: 3}
+  rewerdPercentageDatas:
+  - {fileID: 11400000, guid: 0f57a1500c6d5fa42bef018545ca27c0, type: 2}
+  - {fileID: 11400000, guid: ba70f9d51adfa0645a476cdabd74a842, type: 2}
+  - {fileID: 11400000, guid: 9f7ef80ec1a8d47499f15e0dd01bf610, type: 2}

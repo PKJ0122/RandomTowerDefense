@@ -14,8 +14,7 @@ public class Boss : Enemy
     IEnumerator C_BossActivity()
     {
         yield return delay;
-
-        //todo -> 게임오버
+        GameManager.Instance.GameEnd();
     }
 
     protected override void Die()

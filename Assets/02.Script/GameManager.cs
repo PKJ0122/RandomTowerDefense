@@ -108,7 +108,7 @@ public class GameManager : SingletonMonoBase<GameManager>
             Wave++;
         }
 
-        GameClear();
+        GameEnd();
     }
 
     /// <summary>
@@ -126,18 +126,10 @@ public class GameManager : SingletonMonoBase<GameManager>
     }
 
     /// <summary>
-    /// 게임 클리어 함수
+    /// 게임 종료 함수
     /// </summary>
-    void GameClear()
+    public void GameEnd()
     {
-
-    }
-
-    /// <summary>
-    /// 게임 오버 함수
-    /// </summary>
-    public void GameOver()
-    {
-
+        UIManager.Instance.Get<GameEndUI>().Show(Wave);
     }
 }

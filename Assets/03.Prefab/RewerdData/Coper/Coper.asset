@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f2be422c223c64785d24d3b2f930fe, type: 3}
+  m_Name: Coper
+  m_EditorClassIdentifier: 
+  rewerdRank: 0
+  rewerPrefab: {fileID: 7403793907072913715, guid: 5844a3be6a14f3646a643bbc50a0cc5d, type: 3}
+  rewerdPercentageDatas:
+  - {fileID: 11400000, guid: 1ca9b2b98fc27fd448f3a650042dc043, type: 2}
+  - {fileID: 11400000, guid: 84afa3c82e04df9448efe1489b7869a8, type: 2}
+  - {fileID: 11400000, guid: a59e1d3528ed0ec4caff69c00ee31369, type: 2}
