@@ -21,9 +21,18 @@ public class UnitBase : PoolObject
     int _skillNeedMp;
     ParticleSystem _particleSystem;
 
-    public Slot Slot { get => _slot; set => _slot = value; }
     public UnitKind Kind { get => _Kind; }
     public UnitRank Rank { get => _Rank; }
+    public Slot Slot
+    {
+        get => _slot;
+        set
+        {
+            _slot = value;
+            transform.position = _slot.transform.position;
+            SlotManager.Slots[_slot] = this;
+        }
+    }
     public float Power 
     { 
         get => _power; 
@@ -104,9 +113,7 @@ public class UnitBase : PoolObject
     /// </summary>
     public UnitBase UnitSet(Slot slot, UnitKind kind, UnitRank rank)
     {
-        _slot = slot;
-        SlotManager.Slots[slot] = this;
-        transform.position = slot.transform.position;
+        Slot = slot;
         _Kind = kind;
         _Rank = rank;
         UnitData data = UnitRepository.UnitKindDatas[kind];
