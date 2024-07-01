@@ -94,11 +94,20 @@ public class UnitBase : PoolObject
 
         foreach (Collider target in targets)
         {
+            Enemy enemy = target.GetComponent<Enemy>();
+
             if (_targetEnemy == null)
             {
-                _targetEnemy = target.GetComponent<Enemy>();
+                _targetEnemy = enemy;
                 continue;
             }
+
+            if (_targetEnemy.Priority < enemy.Priority)
+            {
+                _targetEnemy = enemy;
+                break;
+            }
+
             if (Vector3.SqrMagnitude(_targetEnemy.transform.position - transform.position) >
                 Vector3.SqrMagnitude(target.transform.position - transform.position))
             //현재 타겟으로 등록된 몬스터보다 더 가까운 유닛이 있는지 체크하고 있다면 타겟 변경
@@ -106,6 +115,8 @@ public class UnitBase : PoolObject
                 _targetEnemy = target.GetComponent<Enemy>();
             }
         }
+
+        transform.LookAt(_targetEnemy.transform);
     }
 
     /// <summary>
@@ -143,8 +154,6 @@ public class UnitBase : PoolObject
     {
         if (_targetEnemy == null)
             return;
-
-        transform.LookAt(_targetEnemy.transform);
 
         if (_mp >= _skillNeedMp)
         {

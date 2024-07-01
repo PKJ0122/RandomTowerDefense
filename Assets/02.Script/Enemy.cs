@@ -30,6 +30,8 @@ public class Enemy : PoolObject
         }
     }
 
+    public int Priority { get; protected set; }
+
 
     void FixedUpdate()
     {

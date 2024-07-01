@@ -42,10 +42,6 @@ public class GameEndUI : UIBase
         }
     }
 
-    private void Update()
-    {
-    }
-
     public void Show(int wave)
     {
         base.Show();
@@ -53,6 +49,7 @@ public class GameEndUI : UIBase
         _gameClear.gameObject.SetActive(isClear);
         _gameOver.gameObject.SetActive(!isClear);
         Rewerd(wave);
+        Time.timeScale = 0f;
     }
 
     public override void Hide()

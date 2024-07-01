@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
+    private void Awake()
+    {
+        Priority++;
+    }
+
     private void OnEnable()
     {
         StartCoroutine(C_BossActivity());

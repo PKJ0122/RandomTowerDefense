@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class UnitMoveUI : UIBase
 {
+    const float DELAY = 0.1f;
+
     Slot _currentSlot;
 
     LayerMask _layerMank;
+
+    bool _IsMoveing;
+    float _tick;
+
 
     protected override void Awake()
     {
@@ -16,6 +22,14 @@ public class UnitMoveUI : UIBase
     private void Update()
     {
         if (!_canvas.enabled) return;
+
+        if (_IsMoveing)
+        {
+            _tick += Time.deltaTime;
+            if (_tick >= DELAY) Hide();
+
+            return;
+        }
 
         if (Input.touchCount == 1)
         {
@@ -57,6 +71,12 @@ public class UnitMoveUI : UIBase
         _currentSlot = currentSlot;
     }
 
+    public override void Hide()
+    {
+        base.Hide();
+        _IsMoveing = false;
+    }
+
     void UnitMove(Slot moveSlot)
     {
         UnitBase changeUnit = SlotManager.Slots[moveSlot];
@@ -66,6 +86,7 @@ public class UnitMoveUI : UIBase
 
         if (changeUnit != null) changeUnit.Slot = _currentSlot;
 
-        Hide();
+        _IsMoveing = true;
+        _tick = 0;
     }
 }
