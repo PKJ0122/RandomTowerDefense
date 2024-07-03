@@ -17,7 +17,7 @@ public class GoldBossUI : UIBase
         {
             OnBossSpawnButtonClick?.Invoke();
             _clickWave = GameManager.Instance.Wave;
-            Hide();
+            _bossSpawn.gameObject.SetActive(false);
         });
     }
 
@@ -25,7 +25,7 @@ public class GoldBossUI : UIBase
     {
         GameManager.Instance.OnWaveChange += value =>
         {
-            if (value == _clickWave + 5) Show();
+            if (value == _clickWave + 5) _bossSpawn.gameObject.SetActive(true);
         };
     }
 }

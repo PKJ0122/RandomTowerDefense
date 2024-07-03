@@ -16,10 +16,10 @@ MonoBehaviour:
   unitObject: {fileID: 1484026224564908826, guid: e7bf535d1fd85a74f81dd27aa4ccf71d, type: 3}
   unitName: "\uC2A4\uD1A4\uADF8\uB9B0"
   unitPowerDatas:
-  - 10
+  - 5
   - 20
-  - 30
-  - 40
-  - 50
+  - 84
+  - 390
+  - 1700
   skill: {fileID: 11400000, guid: 9379827e42eaa7848bd999d9898bd30f, type: 2}
   unitImg: {fileID: 21300000, guid: f2e0fe1903d403a45a854e560e36a491, type: 3}

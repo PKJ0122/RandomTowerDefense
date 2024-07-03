@@ -7,7 +7,7 @@ public class BulletRainObject : SkillObject
     const float RANGE = 9f;
     const float TICK_TIME = 0.5f;
     const int LAST_TICK_COUNT = 8;
-    const float SLOW_AMOUNT = 0.1f;
+    const float SLOW_AMOUNT = 0.05f;
 
     List<Enemy> _slowEnemy = new List<Enemy>(10);
     int _tickCount;

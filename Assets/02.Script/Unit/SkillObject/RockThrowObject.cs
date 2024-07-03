@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RockThrowObject : SkillObject
@@ -31,7 +30,7 @@ public class RockThrowObject : SkillObject
         while (tick <= THROWING_TIME)
         {
             tick += Time.deltaTime;
-            transform.position = BezierCurves(_caster.transform.position,middle,_target.transform.position,tick/ THROWING_TIME);
+            transform.position = BezierCurves(_caster.transform.position, middle, _target.transform.position, tick / THROWING_TIME);
             transform.Rotate(10f, 0, 0);
             yield return null;
         }
@@ -40,8 +39,10 @@ public class RockThrowObject : SkillObject
         meshRenderer.enabled = false;
 
         Collider[] targets = Physics.OverlapSphere(transform.position, RANGE, _targetMask);
+
         foreach (Collider target in targets)
         {
+
             Enemy enemy = target.GetComponent<Enemy>();
             _target = enemy;
             _target.Speed = 0;
@@ -60,7 +61,7 @@ public class RockThrowObject : SkillObject
         RelasePool();
     }
 
-    Vector3 BezierCurves(Vector3 v1,Vector3 v2,Vector3 v3,float t)
+    Vector3 BezierCurves(Vector3 v1, Vector3 v2, Vector3 v3, float t)
     {
         return Vector3.Lerp(Vector3.Lerp(v1, v2, t), Vector3.Lerp(v2, v3, t), t);
     }

@@ -17,9 +17,9 @@ MonoBehaviour:
   unitName: "\uC5D0\uBA54\uB784\uB4DC"
   unitPowerDatas:
   - 10
-  - 20
-  - 30
   - 40
-  - 50
+  - 168
+  - 800
+  - 3400
   skill: {fileID: 11400000, guid: 09af7f6c31f5d054aa3eaef1570bda47, type: 2}
   unitImg: {fileID: 21300000, guid: 02bd7b7b8cbbca64fab81209736eba03, type: 3}

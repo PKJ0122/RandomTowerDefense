@@ -17,5 +17,5 @@ MonoBehaviour:
     \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
   skillImg: {fileID: 21300000, guid: 62ce59ce09148c847b198159a3abc9f6, type: 3}
   needMp: 30
-  coefficient: 0
+  coefficient: 1.5
   effetObject: {fileID: -6489888205805980672, guid: ea96e021be4630a43ad0d092a15f76ca, type: 3}
