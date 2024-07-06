@@ -41,7 +41,5 @@ public class GPGSManager : MonoBehaviour
     void OpenSaveGame()
     {
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-
-        savedGameClient.OpenWithAutomaticConflictResolution
     }
 }

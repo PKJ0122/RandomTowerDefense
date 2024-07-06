@@ -1536,7 +1536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 7090757.5}
+  m_AnchoredPosition: {x: 0, y: 7519781}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &135037169
@@ -3338,7 +3338,7 @@ GameObject:
   - component: {fileID: 313483075}
   - component: {fileID: 313483074}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Text (TMP) - Rare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7274,7 +7274,7 @@ GameObject:
   - component: {fileID: 701336585}
   - component: {fileID: 701336584}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Text (TMP) - Nomal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9637,7 +9637,7 @@ GameObject:
   - component: {fileID: 1024490504}
   - component: {fileID: 1024490503}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: Text (TMP) - Epic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12502,7 +12502,7 @@ GameObject:
   - component: {fileID: 1312132346}
   - component: {fileID: 1312132345}
   m_Layer: 5
-  m_Name: Text (TMP) (4)
+  m_Name: Text (TMP) - Unique
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19489,7 +19489,7 @@ GameObject:
   - component: {fileID: 1968820254}
   - component: {fileID: 1968820253}
   m_Layer: 5
-  m_Name: Text (TMP) (5)
+  m_Name: Text (TMP) - Legendary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,6 +8,8 @@ public class EnemyAmountUI : UIBase
 {
     const int DIE_AMOUNT = 100;
 
+    public int DieAmount { get; set; } = DIE_AMOUNT;
+
     Slider _enemyAmountS;
     TMP_Text _enemyAmountT;
 
@@ -20,9 +22,9 @@ public class EnemyAmountUI : UIBase
         GameManager.Instance.OnEnemyAmountChange += value =>
         {
             _enemyAmountS.value = value;
-            _enemyAmountT.text = $"{value} / {DIE_AMOUNT}";
+            _enemyAmountT.text = $"{value} / {DieAmount}";
 
-            if (value == 100) GameManager.Instance.GameEnd();
+            if (value == DieAmount) GameManager.Instance.GameEnd();
         };
     }
 }

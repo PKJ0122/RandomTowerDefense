@@ -67,7 +67,7 @@ public class GameEndUI : UIBase
         for (int i = 0; i < chestAmount; i++)
         {
             int randomChest = Random.Range(0, Enum.GetValues(typeof(RewerdRank)).Length);
-            float randomrewerd = Random.Range(1, 101);
+            float randomrewerd = Random.Range(0, 100);
             float rewerdChacker1 = 0;
             float rewerdChacker2 = 0;
             RewerdList rewerd = RewerdList.Gold;
@@ -76,7 +76,7 @@ public class GameEndUI : UIBase
             for (int j = 0; j < Enum.GetValues(typeof(RewerdRank)).Length; j++)
             {
                 rewerdChacker2 += chest.rewerdPercentageDatas[j].Percentage;
-                if (rewerdChacker1 <= randomrewerd && randomrewerd <= rewerdChacker2)
+                if (rewerdChacker1 <= randomrewerd && randomrewerd < rewerdChacker2)
                 {
                     rewerd = chest.rewerdPercentageDatas[j].rewerdList;
                     int min = chest.rewerdPercentageDatas[j].MinAmount;

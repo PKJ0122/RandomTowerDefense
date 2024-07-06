@@ -1,7 +1,6 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -26,6 +25,9 @@ public class UnitBuyUI : UIBase
         }
     }
 
+    Dictionary<UnitRank, float> _unitRankPercentage = new Dictionary<UnitRank,float>();
+    public Dictionary<UnitRank, float> UnitRankPercentage => _unitRankPercentage;
+
     public event Func<Slot> OnBuyButtonClick;
     event Action OnPriceChange;
     public event Action<UnitBase> OnUnitBuySuccess;
@@ -44,6 +46,12 @@ public class UnitBuyUI : UIBase
 
         _unitBuy.onClick.AddListener(() => UnitBuy(OnBuyButtonClick?.Invoke()));
         OnPriceChange += () => { _price.text = $"{UnitPrice}"; };
+
+        UnitDatas unitDatas = UnitRepository.UnitDatas;
+        UnitRankPercentage.Add(UnitRank.Legendary, unitDatas.legendaryPercentage);
+        UnitRankPercentage.Add(UnitRank.Unique, unitDatas.uniquePercentage);
+        UnitRankPercentage.Add(UnitRank.Epic, unitDatas.epicPercentage);
+        UnitRankPercentage.Add(UnitRank.Rare, unitDatas.rarePercentage);
     }
 
     void OnDisable()
@@ -79,7 +87,7 @@ public class UnitBuyUI : UIBase
         UnitBase unit = ObjectPoolManager.Instance.Get(unitKind.ToString())
                                                   .Get()
                                                   .GetComponent<UnitBase>()
-                                                  .UnitSet(slot,unitKind, unitRank);
+                                                  .UnitSet(slot, unitKind, unitRank);
 
         return unit;
     }
@@ -89,12 +97,21 @@ public class UnitBuyUI : UIBase
     /// </summary>
     UnitRank RandomRank()
     {
-        int randomNumber = Random.Range(0, 100);
+        float randomNumber = Random.Range(0f, 100f);
 
-        if (randomNumber >= 98) return UnitRank.Legendary;
-        else if (randomNumber >= 94) return UnitRank.Unique;
-        else if (randomNumber >= 86) return UnitRank.Epic;
-        else if (randomNumber >= 70) return UnitRank.Rare;
-        else return UnitRank.Nomal;
+        float firstPercentage = 0;
+        float latsPercentage = 0;
+
+        for (int i = Enum.GetValues(typeof(UnitRank)).Length - 1; i < 0; i--)
+        {
+            latsPercentage += UnitRankPercentage[(UnitRank)i];
+
+            if (firstPercentage <= randomNumber && randomNumber < latsPercentage)
+                return (UnitRank)i;
+
+            firstPercentage = latsPercentage;
+        }
+
+        return UnitRank.Nomal;
     }
 }

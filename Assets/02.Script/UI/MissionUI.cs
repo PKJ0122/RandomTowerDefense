@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 public class MissionUI : UIBase
 {
     const int CLEAR_GOLD = 100;
+
+    public int ClearGold { get; set; } = CLEAR_GOLD;
 
     Transform _location;
     MissionDatas _missionDatas;
@@ -14,6 +17,8 @@ public class MissionUI : UIBase
     Vector2 _scrollEarlyLocation;
 
     Button _close;
+
+    public event Action OnMissionClear;
 
  
     protected override void Awake()
@@ -47,7 +52,11 @@ public class MissionUI : UIBase
             missionData.OnIsClearChange += value =>
             {
                 clear.gameObject.SetActive(value);
-                if (value) GameManager.Instance.Gold += CLEAR_GOLD;
+                if (value)
+                {
+                    GameManager.Instance.Gold += ClearGold;
+                    OnMissionClear?.Invoke();
+                }
             };
             missionData.Init();
         }

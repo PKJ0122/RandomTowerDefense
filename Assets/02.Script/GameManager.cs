@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
+    const float ROUND_TIME = 60f;
+    const int START_GOLD = 100;
+    const int SALARY = 40;
+    const int INTEREST = 10;
+
     Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>();
     public Dictionary<UnitKind, List<UnitBase>> Units { get => _units; }
 
-    const float ROUND_TIME = 60f;
-    const int START_GOLD = 100;
-    const int INTEREST = 40;
+    public int Salary { get; set; } = SALARY;
+    public int Interest { get; set; } = INTEREST;
 
     int _wave = -1;
     public int Wave
@@ -72,7 +76,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         OnWaveChange += value =>
         {
             if (Wave <= 0) return;
-            Gold += INTEREST + (Gold/10);
+            Gold += Salary + (Gold/Interest);
         };
 
         StartCoroutine(C_Game());

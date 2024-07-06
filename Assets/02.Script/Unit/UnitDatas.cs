@@ -7,4 +7,9 @@ public class UnitDatas : ScriptableObject
 {
     public UnitData[] unitDatas = new UnitData[Enum.GetValues(typeof(UnitKind)).Length];
     public UnitRankData[] unitRankColorDatas = new UnitRankData[Enum.GetValues(typeof(UnitRank)).Length];
+
+    public float legendaryPercentage;
+    public float uniquePercentage;
+    public float epicPercentage;
+    public float rarePercentage;
 }

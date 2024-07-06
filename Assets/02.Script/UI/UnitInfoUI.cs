@@ -36,6 +36,7 @@ public class UnitInfoUI : UIBase
     Action<int, int> _onMpChangeHandler;
 
     public event Action<UnitBase> OnUnitMix;
+    public event Action<int> OnUnitSell;
 
     protected override void Awake()
     {
@@ -137,6 +138,7 @@ public class UnitInfoUI : UIBase
     {
         Hide();
         GameManager.Instance.Gold += UnitSellPrice();
+        OnUnitSell?.Invoke(UnitSellPrice());
         SlotManager.Slots[_currentSlot].RelasePool();
     }
 
