@@ -10,7 +10,7 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// <summary>
     /// 모든 UI가 등록되어있는 Dictionary
     /// </summary>
-    static Dictionary<Type, UIBase> s_UIs = new Dictionary<Type, UIBase>();
+    Dictionary<Type, UIBase> _uis = new Dictionary<Type, UIBase>();
 
     /// <summary>
     /// 현재 활성화중인 UI
@@ -25,7 +25,7 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// </summary>
     public void RegisterUI(UIBase ui)
     {
-        if (!s_UIs.TryAdd(ui.GetType(), ui))
+        if (!_uis.TryAdd(ui.GetType(), ui))
         {
             Debug.LogWarning("이미 등록된 UI입니다.");
         }
@@ -37,7 +37,7 @@ public class UIManager : SingletonMonoBase<UIManager>
     public T Get<T>()
         where T : UIBase
     {
-        return (T)s_UIs[typeof(T)];
+        return (T)_uis[typeof(T)];
     }
 
     /// <summary>

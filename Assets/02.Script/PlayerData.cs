@@ -13,21 +13,20 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public static Dictionary<UnitKind, UnitLevelData> unitLevels = new Dictionary<UnitKind, UnitLevelData>(8);
     public static Dictionary<string, ItemLevelData> itemLevels = new Dictionary<string, ItemLevelData>(10);
 
-    static PlayerDataContainer _playerDataContainer;
+    static PlayerDataContainer s_playerDataContainer;
     public PlayerDataContainer PlayerDataContainer
     {
         get 
         {
-            if (_playerDataContainer == null)
-                _playerDataContainer = new PlayerDataContainer();
+            if (s_playerDataContainer == null)
+                s_playerDataContainer = new PlayerDataContainer();
 
-            return _playerDataContainer;
+            return s_playerDataContainer;
         }
         set
         {
-            _playerDataContainer = value;
+            s_playerDataContainer = value;
             PlayerDataSetting();
-            OnPlayerNameChange?.Invoke(PlayerName);
         }
     }
 

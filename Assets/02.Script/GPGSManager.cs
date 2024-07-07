@@ -52,6 +52,7 @@ public class GPGSManager : MonoBehaviour
 
         if (data == "")
         {
+            PlayerData.Instance.PlayerDataContainer = new PlayerDataContainer();
             SceneManager.LoadScene("Æ©Åä¸®¾ó");
         }
         else
