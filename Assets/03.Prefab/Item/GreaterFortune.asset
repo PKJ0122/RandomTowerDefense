@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358d7d86958c3db49a875d436c759302, type: 3}
+  m_Name: GreaterFortune
+  m_EditorClassIdentifier: 
+  itemName: "\uB354 \uD070 \uD589\uC6B4"
+  description: 
+  itemImage: {fileID: 13529836, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
+  early: 0
+  weight: 0

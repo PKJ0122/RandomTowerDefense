@@ -1,22 +1,15 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GPGSManager : MonoBehaviour
 {
-    public TMP_Text text;
-    public Button button;
+    private const string FILENAME = "PlayerData.dat";
 
 
-    public void Start()
-    {
-        button.onClick.AddListener(GPGS_LogIn);
-    }
-
-    public void GPGS_LogIn()
+    void Awake()
     {
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
@@ -25,21 +18,46 @@ public class GPGSManager : MonoBehaviour
     {
         if (status == SignInStatus.Success)
         {
-            text.text = "로그인 성공";
+            LoadData();
+        }
+    }
+
+    void LoadData()
+    {
+        OpenLoadGame();
+    }
+
+    void OpenLoadGame()
+    {
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+
+        savedGameClient.OpenWithAutomaticConflictResolution(FILENAME,
+                                                            DataSource.ReadCacheOrNetwork,
+                                                            ConflictResolutionStrategy.UseLastKnownGood,
+                                                            LoadGameData);
+    }
+    void LoadGameData(SavedGameRequestStatus status, ISavedGameMetadata data)
+    {
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+
+        if (status == SavedGameRequestStatus.Success)
+        {
+            savedGameClient.ReadBinaryData(data, OnSaveGameDataRead);
+        }
+    }
+
+    void OnSaveGameDataRead(SavedGameRequestStatus status, byte[] loadedData)
+    {
+        string data = System.Text.Encoding.UTF8.GetString(loadedData);
+
+        if (data == "")
+        {
+            SceneManager.LoadScene("튜토리얼");
         }
         else
         {
-            text.text = "로그인 실패";
+            PlayerData.Instance.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+            SceneManager.LoadScene("Lobby");
         }
-    }
-
-    void SaveData()
-    {
-
-    }
-
-    void OpenSaveGame()
-    {
-        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
     }
 }

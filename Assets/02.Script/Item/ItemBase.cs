@@ -12,40 +12,16 @@ public abstract class ItemBase : ScriptableObject
     public float early;
     public float weight;
 
-    int _level;
     public int Level
     {
-        get => _level;
-        set
-        {
-            _level = value;
-            OnLevelChange?.Invoke(value);
-        }
+        get => PlayerData.itemLevels[itemName].level;
     }
-    int _amount;
-    public int Amount
-    {
-        get => _amount;
-        set
-        {
-            _amount = value;
-            if (Level == 0 && _amount >= 1)
-            {
-                Level++;
-                _amount--;
-            }
-            OnAmountChange?.Invoke(value);
-        }
-    }
+
     public float Value => (early + (Level * weight));
-
-    public event Action<int> OnLevelChange;
-    public event Action<int> OnAmountChange;
-
 
     public void TryUse()
     {
-        if (_level == 0) return;
+        if (!PlayerData.itemLevels.ContainsKey(itemName)) return;
         Use();
     }
 
