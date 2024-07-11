@@ -2,11 +2,13 @@ using GoogleMobileAds.Api;
 using System;
 using UnityEngine;
 
-public class AdManager : MonoBehaviour
+public class AdManager : SingletonMonoBase<AdManager>
 {
-    RewardedAd rewardedAd;
+    RewardedAd _rewardedAd;
+    public RewardedAd RewardedAd => _rewardedAd;
 
     string adUnitId;
+
 
     public void Start()
     {
@@ -22,42 +24,24 @@ public class AdManager : MonoBehaviour
 
         //광고 로드 : RewardedAd 객체의 loadAd메서드에 AdRequest 인스턴스를 넣음
         AdRequest request = new AdRequest.Builder().Build();
-        this.rewardedAd = new RewardedAd(adUnitId);
-        this.rewardedAd.LoadAd(request);
+        _rewardedAd = new RewardedAd(adUnitId);
+        _rewardedAd.LoadAd(request);
 
-
-
-        this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded; // 광고 로드가 완료되면 호출
-        this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad; // 광고 로드가 실패했을 때 호출
-        this.rewardedAd.OnAdOpening += HandleRewardedAdOpening; // 광고가 표시될 때 호출(기기 화면을 덮음)
-        this.rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow; // 광고 표시가 실패했을 때 호출
-        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;// 광고를 시청한 후 보상을 받아야할 때 호출
-        this.rewardedAd.OnAdClosed += HandleRewardedAdClosed; // 닫기 버튼을 누르거나 뒤로가기 버튼을 눌러 동영상 광고를 닫을 때 호출
-    }
-
-    public void HandleRewardedAdLoaded(object sender, EventArgs args) { }
-
-    public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
-    {
-    }
-
-    public void HandleRewardedAdOpening(object sender, EventArgs args) { }
-
-    public void HandleRewardedAdFailedToShow(object sender, EventArgs args) { }
-
-    public void HandleRewardedAdClosed(object sender, EventArgs args) { }
-
-    public void HandleUserEarnedReward(object sender, Reward args)
-    {
+        //_rewardedAd.OnAdLoaded += HandleRewardedAdLoaded; // 광고 로드가 완료되면 호출
+        //_rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad; // 광고 로드가 실패했을 때 호출
+        //_rewardedAd.OnAdOpening += HandleRewardedAdOpening; // 광고가 표시될 때 호출(기기 화면을 덮음)
+        //_rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow; // 광고 표시가 실패했을 때 호출
+        //_rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;// 광고를 시청한 후 보상을 받아야할 때 호출
+        //_rewardedAd.OnAdClosed += HandleRewardedAdClosed; // 닫기 버튼을 누르거나 뒤로가기 버튼을 눌러 동영상 광고를 닫을 때 호출
     }
 
     public void ShowAds()
     {
-        if (this.rewardedAd.IsLoaded())
+        if (_rewardedAd.IsLoaded())
         {
-            this.rewardedAd.Show();
+            _rewardedAd.Show();
             AdRequest request = new AdRequest.Builder().Build();
-            this.rewardedAd.LoadAd(request);
+            _rewardedAd.LoadAd(request);
         }
     }
 }

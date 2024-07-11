@@ -1,11 +1,15 @@
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainUI : UIBase
 {
     TMP_Text _playerName;
     Button _playerNameChange;
+
+    Button _shop;
+    Button _gameStart;
 
     Action<string> _onPlayerNameChangeHandler;
 
@@ -15,6 +19,9 @@ public class MainUI : UIBase
         base.Awake();
         _playerName = transform.Find("Image - Profile/Button - Name/Text (TMP)").GetComponent<TMP_Text>();
         _playerNameChange = transform.Find("Image - Profile/Button - Name").GetComponent<Button>();
+        _shop = transform.Find("Button - Shop").GetComponent<Button>();
+        _gameStart = transform.Find("Button - GameStart").GetComponent<Button>();
+        _gameStart.onClick.AddListener(() => SceneManager.LoadScene("Game"));
         _onPlayerNameChangeHandler += value =>
         {
             _playerName.text = value;
@@ -25,6 +32,7 @@ public class MainUI : UIBase
     {
         _playerNameChange.onClick.AddListener(() => UIManager.Instance.Get<PlayerNameUI>().Show());
         _playerName.text = PlayerData.Instance.PlayerName;
+        _shop.onClick.AddListener(() => UIManager.Instance.Get<ShopUI>().Show());
         PlayerData.OnPlayerNameChange += _onPlayerNameChangeHandler;
     }
 

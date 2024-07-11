@@ -16,7 +16,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     static PlayerDataContainer s_playerDataContainer;
     public PlayerDataContainer PlayerDataContainer
     {
-        get 
+        get
         {
             if (s_playerDataContainer == null)
                 s_playerDataContainer = new PlayerDataContainer();
@@ -75,13 +75,62 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             OnDiamondChange?.Invoke(value);
         }
     }
+    public int ItemSummons
+    {
+        get => PlayerDataContainer.itemSummons;
+        set
+        {
+            PlayerDataContainer.itemSummons = value;
+            OnItemSummonsChange?.Invoke(value);
+        }
+    }
+    public bool AdItemBuy
+    {
+        get => PlayerDataContainer.adItemBuy;
+        set
+        {
+            if (AdItemBuy && value) return;
+
+            PlayerDataContainer.adItemBuy = value;
+            OnAdItemBuyChange?.Invoke(value);
+        }
+    }
+    public bool AdDiamondBuy
+    {
+        get => PlayerDataContainer.adDiamondBuy;
+        set
+        {
+            if (AdDiamondBuy && value) return;
+
+            PlayerDataContainer.adDiamondBuy = value;
+            OnAdDiamondBuyChange?.Invoke(value);
+        }
+    }
+
+    public DateTime LastShopChange
+    {
+        get => DateTime.Parse(PlayerDataContainer.lastShopChange);
+        set
+        {
+            PlayerDataContainer.lastShopChange = value.ToString();
+            PlayerDataContainer.freeDiamondBuy = false;
+            PlayerDataContainer.adItemBuy = false;
+            PlayerDataContainer.adDiamondBuy = false;
+            OnLastShopChangeChange?.Invoke();
+        }
+    }
 
     public static event Action<string> OnPlayerNameChange;
     public static event Action<UnitKind, UnitRank> OnUnitCharacterChange;
     public static event Action<int> OnGoldChange;
     public static event Action<int> OnDiamondChange;
+    public static event Action<int> OnItemSummonsChange;
+    public static event Action<bool> OnAdItemBuyChange;
+    public static event Action<bool> OnAdDiamondBuyChange;
+    public static event Action OnLastShopChangeChange;
     public static event Action<UnitLevelData> OnUnitDataChange;
     public static event Action<ItemLevelData> OnItemDataChange;
+    
 
 
     public void PlayerDataSetting()
@@ -94,12 +143,33 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             itemLevels.Add(itemLevelData.itemName, itemLevelData);
         }
+
         OnPlayerNameChange += value => SaveData();
-        OnUnitCharacterChange += (value1,value2) => SaveData();
+        OnUnitCharacterChange += (value1, value2) => SaveData();
         OnGoldChange += value => SaveData();
         OnDiamondChange += value => SaveData();
         OnUnitDataChange += value => SaveData();
         OnItemDataChange += value => SaveData();
+        OnLastShopChangeChange += SaveData;
+    }
+
+    /// <summary>
+    /// 상점 세이브 데이터 설정 함수
+    /// </summary>
+    /// <param name="index">수정할 인덱스 넘버</param>
+    /// <param name="shopSaveData">수정할 상점 데이터</param>
+    public void SetShopSaveData(int index, ShopSaveData shopSaveData)
+    {
+        if (index > PlayerDataContainer.shopSaveDatas.Count - 1)
+        {
+            for (int i = PlayerDataContainer.shopSaveDatas.Count - 1; i < index; i++)
+            {
+                PlayerDataContainer.shopSaveDatas.Add(null);
+            }
+        }
+
+        PlayerDataContainer.shopSaveDatas[index] = shopSaveData;
+        SaveData();
     }
 
     /// <summary>
@@ -107,7 +177,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// </summary>
     /// <param name="unitKind">유닛 종류</param>
     /// <param name="experience">유닛 경험치</param>
-    public void SetUnitLevel(UnitKind unitKind,int pulsExperience)
+    public void SetUnitLevel(UnitKind unitKind, int pulsExperience)
     {
         if (unitLevels.TryGetValue(unitKind, out UnitLevelData unitLevelData))
         {
@@ -131,7 +201,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// </summary>
     /// <param name="itemName">아이템 이름</param>
     /// <param name="itemAmount">변경 개수</param>
-    public void SetItemAmount(string itemName,int itemAmount)
+    public void SetItemAmount(string itemName, int itemAmount)
     {
         if (itemLevels.TryGetValue(itemName, out ItemLevelData itemLevelData))
         {
@@ -163,6 +233,10 @@ public class PlayerData : SingletonMonoBase<PlayerData>
 
     void SaveData()
     {
+#if UNITY_EDITOR
+        return;
+#endif
+
         OpenSaveGame();
     }
 
