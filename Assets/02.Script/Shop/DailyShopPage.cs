@@ -100,6 +100,7 @@ public class DailyShopPage : ShopPageBase
                 shopData.isBuy = true;
                 buyObject.gameObject.SetActive(true);
                 PlayerData.Instance.SetItemAmount(shopData.itemName, 1);
+                UIManager.Instance.Get<ItemInfoUI>().Show(shopData.itemName);
                 itemBuyButton.onClick.RemoveAllListeners();
             });
         }

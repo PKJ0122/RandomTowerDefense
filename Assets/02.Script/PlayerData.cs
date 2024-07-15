@@ -84,28 +84,6 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             OnItemSummonsChange?.Invoke(value);
         }
     }
-    public bool AdItemBuy
-    {
-        get => PlayerDataContainer.adItemBuy;
-        set
-        {
-            if (AdItemBuy && value) return;
-
-            PlayerDataContainer.adItemBuy = value;
-            OnAdItemBuyChange?.Invoke(value);
-        }
-    }
-    public bool AdDiamondBuy
-    {
-        get => PlayerDataContainer.adDiamondBuy;
-        set
-        {
-            if (AdDiamondBuy && value) return;
-
-            PlayerDataContainer.adDiamondBuy = value;
-            OnAdDiamondBuyChange?.Invoke(value);
-        }
-    }
 
     public DateTime LastShopChange
     {
@@ -125,8 +103,6 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public static event Action<int> OnGoldChange;
     public static event Action<int> OnDiamondChange;
     public static event Action<int> OnItemSummonsChange;
-    public static event Action<bool> OnAdItemBuyChange;
-    public static event Action<bool> OnAdDiamondBuyChange;
     public static event Action OnLastShopChangeChange;
     public static event Action<UnitLevelData> OnUnitDataChange;
     public static event Action<ItemLevelData> OnItemDataChange;

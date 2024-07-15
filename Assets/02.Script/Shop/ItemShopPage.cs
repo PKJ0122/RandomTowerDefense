@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemShopPage : ShopPageBase
 {
+    const int PRICE = 500;
+
     TMP_Text _itemSummons;
 
     Action<int> OnItemSummonsChangeHandler;
@@ -21,16 +20,41 @@ public class ItemShopPage : ShopPageBase
         {
             _itemSummons.text = value.ToString("N0");
         };
-        OnAdClosedHandler += (object sender, EventArgs args) =>
-        {
-
-            AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
-        };
         PlayerData.OnItemSummonsChange += OnItemSummonsChangeHandler;
         PlayerData.OnLastShopChangeChange += ShopRefresh;
+        _itemSummons = transform.Find("Panel - Summons/Text (TMP) - Summons").GetComponent<TMP_Text>();
+        _itemSummons.text = PlayerData.Instance.ItemSummons.ToString("N0");
+
+        Button itemSummonsButton = Slots[1].GetComponent<Button>();
+        itemSummonsButton.onClick.AddListener(() =>
+        {
+            if (PlayerData.Instance.ItemSummons < 1) return;
+
+            PlayerData.Instance.ItemSummons--;
+            UIManager.Instance.Get<ItemDrawUI>().Show();
+        });
+        Button DiamondButton = Slots[2].GetComponent<Button>();
+        DiamondButton.onClick.AddListener(() =>
+        {
+            if (PlayerData.Instance.Diamond < PRICE) return;
+
+            PlayerData.Instance.Diamond -= PRICE;
+            UIManager.Instance.Get<ItemDrawUI>().Show();
+        });
     }
 
-    private void OnDestroy()
+    void Start()
+    {
+        OnAdClosedHandler += (object sender, EventArgs args) =>
+        {
+            UIManager.Instance.Get<ItemDrawUI>().Show();
+            PlayerData.Instance.PlayerDataContainer.adItemBuy = true;
+            ShopRefresh();
+            AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
+        };
+    }
+
+    void OnDestroy()
     {
         PlayerData.OnItemSummonsChange -= OnItemSummonsChangeHandler;
         PlayerData.OnLastShopChangeChange -= ShopRefresh;
@@ -38,6 +62,7 @@ public class ItemShopPage : ShopPageBase
 
     protected override void ShopRefresh()
     {
+        Slots[0].Find("Panel - Buy").gameObject.SetActive(PlayerData.Instance.PlayerDataContainer.adItemBuy);
         if (!PlayerData.Instance.PlayerDataContainer.adItemBuy)
         {
             Button adItem = Slots[0].GetComponent<Button>();
@@ -45,6 +70,7 @@ public class ItemShopPage : ShopPageBase
             adItem.onClick.AddListener(() =>
             {
                 AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedHandler;
+                adItem.onClick.RemoveAllListeners();
                 AdManager.Instance.ShowAds();
             });
         }
