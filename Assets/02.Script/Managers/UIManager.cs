@@ -15,7 +15,7 @@ public class UIManager : SingletonMonoBase<UIManager>
     /// <summary>
     /// 현재 활성화중인 UI
     /// </summary>
-    public Stack<UIBase> _ui = new Stack<UIBase>();
+    Stack<UIBase> _ui = new Stack<UIBase>();
 
     public event Action<bool> OnUIChange;
 
@@ -72,5 +72,15 @@ public class UIManager : SingletonMonoBase<UIManager>
         {
             _ui.Peek().InputActionEnable = true;
         }
+    }
+
+    public bool UIPeekCheck(UIBase ui)
+    {
+        if (_ui.Count == 0)
+        {
+            return false;
+        }
+
+        return _ui.Peek() == ui;
     }
 }

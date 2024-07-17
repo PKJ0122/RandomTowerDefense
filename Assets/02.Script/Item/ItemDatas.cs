@@ -25,4 +25,6 @@ public class ItemDatas : ScriptableObject
     }
 
     public ItemBase[] itemDatas;
+
+    public int[] itemLevelUpNeedAmount;
 }

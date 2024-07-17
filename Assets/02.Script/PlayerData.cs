@@ -200,11 +200,16 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// 아이템 레벨 증가 함수
     /// </summary>
     /// <param name="itemName">아이템 이름</param>
-    /// <param name="itemAmount">레벨업 필요조건 개수</param>
+    /// <param name="itemAmount">레벨업 필요조건 개수 (양수로 입력)</param>
     public void SetItemLevel(string itemName, int itemAmount)
     {
-        itemLevels[itemName].Amount -= itemAmount;
         itemLevels[itemName].level++;
+        SetItemAmount(itemName, -itemAmount);
+    }
+
+    public bool IsItemPossess(string itemName)
+    {
+        return itemLevels.ContainsKey(itemName);
     }
 
     void SaveData()
