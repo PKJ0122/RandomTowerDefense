@@ -24,7 +24,7 @@ public class MainUI : UIBase
         _playerNameChange = transform.Find("Image - Profile/Button - Name").GetComponent<Button>();
         _shop = transform.Find("Button - Shop").GetComponent<Button>();
         _inventory = transform.Find("Button - Inventory").GetComponent<Button>();
-        _playerSetting = transform.Find("Button - Setting").GetComponent<Button>();
+        _playerSetting = transform.Find("Button - PlayerSetting").GetComponent<Button>();
         _gameStart = transform.Find("Button - GameStart").GetComponent<Button>();
         _gameStart.onClick.AddListener(() => SceneManager.LoadScene("Game"));
         _onPlayerNameChangeHandler += value =>

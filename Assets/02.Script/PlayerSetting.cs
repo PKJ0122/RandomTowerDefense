@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using UnityEngine;
 
 [Serializable]
 public class PlayerSetting
@@ -9,5 +11,6 @@ public class PlayerSetting
     public bool bgmMute;
     public float sfxVolume;
     public bool sfxMute;
-    public int frame;
+    public bool vibration = true;
+    public int frame = 3;
 }

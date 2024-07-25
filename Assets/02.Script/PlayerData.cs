@@ -12,6 +12,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
 
     public static Dictionary<UnitKind, UnitLevelData> unitLevels = new Dictionary<UnitKind, UnitLevelData>(8);
     public static Dictionary<string, ItemLevelData> itemLevels = new Dictionary<string, ItemLevelData>(10);
+    public static Dictionary<string, QuestSaveData> questDatas = new Dictionary<string, QuestSaveData>(9);
 
     static PlayerDataContainer s_playerDataContainer;
     public PlayerDataContainer PlayerDataContainer
@@ -106,6 +107,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public static event Action OnLastShopChangeChange;
     public static event Action<UnitLevelData> OnUnitDataChange;
     public static event Action<ItemLevelData> OnItemDataChange;
+    public static event Action<QuestSaveData> OnQuestSaveDataChange;
     
 
 
@@ -119,6 +121,10 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             itemLevels.Add(itemLevelData.itemName, itemLevelData);
         }
+        foreach (QuestSaveData questSaveData in PlayerDataContainer.questSaveDatas)
+        {
+            questDatas.Add(questSaveData.QuestName, questSaveData);
+        }
 
         OnPlayerNameChange += value => SaveData();
         OnUnitCharacterChange += (value1, value2) => SaveData();
@@ -126,6 +132,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         OnDiamondChange += value => SaveData();
         OnUnitDataChange += value => SaveData();
         OnItemDataChange += value => SaveData();
+        OnQuestSaveDataChange += value => SaveData();
         OnLastShopChangeChange += SaveData;
     }
 
@@ -170,6 +177,51 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         unitLevels.Add(unitKind, newUnitLevelData);
         PlayerDataContainer.unitLevelDatas.Add(newUnitLevelData);
         OnUnitDataChange?.Invoke(newUnitLevelData);
+    }
+
+    /// <summary>
+    /// 퀘스트 정보 변경함수
+    /// </summary>
+    /// <param name="qusetName"></param>
+    /// <param name="amount"></param>
+    public void SetQuestSaveData(string qusetName, int amount)
+    {
+        if (questDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
+        {
+            questSaveData.Amount += amount;
+            OnQuestSaveDataChange?.Invoke(questSaveData);
+            return;
+        }
+
+        QuestSaveData newQuestSaveData = new QuestSaveData()
+        {
+            QuestName = qusetName,
+            Amount = amount
+        };
+        questDatas.Add(qusetName, newQuestSaveData);
+        PlayerDataContainer.questSaveDatas.Add(newQuestSaveData);
+        OnQuestSaveDataChange?.Invoke(newQuestSaveData);
+    }
+
+    /// <summary>
+    /// 퀘스트 세이브 데이터 반환함수
+    /// </summary>
+    /// <param name="qusetName">반환 할 퀘스트 이름</param>
+    public QuestSaveData GetQuestData(string qusetName)
+    {
+        if (questDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
+        {
+            return questSaveData;
+        }
+
+        QuestSaveData newQuestSaveData = new QuestSaveData()
+        {
+            QuestName = qusetName,
+        };
+
+        questDatas.Add(qusetName, newQuestSaveData);
+        PlayerDataContainer.questSaveDatas.Add(newQuestSaveData);
+        return newQuestSaveData;
     }
 
     /// <summary>

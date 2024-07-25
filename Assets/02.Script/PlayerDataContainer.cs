@@ -19,4 +19,5 @@ public class PlayerDataContainer
     public List<ShopSaveData> shopSaveDatas = new List<ShopSaveData>(5);
     public List<UnitLevelData> unitLevelDatas = new List<UnitLevelData>(8);
     public List<ItemLevelData> itemLevelData = new List<ItemLevelData>(10);
+    public List<QuestSaveData> questSaveDatas = new List<QuestSaveData>(8);
 }
