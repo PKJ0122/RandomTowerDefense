@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class UnitLevelUpUI : UIBase
     Dictionary<UnitKind, int> _unitLevels = new Dictionary<UnitKind, int>();
 
     Button _close;
+
+    public event Action OnUnitLevelUpSuccess;
 
 
     protected override void Awake()
@@ -54,6 +57,7 @@ public class UnitLevelUpUI : UIBase
 
         GameManager.Instance.Gold -= levelUpNeedGold;
         _unitLevels[unitKind]++;
+        OnUnitLevelUpSuccess.Invoke();
         return true;
     }
 

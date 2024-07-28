@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -122,6 +123,10 @@ public class PlayerSettingUI : UIBase
 
     private void OnApplicationQuit()
     {
+#if UNITY_EDITOR
+        return;
+#endif
+
         string json = JsonUtility.ToJson(s_playerSetting);
         File.WriteAllText(s_filePath, json);
     }
