@@ -64,6 +64,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     public event Action<float> OnTimeChange;
     public event Action<int> OnGoldChange;
     public event Action<int> OnEnemyAmountChange;
+    public event Action<int> OnGameEnd;
 
 
     protected override void Awake()
@@ -131,6 +132,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// </summary>
     public void GameEnd()
     {
+        OnGameEnd?.Invoke(Wave);
         UIManager.Instance.Get<GameEndUI>().Show(Wave);
     }
 }

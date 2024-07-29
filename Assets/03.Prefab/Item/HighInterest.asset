@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: HighInterest
   m_EditorClassIdentifier: 
   itemName: "\uACE0\uAE08\uB9AC"
-  description: 
+  description: "\uB9CC\uD07C \uB9E4\uD134 \uD68D\uB4DD\uD558\uB294 \uC774\uC790\uC758
+    \uD37C\uC13C\uD2B8\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   itemImage: {fileID: 800411033, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
   early: 0
   weight: 0

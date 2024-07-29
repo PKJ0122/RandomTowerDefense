@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4decca530cbf24bb223a666598cf27, type: 3}
+  m_Name: ValueofLaborDiamond
+  m_EditorClassIdentifier: 
+  itemName: "\uB178\uB3D9\uC758\uAC00\uCE58(\uB2E4\uC774\uC544)"
+  description: "\uB9CC\uD07C\uC758 \uB2E4\uC774\uC544\uB97C 40\uC6E8\uC774\uBE0C\uC774\uC0C1
+    \uD074\uB9AC\uC5B4\uC2DC \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  itemImage: {fileID: -1751574507, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
+  early: 0
+  weight: 0

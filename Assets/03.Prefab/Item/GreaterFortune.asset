@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GreaterFortune
   m_EditorClassIdentifier: 
   itemName: "\uB354 \uD070 \uD589\uC6B4"
-  description: 
+  description: "\uC758 \uD37C\uC13C\uD2B8\uB9CC\uD07C \uC720\uB2C8\uD06C\uC720\uB2DB\uC758
+    \uB4F1\uC7A5\uD655\uB960\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   itemImage: {fileID: 13529836, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
   early: 0
   weight: 0

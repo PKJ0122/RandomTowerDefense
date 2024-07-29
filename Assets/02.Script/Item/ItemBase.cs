@@ -14,10 +14,17 @@ public abstract class ItemBase : ScriptableObject
 
     public int Level
     {
-        get => PlayerData.itemLevels[itemName].level;
+        get
+        {
+            if (!PlayerData.itemLevels.ContainsKey(itemName)) return 0;
+            
+            return PlayerData.itemLevels[itemName].level;
+        }
     }
 
     public float Value => (early + (Level * weight));
+    public string Amount => $"<color=red><b>{Value}</color></b>";
+
 
     public void TryUse()
     {

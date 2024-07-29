@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueofLaborDiamond : MonoBehaviour
+[CreateAssetMenu(fileName = "ValueofLaborDiamond", menuName = "ScriptableObject/Item/ValueofLaborDiamond")]
+public class ValueofLaborDiamond : ItemBase
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Use()
     {
-        
-    }
+        GameManager.Instance.OnGameEnd += value =>
+        {
+            if (value < 40) return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            PlayerData.Instance.Diamond += (int)Value;
+            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+        };
     }
 }

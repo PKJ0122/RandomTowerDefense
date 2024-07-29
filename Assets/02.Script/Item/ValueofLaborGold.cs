@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValueofLaborGold : MonoBehaviour
+[CreateAssetMenu(fileName = "ValueofLaborGold", menuName = "ScriptableObject/Item/ValueofLaborGold")]
+public class ValueofLaborGold : ItemBase
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Use()
     {
-        
-    }
+        GameManager.Instance.OnGameEnd += value =>
+        {
+            if (value < 40) return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            PlayerData.Instance.Gold += (int)Value;
+            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+        };
     }
 }

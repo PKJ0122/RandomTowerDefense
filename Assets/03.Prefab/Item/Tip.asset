@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35db7edd61066df4fa5b33fd12f50571, type: 3}
+  m_Name: Tip
+  m_EditorClassIdentifier: 
+  itemName: "\uD301"
+  description: "\uB9CC\uD07C \uBBF8\uC158 \uD074\uB9AC\uC5B4\uC2DC \uC9C0\uAE09\uBC1B\uB294
+    \uACE8\uB4DC\uC758 \uC591\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
+  itemImage: {fileID: -2027144351, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
+  early: 0
+  weight: 0

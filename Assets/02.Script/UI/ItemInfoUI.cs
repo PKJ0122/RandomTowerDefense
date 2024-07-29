@@ -57,7 +57,7 @@ public class ItemInfoUI : UIBase
         base.Show();
         ItemBase itemBase = _itemDatas.Items[itemName];
         _name.text = itemBase.itemName;
-        _discription.text = itemBase.description;
+        _discription.text = $"{itemBase.Amount} {itemBase.description}";
         _itemImg.sprite = itemBase.itemImage;
 
         _itemImg.color = PlayerData.Instance.IsItemPossess(itemName) ? Color.white : Color.black;

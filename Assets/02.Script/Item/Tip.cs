@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Tip", menuName = "ScriptableObject/Item/Tip")]
 public class Tip : ItemBase
 {
     protected override void Use()
@@ -9,7 +8,7 @@ public class Tip : ItemBase
         UIManager.Instance.Get<MissionUI>().ClearGold += (int)Value;
         UIManager.Instance.Get<MissionUI>().OnMissionClear += () =>
         {
-            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage,itemName);
+            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
         };
     }
 }

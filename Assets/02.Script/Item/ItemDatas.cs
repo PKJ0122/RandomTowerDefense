@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "ItemDatas", menuName = "ScriptableObject/ItemDatas")]
 [Serializable]
@@ -27,4 +28,6 @@ public class ItemDatas : ScriptableObject
     public ItemBase[] itemDatas;
 
     public int[] itemLevelUpNeedAmount;
+
+    public ItemEffect itemEffect;
 }
