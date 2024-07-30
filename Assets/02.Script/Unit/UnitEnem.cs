@@ -16,5 +16,6 @@ public enum UnitRank
     Rare,
     Epic,
     Unique,
-    Legendary
+    Legendary,
+    Dragon
 }

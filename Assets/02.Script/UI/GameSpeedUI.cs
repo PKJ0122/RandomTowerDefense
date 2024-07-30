@@ -34,4 +34,12 @@ public class GameSpeedUI : UIBase
 
         _gameSpeedB.onClick.AddListener(() => GameSpeed++);
     }
+
+    void Start()
+    {
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        {
+            Time.timeScale = GameSpeed;
+        };
+    }
 }

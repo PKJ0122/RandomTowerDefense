@@ -16,6 +16,8 @@ public class EnemySpawner : MonoBehaviour
     int nomalEnemycount;
     int bossEnemycount;
 
+    List<Enemy> _enemys = new List<Enemy>(100);
+
 
     void Awake()
     {
@@ -29,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
         _goldBossPrefab = _waveDate.goldBossPrefab;
         foreach (Enemy prefab in _nomalEnemyPrefab)
         {
-            ObjectPoolManager.Instance.CreatePool($"{prefab.name}", prefab,99);
+            ObjectPoolManager.Instance.CreatePool($"{prefab.name}", prefab, 99);
         }
         foreach (Boss prefab in _bossEnemyPrefab)
         {
@@ -42,6 +44,14 @@ public class EnemySpawner : MonoBehaviour
     {
         GameManager.Instance.OnWaveChange += value => EnemySpawn(value);
         UIManager.Instance.Get<GoldBossUI>().OnBossSpawnButtonClick += GoldBossSpawn;
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        {
+            for (int i = _enemys.Count - 1; i >= 0; i--)
+            {
+                _enemys[i].RelasePool();
+            }
+            StopAllCoroutines();
+        };
     }
 
     void OnDisable()
@@ -69,14 +79,18 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator C_NomalEnemySpawn(float hp)
     {
         int count = 0;
-        
+
         while (count < 40)
         {
             count++;
-            ObjectPoolManager.Instance.Get($"{_nomalEnemyPrefab[nomalEnemycount].name}")
-                                      .Get()
-                                      .GetComponent<Enemy>()
-                                      .Spawn(hp);
+            Enemy enemy = ObjectPoolManager.Instance.Get($"{_nomalEnemyPrefab[nomalEnemycount].name}")
+                                                    .Get()
+                                                    .GetComponent<Enemy>()
+                                                    .Spawn(hp);
+
+            _enemys.Add(enemy);
+            enemy.OnRelasePool += () => _enemys.Remove(enemy);
+
             yield return _delay;
         }
     }
@@ -86,10 +100,13 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     void BossEnemySpawn(float hp)
     {
-        ObjectPoolManager.Instance.Get($"{_bossEnemyPrefab[bossEnemycount].name}")
-                          .Get()
-                          .GetComponent<Enemy>()
-                          .Spawn(hp);
+        Enemy enemy = ObjectPoolManager.Instance.Get($"{_bossEnemyPrefab[bossEnemycount].name}")
+                                                .Get()
+                                                .GetComponent<Enemy>()
+                                                .Spawn(hp);
+
+        _enemys.Add(enemy);
+        enemy.OnRelasePool += () => _enemys.Remove(enemy);
 
         if (nomalEnemycount++ >= _nomalEnemyPrefab.Length) nomalEnemycount = 0;
         if (bossEnemycount++ >= _bossEnemyPrefab.Length) bossEnemycount = 0;
@@ -97,9 +114,12 @@ public class EnemySpawner : MonoBehaviour
 
     void GoldBossSpawn()
     {
-        ObjectPoolManager.Instance.Get($"{_goldBossPrefab.name}")
-                                  .Get()
-                                  .GetComponent<Enemy>()
-                                  .Spawn(1);
+        Enemy enemy = ObjectPoolManager.Instance.Get($"{_goldBossPrefab.name}")
+                                                .Get()
+                                                .GetComponent<Enemy>()
+                                                .Spawn(1);
+
+        _enemys.Add(enemy);
+        enemy.OnRelasePool += () => _enemys.Remove(enemy);
     }
 }

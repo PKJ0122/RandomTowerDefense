@@ -19,8 +19,6 @@ public class GameEndUI : UIBase
 
     Transform _rewerdLocation;
 
-    float playTime;
-
     public event Action OnReStartButtonClick;
     Action _onHide;
 
@@ -31,7 +29,11 @@ public class GameEndUI : UIBase
         _gameClear = transform.Find("Panel/Text (TMP) - GameClear").GetComponent<Transform>();
         _reStart = transform.Find("Panel/Button - ReStart").GetComponent<Button>();
         _lobby = transform.Find("Panel/Button - Lobby").GetComponent<Button>();
-        _reStart.onClick.AddListener(() => OnReStartButtonClick?.Invoke());
+        _reStart.onClick.AddListener(() =>
+        {
+            Hide();
+            OnReStartButtonClick?.Invoke();
+        });
         _lobby.onClick.AddListener(() => SceneManager.LoadScene("Lobby"));
         _rewerdLocation = transform.Find("Panel/Image - Rewerd").GetComponent<Transform>();
 
@@ -87,17 +89,31 @@ public class GameEndUI : UIBase
                 rewerdChacker1 = rewerdChacker2;
             }
             GameObject chestObject = Instantiate(chest.rewerPrefab, _rewerdLocation);
-            _onHide += () => {  chestObject.SetActive(false); };
+            _onHide += () => 
+            {  
+                chestObject.SetActive(false); 
+            };
             chestObject.GetComponent<Button>().onClick.AddListener(() =>
             {
-                transform.Find("Chest").GetComponent<GameObject>().gameObject.SetActive(false);
-                transform.Find($"Image - {rewerd}").GetComponent<GameObject>().gameObject.SetActive(true);
-                TMP_Text amount = transform.Find("Text (TMP) - Amount").GetComponent<TMP_Text>();
+                chestObject.transform.Find("Chest").gameObject.SetActive(false);
+                chestObject.transform.Find($"Image - {rewerd}").gameObject.SetActive(true);
+                TMP_Text amount = chestObject.transform.Find("Text (TMP) - Amount").GetComponent<TMP_Text>();
                 amount.gameObject.SetActive(true);
                 amount.text = rewerdAmount.ToString();
             });
 
-            // todo -> 보상 주는 코드
+            switch (rewerd)
+            {
+                case RewerdList.Diamond:
+                    PlayerData.Instance.Diamond += rewerdAmount;
+                    break;
+                case RewerdList.Gold:
+                    PlayerData.Instance.Gold += rewerdAmount;
+                    break;
+                case RewerdList.Relics:
+                    PlayerData.Instance.ItemSummons += rewerdAmount;
+                    break;
+            }
         }
     }
 }

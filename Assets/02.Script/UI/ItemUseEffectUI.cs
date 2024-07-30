@@ -8,19 +8,6 @@ public class ItemUseEffectUI : UIBase
     ItemEffect _itemEffectPrefab;
     Transform _itemEffectLocation;
 
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            int Randomitem = Random.Range(0, _itemDatas.itemDatas.Length);
-
-            ItemBase item = _itemDatas.itemDatas[Randomitem];
-
-            Show(item.itemImage, item.itemName);
-        }
-    }
-
     protected override void Awake()
     {
         base.Awake();

@@ -20,7 +20,7 @@ public class MissionUI : UIBase
 
     public event Action OnMissionClear;
 
- 
+
     protected override void Awake()
     {
         base.Awake();
@@ -44,10 +44,11 @@ public class MissionUI : UIBase
             Transform clear = missionObject.transform.Find("MissionClear").GetComponent<Transform>();
             name.text = missionData.missionName;
             detail.text = missionData.detail;
+
             missionData.OnProgressChange += value =>
             {
                 condition.text = $"( {value} / {missionData.condition} )";
-                if (missionData.Progress >= missionData.condition) missionData.IsClear = true ;
+                if (missionData.Progress >= missionData.condition) missionData.IsClear = true;
             };
             missionData.OnIsClearChange += value =>
             {
@@ -59,6 +60,23 @@ public class MissionUI : UIBase
                 }
             };
             missionData.Init();
+        }
+
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        {
+            foreach (MissionBase missionData in _missionDatas.missionDatas)
+            {
+                missionData.Progress = 0;
+                missionData.IsClear = false;
+            }
+        };
+    }
+
+    void OnDisable()
+    {
+        foreach (MissionBase missionData in _missionDatas.missionDatas)
+        {
+            missionData.Break();
         }
     }
 

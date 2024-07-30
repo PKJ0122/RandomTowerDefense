@@ -12,7 +12,7 @@ public class FigureCollector : MissionBase
         base.Init();
         for (int i = 0; i < System.Enum.GetValues(typeof(UnitKind)).Length; i++)
         {
-            _unitChecker.Add((UnitKind)i, 0);
+            _unitChecker.TryAdd((UnitKind)i, 0);
         }
         UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
         {

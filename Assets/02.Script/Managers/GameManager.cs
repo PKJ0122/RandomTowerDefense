@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
@@ -10,7 +11,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     const int SALARY = 40;
     const int INTEREST = 10;
 
-    Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>();
+    Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>(8);
     public Dictionary<UnitKind, List<UnitBase>> Units { get => _units; }
 
     public int Salary { get; set; } = SALARY;
@@ -83,6 +84,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     private void Start()
     {
         UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => RegisterUnit(unit);
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += GameReStart;
     }
 
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼
@@ -134,5 +136,18 @@ public class GameManager : SingletonMonoBase<GameManager>
     {
         OnGameEnd?.Invoke(Wave);
         UIManager.Instance.Get<GameEndUI>().Show(Wave);
+    }
+
+    void GameReStart()
+    {
+        foreach (KeyValuePair<UnitKind, List<UnitBase>> item in Units)
+        {
+            for (int i = item.Value.Count - 1; i >= 0; i--)
+            {
+                item.Value[i].RelasePool();
+            }
+        }
+        StopAllCoroutines();
+        StartCoroutine(C_Game());
     }
 }

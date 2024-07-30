@@ -41,4 +41,10 @@ public class MissionBase : ScriptableObject
         Progress = 0;
         _isClear = false;
     }
+
+    public void Break()
+    {
+        OnProgressChange = null;
+        OnIsClearChange = null;
+    }
 }

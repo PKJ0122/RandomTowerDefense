@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +33,8 @@ public class Enemy : PoolObject
 
     public int Priority { get; protected set; }
 
+    public event Action OnRelasePool;
+
 
     void FixedUpdate()
     {
@@ -48,7 +51,7 @@ public class Enemy : PoolObject
     /// <summary>
     /// 몬스터 스폰 밑 세팅 함수
     /// </summary>
-    public void Spawn(float hp)
+    public Enemy Spawn(float hp)
     {
         _node = EnemySpawner.Path.First;
         transform.position = _node.Value;
@@ -56,6 +59,8 @@ public class Enemy : PoolObject
         Hp = hp;
         Speed = DEFAULT_SPEED;
         GameManager.Instance.EnemyAmount++;
+
+        return this;
     }
 
     /// <summary>
@@ -74,9 +79,16 @@ public class Enemy : PoolObject
 
     protected virtual void Die()
     {
-        GameManager.Instance.EnemyAmount--;
         GameManager.Instance.Gold++;
-        transform.position = Vector3.zero;
         RelasePool();
+    }
+
+    public override void RelasePool()
+    {
+        OnRelasePool?.Invoke();
+        OnRelasePool = null;
+        GameManager.Instance.EnemyAmount--;
+        transform.position = Vector3.zero;
+        base.RelasePool();
     }
 }

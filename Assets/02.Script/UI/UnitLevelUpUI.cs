@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class UnitLevelUpUI : UIBase
 {
@@ -43,6 +44,16 @@ public class UnitLevelUpUI : UIBase
             });
         }
         UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => BuyUnitApply(unit);
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                UnitLevelUpSlot slot = slots[i];
+                slot.level.text = $"0 Lv";
+                slot.levelUpNeedGold.text = $"100";
+                _unitLevels[(UnitKind)i] = 0;
+            }
+        };
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -102,7 +103,7 @@ public class UnitBuyUI : UIBase
         float firstPercentage = 0;
         float latsPercentage = 0;
 
-        for (int i = Enum.GetValues(typeof(UnitRank)).Length - 1; i < 0; i--)
+        for (int i = Enum.GetValues(typeof(UnitRank)).Length - 2; i > 0; i--)
         {
             latsPercentage += UnitRankPercentage[(UnitRank)i];
 
