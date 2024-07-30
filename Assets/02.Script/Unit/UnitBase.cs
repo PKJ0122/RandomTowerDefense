@@ -3,23 +3,23 @@ using UnityEngine;
 
 public class UnitBase : PoolObject
 {
-    const float ATTACK_RANGE = 22.5f;
-    const int MP_RECOVERY_AMOUNT = 10;
+    protected const float ATTACK_RANGE = 22.5f;
+    protected const int MP_RECOVERY_AMOUNT = 10;
 
-    LayerMask _targetMask;
-    Animator _animator;
+    protected LayerMask _targetMask;
+    protected Animator _animator;
 
-    Slot _slot;
-    Enemy _targetEnemy; //현재 공격중인 타겟몬스터 참조
+    protected Slot _slot;
+    protected Enemy _targetEnemy; //현재 공격중인 타겟몬스터 참조
 
-    UnitKind _Kind;
-    UnitRank _Rank;
-    float _power;
-    float _damage;
-    SkillBase _skill;
-    int _mp;
-    int _skillNeedMp;
-    ParticleSystem _particleSystem;
+    protected UnitKind _Kind;
+    protected UnitRank _Rank;
+    protected float _power;
+    protected float _damage;
+    protected SkillBase _skill;
+    protected int _mp;
+    protected int _skillNeedMp;
+    protected ParticleSystem _particleSystem;
 
     public UnitKind Kind { get => _Kind; }
     public UnitRank Rank { get => _Rank; }
@@ -33,7 +33,7 @@ public class UnitBase : PoolObject
             SlotManager.Slots[_slot] = this;
         }
     }
-    public float Power 
+    public virtual float Power 
     { 
         get => _power; 
         set
@@ -61,13 +61,13 @@ public class UnitBase : PoolObject
         }
     }
 
-    public event Action<float> OnPowerChange;
-    public event Action<float> OnDamageChange;
-    public event Action<int,int> OnMpChange;
-    public event Action OnDisable;
+    public Action<float> OnPowerChange;
+    public Action<float> OnDamageChange;
+    public Action<int,int> OnMpChange;
+    public Action OnDisable;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
         _particleSystem = transform.Find("Rank").GetComponent<ParticleSystem>();
@@ -122,7 +122,7 @@ public class UnitBase : PoolObject
     /// <summary>
     /// 유닛 세팅 함수
     /// </summary>
-    public UnitBase UnitSet(Slot slot, UnitKind kind, UnitRank rank)
+    public virtual UnitBase UnitSet(Slot slot, UnitKind kind, UnitRank rank)
     {
         Slot = slot;
         _Kind = kind;
@@ -150,25 +150,25 @@ public class UnitBase : PoolObject
     /// <summary>
     /// 유닛 공격함수 / 호출은 애니메이션 클립에서 호출
     /// </summary>
-    void Attack()
+    protected void Attack()
     {
         if (_targetEnemy == null)
             return;
 
-        if (_mp >= _skillNeedMp)
+        if (Mp >= _skillNeedMp)
         {
             Skill();
             return;
         }
 
         Mp += MP_RECOVERY_AMOUNT;
-        Damage += _targetEnemy.Damage(_power);
+        Damage += _targetEnemy.Damage(Power);
     }
 
-    void Skill()
+    protected void Skill()
     {
         Mp = 0;
-        _skill.Skill(this, _targetEnemy, _power);
+        _skill.Skill(this, _targetEnemy, Power);
     }
 
     public override void RelasePool()

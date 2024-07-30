@@ -29,6 +29,14 @@ public class UnitInfoUI : UIBase
 
     Button _close;
 
+    Transform _dragonEnforce;
+    TMP_Text _enforce;
+    TMP_Text _additionalATK;
+    Image _material;
+    TMP_Text _materialRank;
+    Transform _maxEnforce;
+    Button _dragonEnforceUp;
+
     Slot _currentSlot; //현재 선택된 유닛의 참조
 
     Action<float> _onPowerChangeHandler;
@@ -43,7 +51,7 @@ public class UnitInfoUI : UIBase
         base.Awake();
         _unitImage = transform.Find("Panel/Image - Unit").GetComponent<Image>();
         _unitName = transform.Find("Panel/Panel - UnitName/Text (TMP) - UnitName").GetComponent<TMP_Text>();
-        _unitRank = transform.Find("Panel/Panel - UnitRank/Text (TMP) - UnitRank").GetComponent<TMP_Text>();
+        _unitRank = transform.Find("Panel/Panel - unitRank/Text (TMP) - unitRank").GetComponent<TMP_Text>();
         _unitPower = transform.Find("Panel/Panel - UnitPower/Text (TMP) - UnitPower").GetComponent<TMP_Text>();
         _unitDamage = transform.Find("Panel/Panel - UnitDamage/Text (TMP) - UnitDamage").GetComponent<TMP_Text>();
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
@@ -123,6 +131,27 @@ public class UnitInfoUI : UIBase
         _onDamageChangeHandler?.Invoke(unit.Damage);
         unit.OnMpChange += _onMpChangeHandler;
         _onMpChangeHandler?.Invoke(unit.Mp, skill.needMp);
+
+        _dragonEnforce.gameObject.SetActive(unit.Rank == UnitRank.Dragon);
+        if (unit.Rank == UnitRank.Dragon)
+        {
+            DragonBase dragon = (DragonBase)unit;
+            bool maxEnforce = dragon.EnforceMaterial == null;
+            _maxEnforce.gameObject.SetActive(maxEnforce);
+
+            if (maxEnforce) return;
+
+            _enforce.text = $"+ {dragon.Enforce}";
+            _additionalATK.text = $"+ {dragon.AddAdditionalATK()}";
+
+            EnforceMaterial material = dragon.EnforceMaterial.Value;
+
+            _material.sprite = UnitRepository.UnitKindDatas[material.unitKind].unitImg;
+
+            UnitRankData rankData = UnitRepository.UnitRankDatas[material.unitRank];
+            _materialRank.text = rankData.unitRankName;
+            _materialRank.color = rankData.unitRankColor;
+        }
     }
 
     public override void Hide()

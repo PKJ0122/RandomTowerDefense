@@ -4,5 +4,5 @@ using System;
 public struct DragonCraftingMaterials
 {
     public DragonIngredient dragonIngredient;
-    public UnitRank UnitRank;
+    public UnitRank unitRank;
 }
