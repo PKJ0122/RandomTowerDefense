@@ -8,7 +8,7 @@ public class Tip : ItemBase
         UIManager.Instance.Get<MissionUI>().ClearGold += (int)Value;
         UIManager.Instance.Get<MissionUI>().OnMissionClear += () =>
         {
-            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+            Notice();
         };
     }
 }

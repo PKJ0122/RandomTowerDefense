@@ -5,7 +5,7 @@ public class HighInterest : ItemBase
 {
     protected override void Use()
     {
-        GameManager.Instance.Gold += (int)Value;
-        UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+        GameManager.Instance.Interest += (int)Value;
+        Notice();
     }
 }

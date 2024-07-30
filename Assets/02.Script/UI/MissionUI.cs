@@ -56,6 +56,7 @@ public class MissionUI : UIBase
                 if (value)
                 {
                     GameManager.Instance.Gold += ClearGold;
+                    UIManager.Instance.Get<NoticeEffectUI>().Show(null, missionData.missionName);
                     OnMissionClear?.Invoke();
                 }
             };

@@ -12,7 +12,7 @@ public class ValueofLaborGold : ItemBase
             if (value < 40) return;
 
             PlayerData.Instance.Gold += (int)Value;
-            UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+            Notice();
         };
     }
 }

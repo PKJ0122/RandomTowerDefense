@@ -27,7 +27,7 @@ public class Negotiation : ItemBase
                 UnitBase returnUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(slot);
                 returnUnit.UnitSet(slot, returnUnit.Kind, unitrank);
 
-                UIManager.Instance.Get<ItemUseEffectUI>().Show(itemImage, itemName);
+                Notice();
             }
         };
     }

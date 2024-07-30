@@ -37,16 +37,22 @@ public class UnitBuyUI : UIBase
     protected override void Awake()
     {
         base.Awake();
-        GameManager.Instance.OnWaveChange += v =>
-        {
-            if (v == 0) UnitPrice = 20;
-        };
-
         _unitBuy = transform.Find("Button - UnitBuy").GetComponent<Button>();
         _price = transform.Find("Text (TMP) - Gold").GetComponent<TMP_Text>();
-
         _unitBuy.onClick.AddListener(() => UnitBuy(OnBuyButtonClick?.Invoke()));
+        _unitBuy.interactable = false;
         OnPriceChange += () => { _price.text = $"{UnitPrice}"; };
+
+        GameManager.Instance.OnWaveChange += v =>
+        {
+            if (v == 0)
+            {
+                UnitPrice = 20;
+                _unitBuy.interactable = true;
+            };
+        };
+
+        GameManager.Instance.OnGameEnd += v => _unitBuy.interactable = false;
 
         UnitDatas unitDatas = UnitRepository.UnitDatas;
         UnitRankPercentage.Add(UnitRank.Legendary, unitDatas.legendaryPercentage);
@@ -57,24 +63,7 @@ public class UnitBuyUI : UIBase
 
     void OnDisable()
     {
-        //GameManager.Instance.onWaveChange -= v =>
-        //{
-        //    if (v == 0) UnitPrice = 20;
-        //};
         OnPriceChange -= () => { _price.text = $"{UnitPrice}"; };
-    }
-
-    /// <summary>
-    /// 유닛을 구매하는 함수
-    /// </summary>
-    void UnitBuy(Slot slot)
-    {
-        if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
-
-        UnitBase randomUnit = RandomUnit(slot);
-        OnUnitBuySuccess?.Invoke(randomUnit);
-        GameManager.Instance.Gold -= UnitPrice;
-        UnitPrice += WEIGHT;
     }
 
     /// <summary>
@@ -91,6 +80,19 @@ public class UnitBuyUI : UIBase
                                                   .UnitSet(slot, unitKind, unitRank);
 
         return unit;
+    }
+
+    /// <summary>
+    /// 유닛을 구매하는 함수
+    /// </summary>
+    void UnitBuy(Slot slot)
+    {
+        if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
+
+        UnitBase randomUnit = RandomUnit(slot);
+        OnUnitBuySuccess?.Invoke(randomUnit);
+        GameManager.Instance.Gold -= UnitPrice;
+        UnitPrice += WEIGHT;
     }
 
     /// <summary>

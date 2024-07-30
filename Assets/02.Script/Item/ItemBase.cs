@@ -33,4 +33,9 @@ public abstract class ItemBase : ScriptableObject
     }
 
     protected abstract void Use();
+
+    protected void Notice()
+    {
+        UIManager.Instance.Get<NoticeEffectUI>().Show(itemImage, itemName);
+    }
 }

@@ -5,6 +5,13 @@ public class AuspiciousStart : ItemBase
 {
     protected override void Use()
     {
-        GameManager.Instance.Gold += (int)Value;
+        GameManager.Instance.OnWaveChange += v =>
+        {
+            if (v == 0)
+            {
+                GameManager.Instance.Gold += (int)Value;
+                Notice();
+            }
+        };
     }
 }
