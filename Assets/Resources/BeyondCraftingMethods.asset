@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5177f8315de37cb469869497321bb112, type: 3}
+  m_Name: BeyondCraftingMethods
+  m_EditorClassIdentifier: 
+  beyondCraftingMethods:
+  - {fileID: 11400000, guid: 426a67df96b37984aa2fbe3110c45f53, type: 2}
+  - {fileID: 11400000, guid: 9076a613073721a43853fa96b009e322, type: 2}
+  - {fileID: 11400000, guid: d9bb55be8f49fb7499b74265d3f316db, type: 2}
+  - {fileID: 11400000, guid: 5fa2129ba7d94254a9da51c31883eab4, type: 2}
+  - {fileID: 11400000, guid: 4c35bd5f52b2faf4ca40ecb72c349950, type: 2}
+  - {fileID: 11400000, guid: bd12c0efaac9a20489ae05f843dc1f73, type: 2}
+  - {fileID: 11400000, guid: dd986002675ce694fbabb1b392536ae9, type: 2}
+  - {fileID: 11400000, guid: 8397d607143023548868a43f7aec2fdb, type: 2}

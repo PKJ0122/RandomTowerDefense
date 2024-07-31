@@ -10,6 +10,7 @@ public class MainUI : UIBase
 
     Button _shop;
     Button _inventory;
+    Button _beyondCrafting;
     Button _quest;
     Button _playerSetting;
     Button _gameStart;
@@ -24,6 +25,7 @@ public class MainUI : UIBase
         _playerNameChange = transform.Find("Image - Profile/Button - Name").GetComponent<Button>();
         _shop = transform.Find("Button - Shop").GetComponent<Button>();
         _inventory = transform.Find("Button - Inventory").GetComponent<Button>();
+        _beyondCrafting = transform.Find("Button - BeyondCrafting").GetComponent<Button>();
         _quest = transform.Find("Button - Quest").GetComponent<Button>();
         _playerSetting = transform.Find("Button - Setting").GetComponent<Button>();
         _gameStart = transform.Find("Button - GameStart").GetComponent<Button>();
@@ -40,6 +42,7 @@ public class MainUI : UIBase
         _playerName.text = PlayerData.Instance.PlayerName;
         _shop.onClick.AddListener(() => UIManager.Instance.Get<ShopUI>().Show());
         _inventory.onClick.AddListener(() => UIManager.Instance.Get<InventoryUI>().Show());
+        _beyondCrafting.onClick.AddListener(() => UIManager.Instance.Get<BeyondCraftingShopUI>().Show());
         _quest.onClick.AddListener(() => UIManager.Instance.Get<QuestUI>().Show());
         _playerSetting.onClick.AddListener(() => UIManager.Instance.Get<PlayerSettingUI>().Show());
         PlayerData.OnPlayerNameChange += _onPlayerNameChangeHandler;

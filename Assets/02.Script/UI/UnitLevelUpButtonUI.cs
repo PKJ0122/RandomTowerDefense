@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitLevelUpButtonUI : UIBase
@@ -13,12 +10,9 @@ public class UnitLevelUpButtonUI : UIBase
         base.Awake();
         _levelUp = transform.Find("Button - LevelUpButton").GetComponent<Button>();
         _levelUp.interactable = false;
-        GameManager.Instance.OnWaveChange += v =>
+        GameManager.Instance.OnGameStart += () =>
         {
-            if (v == 0)
-            {
-                _levelUp.interactable = true;
-            }
+            _levelUp.interactable = true;
         };
         GameManager.Instance.OnGameEnd += v =>
         {

@@ -17,5 +17,5 @@ public enum UnitRank
     Epic,
     Unique,
     Legendary,
-    Dragon
+    Beyond
 }

@@ -174,6 +174,7 @@ public class UnitBase : PoolObject
     public override void RelasePool()
     {
         OnDisable?.Invoke();
+        OnDisable = null;
         GameManager.Instance.Units[Kind].Remove(this);
         SlotManager.Slots[Slot] = null;
         base.RelasePool();

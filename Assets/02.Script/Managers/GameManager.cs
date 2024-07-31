@@ -65,6 +65,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     public event Action<float> OnTimeChange;
     public event Action<int> OnGoldChange;
     public event Action<int> OnEnemyAmountChange;
+    public event Action OnGameStart;
     public event Action<int> OnGameEnd;
 
 
@@ -95,6 +96,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     IEnumerator C_Game()
     {
         yield return delay;
+        OnGameStart?.Invoke();
         Gold = START_GOLD;
         Wave = 0;
 

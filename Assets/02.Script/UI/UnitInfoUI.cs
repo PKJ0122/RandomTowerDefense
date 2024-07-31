@@ -29,13 +29,13 @@ public class UnitInfoUI : UIBase
 
     Button _close;
 
-    Transform _dragonEnforce;
+    Transform _beyondEnforce;
     TMP_Text _enforce;
     TMP_Text _additionalATK;
     Image _material;
     TMP_Text _materialRank;
     Transform _maxEnforce;
-    Button _dragonEnforceUp;
+    Button _beyondEnforceUp;
 
     Slot _currentSlot; //현재 선택된 유닛의 참조
 
@@ -51,7 +51,7 @@ public class UnitInfoUI : UIBase
         base.Awake();
         _unitImage = transform.Find("Panel/Image - Unit").GetComponent<Image>();
         _unitName = transform.Find("Panel/Panel - UnitName/Text (TMP) - UnitName").GetComponent<TMP_Text>();
-        _unitRank = transform.Find("Panel/Panel - unitRank/Text (TMP) - unitRank").GetComponent<TMP_Text>();
+        _unitRank = transform.Find("Panel/Panel - UnitRank/Text (TMP) - UnitRank").GetComponent<TMP_Text>();
         _unitPower = transform.Find("Panel/Panel - UnitPower/Text (TMP) - UnitPower").GetComponent<TMP_Text>();
         _unitDamage = transform.Find("Panel/Panel - UnitDamage/Text (TMP) - UnitDamage").GetComponent<TMP_Text>();
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
@@ -70,6 +70,16 @@ public class UnitInfoUI : UIBase
         _unitMix.onClick.AddListener(UnitMix);
 
         _close = transform.Find("Panel/Button - CloseButton").GetComponent<Button>();
+
+        _beyondEnforce = transform.Find("Panel/Image - BeyondEnforce").GetComponent<Transform>();
+        _enforce = _beyondEnforce.transform.Find("Panel - Enforce/Text (TMP)").GetComponent<TMP_Text>();
+        _additionalATK = _beyondEnforce.transform.Find("Panel - AdditionalATK/Text (TMP)").GetComponent<TMP_Text>();
+        _material = _beyondEnforce.transform.Find("Image - Material/Image - Unit").GetComponent<Image>();
+        _materialRank = _beyondEnforce.transform.Find("Image - Material/Text (TMP) - Rank").GetComponent<TMP_Text>();
+        _maxEnforce = _beyondEnforce.transform.Find("Panel - MaxEnforce").GetComponent<Transform>();
+        _beyondEnforceUp = _beyondEnforce.transform.Find("Button - EnforceUp").GetComponent<Button>();
+        _beyondEnforceUp.onClick.AddListener(() =>
+            UIManager.Instance.Get<BeyondEnforceUI>().Show((BeyondBase)SlotManager.Slots[_currentSlot]));
 
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
@@ -132,19 +142,19 @@ public class UnitInfoUI : UIBase
         unit.OnMpChange += _onMpChangeHandler;
         _onMpChangeHandler?.Invoke(unit.Mp, skill.needMp);
 
-        _dragonEnforce.gameObject.SetActive(unit.Rank == UnitRank.Dragon);
-        if (unit.Rank == UnitRank.Dragon)
+        _beyondEnforce.gameObject.SetActive(unit.Rank == UnitRank.Beyond);
+        if (unit.Rank == UnitRank.Beyond)
         {
-            DragonBase dragon = (DragonBase)unit;
-            bool maxEnforce = dragon.EnforceMaterial == null;
+            BeyondBase beyond = (BeyondBase)unit;
+            bool maxEnforce = beyond.EnforceMaterial == null;
             _maxEnforce.gameObject.SetActive(maxEnforce);
 
             if (maxEnforce) return;
 
-            _enforce.text = $"+ {dragon.Enforce}";
-            _additionalATK.text = $"+ {dragon.AddAdditionalATK()}";
+            _enforce.text = $"+ {beyond.Enforce}";
+            _additionalATK.text = $"+ {beyond.AddAdditionalATK()}";
 
-            EnforceMaterial material = dragon.EnforceMaterial.Value;
+            UnitInfo material = beyond.EnforceMaterial.Value;
 
             _material.sprite = UnitRepository.UnitKindDatas[material.unitKind].unitImg;
 

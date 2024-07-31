@@ -13,6 +13,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public static Dictionary<UnitKind, UnitLevelData> unitLevels = new Dictionary<UnitKind, UnitLevelData>(8);
     public static Dictionary<string, ItemLevelData> itemLevels = new Dictionary<string, ItemLevelData>(10);
     public static Dictionary<string, QuestSaveData> questDatas = new Dictionary<string, QuestSaveData>(9);
+    public static Dictionary<UnitKind, BeyondCraftingData> beyondCraftingDatas = new Dictionary<UnitKind, BeyondCraftingData>(8);
 
     static PlayerDataContainer s_playerDataContainer;
     public PlayerDataContainer PlayerDataContainer
@@ -40,24 +41,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             OnPlayerNameChange?.Invoke(value);
         }
     }
-    public UnitKind PlayerCharacter
-    {
-        get => PlayerDataContainer.playerCharacter;
-        set
-        {
-            PlayerDataContainer.playerCharacter = value;
-            OnUnitCharacterChange?.Invoke(PlayerCharacter, PlayerCharacterRank);
-        }
-    }
-    public UnitRank PlayerCharacterRank
-    {
-        get => PlayerDataContainer.playerCharacterRank;
-        set
-        {
-            PlayerDataContainer.playerCharacterRank = value;
-            OnUnitCharacterChange?.Invoke(PlayerCharacter, PlayerCharacterRank);
-        }
-    }
+
     public int Gold
     {
         get => PlayerDataContainer.gold;
@@ -100,7 +84,6 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     }
 
     public static event Action<string> OnPlayerNameChange;
-    public static event Action<UnitKind, UnitRank> OnUnitCharacterChange;
     public static event Action<int> OnGoldChange;
     public static event Action<int> OnDiamondChange;
     public static event Action<int> OnItemSummonsChange;
@@ -125,9 +108,12 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             questDatas.Add(questSaveData.QuestName, questSaveData);
         }
+        foreach (BeyondCraftingData beyondCraftingData in PlayerDataContainer.beyondCraftingDatas)
+        {
+            beyondCraftingDatas.Add(beyondCraftingData.unitKind, beyondCraftingData);
+        }
 
         OnPlayerNameChange += value => SaveData();
-        OnUnitCharacterChange += (value1, value2) => SaveData();
         OnGoldChange += value => SaveData();
         OnDiamondChange += value => SaveData();
         OnUnitDataChange += value => SaveData();

@@ -29,7 +29,8 @@ public class UnitRepository : MonoBehaviour
                 foreach (UnitData item in UnitDatas.unitDatas)
                 {
                     s_unitKindDatas.Add(item.unitKind, item);
-                    ObjectPoolManager.Instance.CreatePool($"{item.unitKind}", item.unitObject,50);
+                    ObjectPoolManager.Instance.CreatePool($"{item.unitKind}", item.unitObject,30);
+                    ObjectPoolManager.Instance.CreatePool($"Beyond_{item.unitKind}", item.beyondObject, 4);
                     item.skill.PoolSet();
                 }
             }

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class PlayerDataContainer
 {
     public string playerName = "이름없는";
-    public UnitKind playerCharacter = UnitKind.Spike;
-    public UnitRank playerCharacterRank = UnitRank.Nomal;
     public int gold;
     public int diamond;
     public int itemSummons;
@@ -20,4 +18,5 @@ public class PlayerDataContainer
     public List<UnitLevelData> unitLevelDatas = new List<UnitLevelData>(8);
     public List<ItemLevelData> itemLevelData = new List<ItemLevelData>(10);
     public List<QuestSaveData> questSaveDatas = new List<QuestSaveData>(8);
+    public List<BeyondCraftingData> beyondCraftingDatas = new List<BeyondCraftingData>(8);
 }
