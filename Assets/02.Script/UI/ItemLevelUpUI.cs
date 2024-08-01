@@ -47,12 +47,15 @@ public class ItemLevelUpUI : UIBase
         ItemLevelData itemLevelData = PlayerData.itemLevels[itemName];
         ItemBase itemData = _itemDatas.Items[itemName];
         _item.sprite = itemData.itemImage;
+
+        int itemLevel = Math.Min(9, itemLevelData.level);
+
         _level.text = $"{itemLevelData.level} Lv";
-        int itemLevelUpNeedAmount = _itemDatas.itemLevelUpNeedAmount[itemLevelData.level];
+        int itemLevelUpNeedAmount = _itemDatas.itemLevelUpNeedAmount[itemLevel];
         _itemCountS.maxValue = itemLevelUpNeedAmount;
         _itemCountS.value = itemLevelData.Amount;
         _itemCountT.text = $"{itemLevelData.Amount} / {itemLevelUpNeedAmount}";
-        int itemLevelUpNeedGold = _itemDatas.itemLevelUpNeedAmount[itemLevelData.level];
+        int itemLevelUpNeedGold = _itemDatas.itemLevelUpNeedGold[itemLevel];
         _levelUpNeedGold.text = itemLevelUpNeedGold.ToString("N0");
         _nowAbility.text = itemData.Value.ToString();
         _nextAbility.text = (itemData.Value + itemData.weight).ToString();

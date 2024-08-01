@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// UI 관리를 위한 매니저
@@ -18,6 +19,23 @@ public class UIManager : SingletonMonoBase<UIManager>
     Stack<UIBase> _ui = new Stack<UIBase>();
 
     public event Action<bool> OnUIChange;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName != "Game") return; 
+
+        GameManager.Instance.OnGameEnd += v =>
+        {
+            for (int i = _ui.Count-1; i >= 0; i--)
+            {
+                _ui.Peek().Hide();
+            }
+        };
+    }
 
 
     /// <summary>

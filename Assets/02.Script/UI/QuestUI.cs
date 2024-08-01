@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class QuestUI : UIBase
     GameObject _questPrefab;
     Transform _questLocation;
     RectTransform _questContent;
+
+    List<QuestSaveData> _questSaveDatas = new List<QuestSaveData>(8);
 
     Button _close;
 
@@ -43,6 +46,7 @@ public class QuestUI : UIBase
                 questShameS.value = value;
                 questShameT.text = $"{value} / {item.requirements}";
             };
+            _questSaveDatas.Add(questSaveData);
         }
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
@@ -56,10 +60,9 @@ public class QuestUI : UIBase
 
     void OnDisable()
     {
-        foreach (QuestBase item in QuestManager.QuestDatas.questDatas)
+        foreach (QuestSaveData item in _questSaveDatas)
         {
-            QuestSaveData questSaveData = PlayerData.Instance.GetQuestData(item.questName);
-            questSaveData.Reset();
+            item.Reset();
         }
     }
 }

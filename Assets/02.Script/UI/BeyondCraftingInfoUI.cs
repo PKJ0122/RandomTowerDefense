@@ -46,7 +46,7 @@ public class BeyondCraftingInfoUI : UIBase
         }
         bool ishave = craftingData.IsHave;
 
-        _buy.enabled = ishave ? false : true;
+        _buy.gameObject.SetActive(!ishave);
 
         if (ishave) return;
 

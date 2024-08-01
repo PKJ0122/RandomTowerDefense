@@ -21,12 +21,12 @@ public class NoticeEffectUI : UIBase
     /// 아이템 사용상황,미션 클리어 현황을 알려주는 UI
     /// </summary>
     /// <param name="itemImage">아이템 이미지, 미션인 경우 null</param>
-    public void Show(Sprite itemImage, string itemName)
+    public void Show(Sprite itemImage, string detail)
     {
         ItemEffect obj = ObjectPoolManager.Instance.Get("itemEffectPrefab")
                                                    .Get()
                                                    .GetComponent<ItemEffect>()
-                                                   .Denote(itemImage, itemName);
+                                                   .Denote(itemImage, detail);
         obj.transform.SetParent(_itemEffectLocation, false);
         obj.transform.SetAsLastSibling();
     }

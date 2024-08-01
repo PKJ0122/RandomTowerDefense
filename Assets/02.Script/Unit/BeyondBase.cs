@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeyondBase : UnitBase
 {
-    public const int MAX_ENFORCE = 14;
+    public const int MAX_ENFORCE = 15;
 
     int _enforce;
     public int Enforce
@@ -65,7 +65,7 @@ public class BeyondBase : UnitBase
         }
 
         int randomMaterial = Random.Range(0, System.Enum.GetValues(typeof(UnitKind)).Length);
-        int upMaterial = Enforce == 0 ? 0 : Enforce + 1 / 3;
+        int upMaterial = Enforce == 0 ? 0 : Enforce / 3;
         EnforceMaterial = new UnitInfo()
         {
             unitKind = (UnitKind)randomMaterial,

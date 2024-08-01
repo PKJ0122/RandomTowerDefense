@@ -39,6 +39,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             PlayerDataContainer.playerName = value;
             OnPlayerNameChange?.Invoke(value);
+            SaveData();
         }
     }
 
@@ -49,6 +50,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             PlayerDataContainer.gold = value;
             OnGoldChange?.Invoke(value);
+            SaveData();
         }
     }
     public int Diamond
@@ -58,6 +60,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             PlayerDataContainer.diamond = value;
             OnDiamondChange?.Invoke(value);
+            SaveData();
         }
     }
     public int ItemSummons
@@ -67,6 +70,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             PlayerDataContainer.itemSummons = value;
             OnItemSummonsChange?.Invoke(value);
+            SaveData();
         }
     }
 
@@ -80,18 +84,19 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             PlayerDataContainer.adItemBuy = false;
             PlayerDataContainer.adDiamondBuy = false;
             OnLastShopChangeChange?.Invoke();
+            SaveData();
         }
     }
 
-    public static event Action<string> OnPlayerNameChange;
-    public static event Action<int> OnGoldChange;
-    public static event Action<int> OnDiamondChange;
-    public static event Action<int> OnItemSummonsChange;
-    public static event Action OnLastShopChangeChange;
-    public static event Action<UnitLevelData> OnUnitDataChange;
-    public static event Action<ItemLevelData> OnItemDataChange;
-    public static event Action<QuestSaveData> OnQuestSaveDataChange;
-    
+    public event Action<string> OnPlayerNameChange;
+    public event Action<int> OnGoldChange;
+    public event Action<int> OnDiamondChange;
+    public event Action<int> OnItemSummonsChange;
+    public event Action OnLastShopChangeChange;
+    public event Action<UnitLevelData> OnUnitDataChange;
+    public event Action<ItemLevelData> OnItemDataChange;
+    public event Action<QuestSaveData> OnQuestSaveDataChange;
+
 
 
     public void PlayerDataSetting()
@@ -112,14 +117,6 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             beyondCraftingDatas.Add(beyondCraftingData.unitKind, beyondCraftingData);
         }
-
-        OnPlayerNameChange += value => SaveData();
-        OnGoldChange += value => SaveData();
-        OnDiamondChange += value => SaveData();
-        OnUnitDataChange += value => SaveData();
-        OnItemDataChange += value => SaveData();
-        OnQuestSaveDataChange += value => SaveData();
-        OnLastShopChangeChange += SaveData;
     }
 
     /// <summary>
@@ -152,6 +149,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             unitLevelData.experience += pulsExperience;
             OnUnitDataChange?.Invoke(unitLevelData);
+            SaveData();
             return;
         }
 
@@ -163,6 +161,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         unitLevels.Add(unitKind, newUnitLevelData);
         PlayerDataContainer.unitLevelDatas.Add(newUnitLevelData);
         OnUnitDataChange?.Invoke(newUnitLevelData);
+        SaveData();
     }
 
     /// <summary>
@@ -176,6 +175,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             questSaveData.Amount += amount;
             OnQuestSaveDataChange?.Invoke(questSaveData);
+            SaveData();
             return;
         }
 
@@ -187,6 +187,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         questDatas.Add(qusetName, newQuestSaveData);
         PlayerDataContainer.questSaveDatas.Add(newQuestSaveData);
         OnQuestSaveDataChange?.Invoke(newQuestSaveData);
+        SaveData();
     }
 
     /// <summary>
@@ -221,6 +222,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         {
             itemLevelData.Amount += itemAmount;
             OnItemDataChange?.Invoke(itemLevelData);
+            SaveData();
             return;
         }
 
@@ -232,6 +234,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         itemLevels.Add(itemName, newItemLevelData);
         PlayerDataContainer.itemLevelData.Add(newItemLevelData);
         OnItemDataChange?.Invoke(newItemLevelData);
+        SaveData();
     }
 
     /// <summary>

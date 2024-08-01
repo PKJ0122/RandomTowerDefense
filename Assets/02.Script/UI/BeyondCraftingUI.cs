@@ -19,7 +19,7 @@ public class BeyondCraftingUI : UIBase
 
     BeyondCraftingCounter _currentCounter;
 
-    public event Action OnBeyond;
+    public event Action<UnitBase> OnBeyond;
 
 
     protected override void Awake()
@@ -43,21 +43,16 @@ public class BeyondCraftingUI : UIBase
 
     private void Start()
     {
-        foreach (var data in _beyondCraftingMethods.beyondCraftingMethods)
-        {
-            PlayerData.beyondCraftingDatas.Add(data.unitKind, new BeyondCraftingData
-            {
-                unitKind = data.unitKind,
-                IsHave = true
-            });
-        }
         foreach (KeyValuePair<UnitKind, BeyondCraftingData> item in PlayerData.beyondCraftingDatas)
         {
             Button beyondInfo = Instantiate(_beyondSlotPrefab, _location);
             Image unitImg = beyondInfo.transform.Find("Image - Unit").GetComponent<Image>();
-            Image creatPossible = beyondInfo.transform.Find("Image - Unit").GetComponent<Image>();
+            Image creatPossible = beyondInfo.transform.Find("Image - Creat").GetComponent<Image>();
             BeyondCraftingCounter counter =
                 new BeyondCraftingCounter(_beyondCraftingMethods.BeyondCraftingMethodDatas[item.Key]);
+
+            UnitData unitData = UnitRepository.UnitKindDatas[item.Key];
+            unitImg.sprite = unitData.unitImg;
 
             beyondInfo.onClick.AddListener(() =>
             {
@@ -71,6 +66,7 @@ public class BeyondCraftingUI : UIBase
                 if (value)
                 {
                     beyondInfo.transform.SetAsFirstSibling();
+                    UIManager.Instance.Get<NoticeEffectUI>().Show(unitData.unitImg, "\"초월\" 준비완료");
                 }
                 else
                 {
@@ -78,7 +74,7 @@ public class BeyondCraftingUI : UIBase
                 }
             };
 
-            unitImg.sprite = UnitRepository.UnitKindDatas[item.Key].unitImg;
+            
         }
     }
 
@@ -123,7 +119,6 @@ public class BeyondCraftingUI : UIBase
             if (i == 0) slot = materials[materials.Count - 1].Slot;
 
             materials[materials.Count - 1].RelasePool();
-            materials.RemoveAt(materials.Count - 1);
         }
 
         UnitKind unitKind = _currentCounter.Method.unitKind;
@@ -133,7 +128,7 @@ public class BeyondCraftingUI : UIBase
                                                     .GetComponent<BeyondBase>()
                                                     .UnitSet(slot, unitKind, UnitRank.Beyond);
 
-        OnBeyond?.Invoke();
-        Refresh();
+        OnBeyond?.Invoke(beyond);
+        Hide();
     }
 }

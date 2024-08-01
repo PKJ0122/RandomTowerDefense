@@ -44,12 +44,7 @@ public class InventoryUI : UIBase
             SlotRefresh(_slots[itemLevelData.itemName], itemLevelData.itemName);
         };
 
-        PlayerData.OnItemDataChange += OnItemDataChangeHandler;
-    }
-
-    private void OnDisable()
-    {
-        PlayerData.OnItemDataChange -= OnItemDataChangeHandler;
+        PlayerData.Instance.OnItemDataChange += OnItemDataChangeHandler;
     }
 
     void SlotRefresh(Button slot, string itemName)
@@ -69,7 +64,9 @@ public class InventoryUI : UIBase
         }
         ItemLevelData itemLevelData = PlayerData.itemLevels[itemName];
 
-        int itemLevelUpNeedAmount = _itemDatas.itemLevelUpNeedAmount[itemLevelData.level];
+        int level = Math.Min(9, itemLevelData.level);
+
+        int itemLevelUpNeedAmount = _itemDatas.itemLevelUpNeedAmount[level];
 
         itemCountS.maxValue = itemLevelUpNeedAmount;
         itemCountS.value = itemLevelData.Amount;

@@ -78,8 +78,7 @@ public class UnitInfoUI : UIBase
         _materialRank = _beyondEnforce.transform.Find("Image - Material/Text (TMP) - Rank").GetComponent<TMP_Text>();
         _maxEnforce = _beyondEnforce.transform.Find("Panel - MaxEnforce").GetComponent<Transform>();
         _beyondEnforceUp = _beyondEnforce.transform.Find("Button - EnforceUp").GetComponent<Button>();
-        _beyondEnforceUp.onClick.AddListener(() =>
-            UIManager.Instance.Get<BeyondEnforceUI>().Show((BeyondBase)SlotManager.Slots[_currentSlot]));
+        
 
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
@@ -113,6 +112,11 @@ public class UnitInfoUI : UIBase
         {
             Hide();
             UIManager.Instance.Get<UnitMoveUI>().Show(_currentSlot);
+        });
+        _beyondEnforceUp.onClick.AddListener(() =>
+        {
+            Hide();
+            UIManager.Instance.Get<BeyondEnforceUI>().Show((BeyondBase)SlotManager.Slots[_currentSlot]);
         });
     }
 

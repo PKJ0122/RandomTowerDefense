@@ -45,11 +45,6 @@ public class MainUI : UIBase
         _beyondCrafting.onClick.AddListener(() => UIManager.Instance.Get<BeyondCraftingShopUI>().Show());
         _quest.onClick.AddListener(() => UIManager.Instance.Get<QuestUI>().Show());
         _playerSetting.onClick.AddListener(() => UIManager.Instance.Get<PlayerSettingUI>().Show());
-        PlayerData.OnPlayerNameChange += _onPlayerNameChangeHandler;
-    }
-
-    void OnDestroy()
-    {
-        PlayerData.OnPlayerNameChange -= _onPlayerNameChangeHandler;
+        PlayerData.Instance.OnPlayerNameChange += _onPlayerNameChangeHandler;
     }
 }

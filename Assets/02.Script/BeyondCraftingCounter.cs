@@ -23,6 +23,8 @@ public class BeyondCraftingCounter
         get => _isBeyondCraftingPossible;
         set
         {
+            if (_isBeyondCraftingPossible == value) return;
+
             _isBeyondCraftingPossible = value;
             OnBeyondCraftingPossibleChange?.Invoke(value);
         }
@@ -40,6 +42,7 @@ public class BeyondCraftingCounter
             {
                 if (_materials[i].Count == 0)
                 {
+                    IsBeyondCraftingPossible = false;
                     return;
                 }
             }

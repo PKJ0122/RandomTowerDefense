@@ -20,8 +20,8 @@ public class ItemShopPage : ShopPageBase
         {
             _itemSummons.text = value.ToString("N0");
         };
-        PlayerData.OnItemSummonsChange += OnItemSummonsChangeHandler;
-        PlayerData.OnLastShopChangeChange += ShopRefresh;
+        PlayerData.Instance.OnItemSummonsChange += OnItemSummonsChangeHandler;
+        PlayerData.Instance.OnLastShopChangeChange += ShopRefresh;
         _itemSummons = transform.Find("Panel - Summons/Text (TMP) - Summons").GetComponent<TMP_Text>();
         _itemSummons.text = PlayerData.Instance.ItemSummons.ToString("N0");
 
@@ -52,12 +52,6 @@ public class ItemShopPage : ShopPageBase
             ShopRefresh();
             AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
         };
-    }
-
-    void OnDestroy()
-    {
-        PlayerData.OnItemSummonsChange -= OnItemSummonsChangeHandler;
-        PlayerData.OnLastShopChangeChange -= ShopRefresh;
     }
 
     protected override void ShopRefresh()

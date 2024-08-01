@@ -19,13 +19,7 @@ public class GoodsUI : UIBase
         _diamond.text = PlayerData.Instance.Diamond.ToString("N0");
         OnGoldChangeHandler += value => _gold.text = value.ToString("N0");
         OnDiamondChangeHandler += value => _diamond.text = value.ToString("N0");
-        PlayerData.OnGoldChange += OnGoldChangeHandler;
-        PlayerData.OnDiamondChange += OnDiamondChangeHandler;
-    }
-
-    public void OnDestroy()
-    {
-        PlayerData.OnGoldChange -= OnGoldChangeHandler;
-        PlayerData.OnDiamondChange -= OnDiamondChangeHandler;
+        PlayerData.Instance.OnGoldChange += OnGoldChangeHandler;
+        PlayerData.Instance.OnDiamondChange += OnDiamondChangeHandler;
     }
 }

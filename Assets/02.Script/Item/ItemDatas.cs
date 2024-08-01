@@ -29,5 +29,7 @@ public class ItemDatas : ScriptableObject
 
     public int[] itemLevelUpNeedAmount;
 
+    public int[] itemLevelUpNeedGold;
+
     public ItemEffect itemEffect;
 }

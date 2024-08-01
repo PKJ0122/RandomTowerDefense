@@ -52,7 +52,7 @@ public class ItemInfoUI : UIBase
         {
             ItemLevelUpUI levelUpUI = UIManager.Instance.Get<ItemLevelUpUI>();
             levelUpUI.Show(itemName);
-            PlayerData.OnItemDataChange += OnItemDataChangeHandler;
+            PlayerData.Instance.OnItemDataChange += OnItemDataChangeHandler;
         });
         base.Show();
         ItemBase itemBase = _itemDatas.Items[itemName];
@@ -66,7 +66,7 @@ public class ItemInfoUI : UIBase
     public override void Hide()
     {
         base.Hide();
-        PlayerData.OnItemDataChange -= OnItemDataChangeHandler;
+        PlayerData.Instance.OnItemDataChange -= OnItemDataChangeHandler;
     }
 
     public bool IsLevelUpPossible(string itemName)
@@ -81,11 +81,11 @@ public class ItemInfoUI : UIBase
             return false;
         }
 
-        int level = itemLevelData.level;
+        int level = Math.Min(9,itemLevelData.level);
         int nowAmount = itemLevelData.Amount;
         int upNeedAmount = _itemDatas.itemLevelUpNeedAmount[level];
 
-        _level.text = $"{level} Lv";
+        _level.text = $"{itemLevelData.level} Lv";
         _itemCounts.maxValue = upNeedAmount;
         _itemCounts.value = nowAmount;
         _itemCountT.text = $"{nowAmount} / {upNeedAmount}";

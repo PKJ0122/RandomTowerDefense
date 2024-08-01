@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BeyondEnforceUI : UIBase
@@ -33,6 +31,12 @@ public class BeyondEnforceUI : UIBase
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _currentBeyond.Enforce++;
+            _IsMoveing = true;
+        }
+
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -52,12 +56,12 @@ public class BeyondEnforceUI : UIBase
                     }
                     else
                     {
-                        Hide();
+                        _IsMoveing = true;
                     }
                 }
                 else
                 {
-                    Hide();
+                    _IsMoveing = true;
                 }
             }
         }
@@ -77,12 +81,12 @@ public class BeyondEnforceUI : UIBase
                 }
                 else
                 {
-                    Hide();
+                    _IsMoveing = true;
                 }
             }
             else
             {
-                Hide();
+                _IsMoveing = true;
             }
         }
     }

@@ -22,12 +22,7 @@ public class DailyShopPage : ShopPageBase
             RandomDailyShop();
             ShopRefresh();
         };
-        PlayerData.OnLastShopChangeChange += OnLastShopChangeHandler;
-    }
-
-    void OnDisable()
-    {
-        PlayerData.OnLastShopChangeChange -= OnLastShopChangeHandler;
+        PlayerData.Instance.OnLastShopChangeChange += OnLastShopChangeHandler;
     }
 
     public void RandomDailyShop()

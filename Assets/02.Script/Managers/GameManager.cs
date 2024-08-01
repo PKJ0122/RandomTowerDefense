@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
@@ -76,7 +75,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         OnWaveChange += value =>
         {
             if (Wave <= 0) return;
-            Gold += Salary + (Gold/Interest);
+            Gold += Salary + (Gold / Interest);
         };
 
         StartCoroutine(C_Game());
@@ -84,7 +83,9 @@ public class GameManager : SingletonMonoBase<GameManager>
 
     private void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => RegisterUnit(unit);
+        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit => RegisterUnit(unit);
+        UIManager.Instance.Get<UnitInfoUI>().OnUnitMix += unit => RegisterUnit(unit);
+        UIManager.Instance.Get<BeyondCraftingUI>().OnBeyond += unit => RegisterUnit(unit);
         UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += GameReStart;
     }
 
@@ -123,7 +124,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// <param name="unit"></param>
     void RegisterUnit(UnitBase unit)
     {
-        if (!Units.TryGetValue(unit.Kind,out List<UnitBase> list))
+        if (!Units.TryGetValue(unit.Kind, out List<UnitBase> list))
         {
             list = new List<UnitBase>();
             Units.Add(unit.Kind, list);

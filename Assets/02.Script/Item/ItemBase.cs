@@ -36,6 +36,6 @@ public abstract class ItemBase : ScriptableObject
 
     protected void Notice()
     {
-        UIManager.Instance.Get<NoticeEffectUI>().Show(itemImage, itemName);
+        UIManager.Instance.Get<NoticeEffectUI>().Show(itemImage, $"\"{itemName}\" 효과발동");
     }
 }

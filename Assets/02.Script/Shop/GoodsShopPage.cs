@@ -17,7 +17,7 @@ public class GoodsShopPage : ShopPageBase
     {
         base.Awake();
         _toggleObjectName = "Toggle - GoodsShop";
-        PlayerData.OnLastShopChangeChange += ShopRefresh;
+        PlayerData.Instance.OnLastShopChangeChange += ShopRefresh;
 
         Button tradeButton = Slots[1].GetComponent<Button>();
         tradeButton.onClick.AddListener(() =>
@@ -46,11 +46,6 @@ public class GoodsShopPage : ShopPageBase
             ShopRefresh();
             AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
         };
-    }
-
-    void OnDestroy()
-    {
-        PlayerData.OnLastShopChangeChange -= ShopRefresh;
     }
 
     protected override void ShopRefresh()
