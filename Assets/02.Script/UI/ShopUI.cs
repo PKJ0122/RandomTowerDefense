@@ -32,11 +32,11 @@ public class ShopUI : UIBase
         ShopPageBase[] _shopPage = _shopLocation.GetComponentsInChildren<ShopPageBase>();
 
         foreach (ShopPageBase item in _shopPage) item.SetPage(_shopPageBase);
-
+        
+        _shops[0].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
-
-        _shops[0].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
     }
 
     public void Start()

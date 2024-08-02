@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class IceTerrainObject : SkillObject
 {
+    const int MAX_ENEMY = 4;
+
     const float RANGE = 9f;
     const float TICK_TIME = 0.5f;
     const int LAST_TICK_COUNT = 8;
@@ -34,6 +36,8 @@ public class IceTerrainObject : SkillObject
         {
             ++_tickCount;
 
+            int num = 0;
+
             Collider[] targets = Physics.OverlapSphere(transform.position, RANGE, _targetMask);
 
             foreach (Collider target in targets)
@@ -43,6 +47,11 @@ public class IceTerrainObject : SkillObject
                 _target.Speed = SLOW_AMOUNT;
                 _slowEnemy.Add(enemy);
                 Damage();
+
+                if (++num >= MAX_ENEMY)
+                {
+                    break;
+                }
             }
 
             yield return _delay;

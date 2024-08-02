@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletRainObject : SkillObject
 {
+    const int MAX_ENEMY = 6;
+
     const float RANGE = 9f;
     const float TICK_TIME = 0.5f;
     const int LAST_TICK_COUNT = 8;
@@ -36,6 +38,8 @@ public class BulletRainObject : SkillObject
 
             Collider[] targets = Physics.OverlapSphere(transform.position, RANGE, _targetMask);
 
+            int num = 0;
+
             foreach (Collider target in targets)
             {
                 Enemy enemy = target.GetComponent<Enemy>();
@@ -43,6 +47,11 @@ public class BulletRainObject : SkillObject
                 _target.Speed = SLOW_AMOUNT;
                 _slowEnemy.Add(enemy);
                 Damage();
+
+                if (++num >= MAX_ENEMY)
+                {
+                    break;
+                }
             }
 
             yield return _delay;

@@ -19,4 +19,5 @@ public class PlayerDataContainer
     public List<ItemLevelData> itemLevelData = new List<ItemLevelData>(10);
     public List<QuestSaveData> questSaveDatas = new List<QuestSaveData>(8);
     public List<BeyondCraftingData> beyondCraftingDatas = new List<BeyondCraftingData>(8);
+    public List<MailSaveData> mailSaveDatas = new List<MailSaveData>(5);
 }

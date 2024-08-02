@@ -21,7 +21,7 @@ MonoBehaviour:
   - 88
   - 380
   - 1800
-  - 3600
+  - 5400
   skill: {fileID: 11400000, guid: f5198faf600bd304980d2755c47b5520, type: 2}
   unitImg: {fileID: 21300000, guid: abb7d520155780746bb6ee3c8868a9e2, type: 3}
   beyondObject: {fileID: -2907564406139807422, guid: 2ea718742c94ab744ac7493e872ab177, type: 3}

@@ -12,6 +12,7 @@ public class MainUI : UIBase
     Button _inventory;
     Button _beyondCrafting;
     Button _quest;
+    Button _mailBox;
     Button _playerSetting;
     Button _gameStart;
 
@@ -27,6 +28,7 @@ public class MainUI : UIBase
         _inventory = transform.Find("Button - Inventory").GetComponent<Button>();
         _beyondCrafting = transform.Find("Button - BeyondCrafting").GetComponent<Button>();
         _quest = transform.Find("Button - Quest").GetComponent<Button>();
+        _mailBox = transform.Find("Button - Mailbox").GetComponent<Button>();
         _playerSetting = transform.Find("Button - Setting").GetComponent<Button>();
         _gameStart = transform.Find("Button - GameStart").GetComponent<Button>();
         _gameStart.onClick.AddListener(() => SceneManager.LoadScene("Game"));
@@ -44,6 +46,7 @@ public class MainUI : UIBase
         _inventory.onClick.AddListener(() => UIManager.Instance.Get<InventoryUI>().Show());
         _beyondCrafting.onClick.AddListener(() => UIManager.Instance.Get<BeyondCraftingShopUI>().Show());
         _quest.onClick.AddListener(() => UIManager.Instance.Get<QuestUI>().Show());
+        _mailBox.onClick.AddListener(() => UIManager.Instance.Get<MailBoxUI>().Show());
         _playerSetting.onClick.AddListener(() => UIManager.Instance.Get<PlayerSettingUI>().Show());
         PlayerData.Instance.OnPlayerNameChange += _onPlayerNameChangeHandler;
     }

@@ -14,6 +14,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public static Dictionary<string, ItemLevelData> itemLevels = new Dictionary<string, ItemLevelData>(10);
     public static Dictionary<string, QuestSaveData> questDatas = new Dictionary<string, QuestSaveData>(9);
     public static Dictionary<UnitKind, BeyondCraftingData> beyondCraftingDatas = new Dictionary<UnitKind, BeyondCraftingData>(8);
+    public static Dictionary<string, MailSaveData> mailSaveDatas = new Dictionary<string, MailSaveData>(5);
 
     static PlayerDataContainer s_playerDataContainer;
     public PlayerDataContainer PlayerDataContainer
@@ -116,6 +117,10 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         foreach (BeyondCraftingData beyondCraftingData in PlayerDataContainer.beyondCraftingDatas)
         {
             beyondCraftingDatas.Add(beyondCraftingData.unitKind, beyondCraftingData);
+        }
+        foreach (MailSaveData mailSaveData in PlayerDataContainer.mailSaveDatas)
+        {
+            mailSaveDatas.Add(mailSaveData.mailName, mailSaveData);
         }
     }
 

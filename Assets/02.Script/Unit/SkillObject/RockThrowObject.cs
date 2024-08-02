@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RockThrowObject : SkillObject
 {
+    const int MAX_ENEMY = 6;
+
     const float RANGE = 3f;
     const float THROWING_TIME = 0.5f;
 
@@ -40,13 +42,19 @@ public class RockThrowObject : SkillObject
 
         Collider[] targets = Physics.OverlapSphere(transform.position, RANGE, _targetMask);
 
+        int num = 0;
+
         foreach (Collider target in targets)
         {
-
             Enemy enemy = target.GetComponent<Enemy>();
             _target = enemy;
             _target.Speed = 0;
             Damage();
+
+            if (++num >= MAX_ENEMY)
+            {
+                break;
+            }
         }
 
         yield return _delay;
