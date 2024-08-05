@@ -19,6 +19,11 @@ public class GoldBossUI : UIBase
             _clickWave = GameManager.Instance.Wave;
             _bossSpawn.gameObject.SetActive(false);
         });
+        GameManager.Instance.OnGameEnd += v =>
+        {
+            _clickWave = -1;
+            _bossSpawn.gameObject.SetActive(false);
+        };
     }
 
     private void Start()

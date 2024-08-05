@@ -18,5 +18,5 @@ MonoBehaviour:
     unitRank: 4
   - unitKind: 0
     unitRank: 3
-  - unitKind: 1
+  - unitKind: 0
     unitRank: 2

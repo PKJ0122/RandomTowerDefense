@@ -225,8 +225,6 @@ public class UnitInfoUI : UIBase
         }
 
         UnitRank mixUnitRank = (UnitRank)((int)unitRank + 1);
-        UnitBase mixUnit = UIManager.Instance.Get<UnitBuyUI>().RandomUnit(_currentSlot);
-        mixUnit.UnitSet(_currentSlot, mixUnit.Kind, mixUnitRank);
-        OnUnitMix?.Invoke(mixUnit);
+        UnitFactory.Instance.UnitCreat<UnitBase>(_currentSlot, unitKind, mixUnitRank);
     }
 }

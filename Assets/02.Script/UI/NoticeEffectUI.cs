@@ -20,7 +20,7 @@ public class NoticeEffectUI : UIBase
     /// <summary>
     /// 아이템 사용상황,미션 클리어 현황을 알려주는 UI
     /// </summary>
-    /// <param name="itemImage">아이템 이미지, 미션인 경우 null</param>
+    /// <param name="itemImage">이미지가 없는 경우 null</param>
     public void Show(Sprite itemImage, string detail)
     {
         ItemEffect obj = ObjectPoolManager.Instance.Get("itemEffectPrefab")

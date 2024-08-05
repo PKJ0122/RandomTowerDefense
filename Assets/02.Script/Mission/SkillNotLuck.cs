@@ -7,7 +7,7 @@ public class SkillNotLuck : MissionBase
     public override void Init()
     {
         base.Init();
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
+        UnitFactory.Instance.OnUnitCreat += unit =>
         {
             if (unit.Rank == UnitRank.Legendary) Progress++;
         };

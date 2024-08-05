@@ -29,7 +29,7 @@ public class UnitBase : PoolObject
         set
         {
             _slot = value;
-            transform.position = _slot.transform.position;
+            transform.position = _slot == null ? Vector3.zero : _slot.transform.position;
             SlotManager.Slots[_slot] = this;
         }
     }
@@ -115,8 +115,6 @@ public class UnitBase : PoolObject
                 _targetEnemy = target.GetComponent<Enemy>();
             }
         }
-
-        transform.LookAt(_targetEnemy.transform);
     }
 
     /// <summary>
@@ -155,6 +153,8 @@ public class UnitBase : PoolObject
         if (_targetEnemy == null)
             return;
 
+        transform.LookAt(_targetEnemy.transform);
+
         if (Mp >= _skillNeedMp)
         {
             Skill();
@@ -175,8 +175,6 @@ public class UnitBase : PoolObject
     {
         OnDisable?.Invoke();
         OnDisable = null;
-        GameManager.Instance.Units[Kind].Remove(this);
-        SlotManager.Slots[Slot] = null;
         base.RelasePool();
     }
 }

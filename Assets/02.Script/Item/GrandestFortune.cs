@@ -7,7 +7,7 @@ public class GrandestFortune : ItemBase
     {
         UIManager.Instance.Get<UnitBuyUI>().UnitRankPercentage[UnitRank.Legendary] += Value;
         float per = UIManager.Instance.Get<UnitBuyUI>().UnitRankPercentage[UnitRank.Legendary];
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
+        UnitFactory.Instance.OnUnitCreat += unit =>
         {
             if (unit.Rank != UnitRank.Legendary) return;
 

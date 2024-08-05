@@ -19,7 +19,7 @@ public class BeyondCraftingUI : UIBase
 
     BeyondCraftingCounter _currentCounter;
 
-    public event Action<UnitBase> OnBeyond;
+    public event Action OnBeyond;
 
 
     protected override void Awake()
@@ -73,8 +73,6 @@ public class BeyondCraftingUI : UIBase
                     beyondInfo.transform.SetAsLastSibling();
                 }
             };
-
-            
         }
     }
 
@@ -110,25 +108,19 @@ public class BeyondCraftingUI : UIBase
     {
         if (!_currentCounter.IsBeyondCraftingPossible) return;
 
-        Slot slot = null;
+        Slot slot = slot = _currentCounter.Materials[0][0].Slot;
 
         for (int i = 0; i < _materials.Length; i++)
         {
             List<UnitBase> materials = _currentCounter.Materials[i];
 
-            if (i == 0) slot = materials[materials.Count - 1].Slot;
-
             materials[materials.Count - 1].RelasePool();
         }
 
-        UnitKind unitKind = _currentCounter.Method.unitKind;
+        UnitKind Kind = _currentCounter.Method.unitKind;
 
-        UnitBase beyond = ObjectPoolManager.Instance.Get($"Beyond_{unitKind}")
-                                                    .Get()
-                                                    .GetComponent<BeyondBase>()
-                                                    .UnitSet(slot, unitKind, UnitRank.Beyond);
+        UnitFactory.Instance.UnitCreat<BeyondBase>(slot, Kind, UnitRank.Beyond);
 
-        OnBeyond?.Invoke(beyond);
         Hide();
     }
 }

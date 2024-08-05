@@ -5,7 +5,7 @@ public class UnitBuy : QuestBase
 {
     public override void Init()
     {
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += v =>
+        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuy += () =>
         {
             PlayerData.Instance.SetQuestSaveData(questName, 1);
         };

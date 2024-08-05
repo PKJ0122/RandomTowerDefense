@@ -6,7 +6,7 @@ public class BeyondOwner : MissionBase
     public override void Init()
     {
         base.Init();
-        UIManager.Instance.Get<BeyondCraftingUI>().OnBeyond += (unit) =>
+        UIManager.Instance.Get<BeyondCraftingUI>().OnBeyond += () =>
         {
             Progress++;
         };

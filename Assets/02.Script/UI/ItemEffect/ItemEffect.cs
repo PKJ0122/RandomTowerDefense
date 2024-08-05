@@ -29,7 +29,7 @@ public class ItemEffect : PoolObject
         return this;
     }
 
-    YieldInstruction _delay = new WaitForSeconds(2f);
+    WaitForSecondsRealtime _delay = new WaitForSecondsRealtime(2f);
 
     IEnumerator C_Activity()
     {

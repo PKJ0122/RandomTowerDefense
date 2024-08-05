@@ -31,6 +31,14 @@ public class SlotManager : MonoBehaviour
     {
         UIManager.Instance.Get<UnitBuyUI>().OnBuyButtonClick += () => IsVacancy();
         UIManager.Instance.OnUIChange += value => _isClickPossible = value;
+
+        UnitFactory.Instance.OnUnitCreat += unit =>
+        {
+            unit.OnDisable += () =>
+            {
+                Slots[unit.Slot] = null;
+            };
+        };
     }
 
     void Update()
@@ -86,7 +94,7 @@ public class SlotManager : MonoBehaviour
     /// <summary>
     /// 유닛이 생성될 공간이 있는지 확인하고 있다면 해당 Slot을 반환해주는 함수 / 빈자리가 없다면 null을 반환
     /// </summary>
-    Slot IsVacancy()
+    static public Slot IsVacancy()
     {
         foreach (KeyValuePair<Slot, UnitBase> item in Slots)
         {

@@ -18,8 +18,7 @@ public class SpawnRecordUI : UIBase
 
     void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit => CreateText(unit);
-        UIManager.Instance.Get<UnitInfoUI>().OnUnitMix += unit => CreateText(unit);
+        UnitFactory.Instance.OnUnitCreat += unit => CreateText(unit);
     }
 
     void CreateText(UnitBase unit)

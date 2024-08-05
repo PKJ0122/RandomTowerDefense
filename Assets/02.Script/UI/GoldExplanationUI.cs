@@ -20,7 +20,7 @@ public class GoldExplanationUI : UIBase
         GameManager.Instance.OnGameStart += () =>
         {
             _Interest.text = $"+ {GameManager.Instance.Interest}% Gold";
-            _Salary.text = $"+ {GameManager.Instance.Salary}Gold";
+            _Salary.text = $"+ {GameManager.Instance.Salary} Gold";
         };
     }
 }

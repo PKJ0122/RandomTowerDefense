@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class UnitLevelUpUI : UIBase
 {
     const int EARLY_PRICE = 100;
-    const int PRICE_WEIGHT = 100;
+    const int PRICE_WEIGHT = 50;
     const float POWER_WEIGHT = 0.1f;
 
     Dictionary<UnitKind, int> _unitLevels = new Dictionary<UnitKind, int>();
@@ -41,7 +41,7 @@ public class UnitLevelUpUI : UIBase
                 PurchasedUnitApply(unitKind);
             });
         }
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += (unit) => BuyUnitApply(unit);
+        UnitFactory.Instance.OnUnitCreat += (unit) => BuyUnitApply(unit);
         UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
         {
             for (int i = 0; i < slots.Length; i++)

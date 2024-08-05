@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,7 +9,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class UnitBuyUI : UIBase
 {
-    const int WEIGHT = 2;
+    const int WEIGHT = 1;
 
     Button _unitBuy;
     TMP_Text _price;
@@ -26,12 +25,12 @@ public class UnitBuyUI : UIBase
         }
     }
 
-    Dictionary<UnitRank, float> _unitRankPercentage = new Dictionary<UnitRank,float>();
+    Dictionary<UnitRank, float> _unitRankPercentage = new Dictionary<UnitRank, float>();
     public Dictionary<UnitRank, float> UnitRankPercentage => _unitRankPercentage;
 
     public event Func<Slot> OnBuyButtonClick;
     event Action OnPriceChange;
-    public event Action<UnitBase> OnUnitBuySuccess;
+    public event Action OnUnitBuy;
 
 
     protected override void Awake()
@@ -67,30 +66,13 @@ public class UnitBuyUI : UIBase
     }
 
     /// <summary>
-    /// 랜덤한 유닛을 반환해주는 함수
-    /// </summary>
-    public UnitBase RandomUnit(Slot slot)
-    {
-        UnitKind unitKind = (UnitKind)Random.Range(0, Enum.GetValues(typeof(UnitKind)).Length);
-        UnitRank unitRank = RandomRank();
-
-        UnitBase unit = ObjectPoolManager.Instance.Get(unitKind.ToString())
-                                                  .Get()
-                                                  .GetComponent<UnitBase>()
-                                                  .UnitSet(slot, unitKind, unitRank);
-
-        return unit;
-    }
-
-    /// <summary>
     /// 유닛을 구매하는 함수
     /// </summary>
     void UnitBuy(Slot slot)
     {
         if (slot == null || GameManager.Instance.Gold < UnitPrice) return;
 
-        UnitBase randomUnit = RandomUnit(slot);
-        OnUnitBuySuccess?.Invoke(randomUnit);
+        UnitFactory.Instance.UnitCreat<UnitBase>(slot, RandomRank());
         GameManager.Instance.Gold -= UnitPrice;
         UnitPrice += WEIGHT;
     }
@@ -98,7 +80,7 @@ public class UnitBuyUI : UIBase
     /// <summary>
     /// 랜덤한 등급을 반환해주는 함수
     /// </summary>
-    UnitRank RandomRank()
+    public UnitRank RandomRank()
     {
         float randomNumber = Random.Range(0f, 100f);
 

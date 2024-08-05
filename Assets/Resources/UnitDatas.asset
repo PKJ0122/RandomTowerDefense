@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36d23d84a6467e9419fc51cff5a2b5cc, type: 2}
   - {fileID: 11400000, guid: 0079d4ade9c7d2e40b4dafd528d8acf3, type: 2}
   - {fileID: 11400000, guid: a1118317e3284074faedd861ffe2b092, type: 2}
-  legendaryPercentage: 10
-  uniquePercentage: 10
-  epicPercentage: 4
-  rarePercentage: 15
+  legendaryPercentage: 1
+  uniquePercentage: 4
+  epicPercentage: 8
+  rarePercentage: 17

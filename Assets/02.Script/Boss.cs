@@ -14,17 +14,17 @@ public class Boss : Enemy
         StartCoroutine(C_BossActivity());
     }
 
-    YieldInstruction delay = new WaitForSeconds(60.5f);
+    YieldInstruction _delay = new WaitForSeconds(60.5f);
 
     IEnumerator C_BossActivity()
     {
-        yield return delay;
+        yield return _delay;
         GameManager.Instance.GameEnd();
     }
 
     protected override void Die()
     {
-        GameManager.Instance.Gold += 99;
+        GameManager.Instance.Key++;
         base.Die();
     }
 }

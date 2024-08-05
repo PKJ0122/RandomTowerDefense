@@ -7,7 +7,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 {
     const float ROUND_TIME = 60f;
     const int START_GOLD = 100;
-    const int SALARY = 40;
+    const int SALARY = 100;
     const int INTEREST = 10;
 
     Dictionary<UnitKind, List<UnitBase>> _units = new Dictionary<UnitKind, List<UnitBase>>(8);
@@ -49,6 +49,17 @@ public class GameManager : SingletonMonoBase<GameManager>
         }
     }
 
+    int _key;
+    public int Key
+    {
+        get => _key;
+        set
+        {
+            _key = value;
+            OnKeyChange?.Invoke(value);
+        }
+    }
+
     int _enemyAmount;
     public int EnemyAmount
     {
@@ -63,6 +74,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     public event Action<int> OnWaveChange;
     public event Action<float> OnTimeChange;
     public event Action<int> OnGoldChange;
+    public event Action<int> OnKeyChange;
     public event Action<int> OnEnemyAmountChange;
     public event Action OnGameStart;
     public event Action<int> OnGameEnd;
@@ -83,9 +95,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 
     private void Start()
     {
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit => RegisterUnit(unit);
-        UIManager.Instance.Get<UnitInfoUI>().OnUnitMix += unit => RegisterUnit(unit);
-        UIManager.Instance.Get<BeyondCraftingUI>().OnBeyond += unit => RegisterUnit(unit);
+        UnitFactory.Instance.OnUnitCreat += unit => RegisterUnit(unit);
         UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += GameReStart;
     }
 
@@ -100,6 +110,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         OnGameStart?.Invoke();
         Gold = START_GOLD;
         Wave = 0;
+        Key = 50;
 
 
         while (Wave + 1 <= 50)
@@ -130,6 +141,10 @@ public class GameManager : SingletonMonoBase<GameManager>
             Units.Add(unit.Kind, list);
         }
         list.Add(unit);
+        unit.OnDisable += () =>
+        {
+            list.Remove(unit);
+        };
     }
 
     /// <summary>

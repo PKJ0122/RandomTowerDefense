@@ -14,7 +14,7 @@ public class FigureCollector : MissionBase
         {
             _unitChecker.TryAdd((UnitKind)i, 0);
         }
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
+        UnitFactory.Instance.OnUnitCreat += unit =>
         {
             if (unit.Rank == UnitRank.Nomal)
             {

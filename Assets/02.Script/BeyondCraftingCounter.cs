@@ -11,6 +11,39 @@ public class BeyondCraftingCounter
         Init();
     }
 
+    public BeyondCraftingCounter(BeyondCraftingMethod method,UnitATKChecker unitATKChecker)
+    {
+        _method = method;
+        OnMaterialsStateChange += () =>
+        {
+            for (int i = 0; i < _materials.Length; i++)
+            {
+                if (_materials[i].Count == 0)
+                {
+                    IsBeyondCraftingPossible = false;
+                    return;
+                }
+            }
+            IsBeyondCraftingPossible = true;
+        };
+        unitATKChecker.OnUnit += unit =>
+        {
+            for (int i = 0; i < _materials.Length; i++)
+            {
+                if (unit.Kind == _method.beyondCraftingMaterials[i].unitKind &&
+                    unit.Rank == _method.beyondCraftingMaterials[i].unitRank)
+                {
+                    UnitAdd(unit, _materials[i]);
+                    unit.OnDisable += () =>
+                    {
+                        UnitRemove(unit, _materials[i]);
+                    };
+                    break;
+                }
+            }
+        };
+    }
+
     BeyondCraftingMethod _method;
     public BeyondCraftingMethod Method => _method;
 
@@ -48,23 +81,7 @@ public class BeyondCraftingCounter
             }
             IsBeyondCraftingPossible = true;
         };
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
-        {
-            for (int i = 0; i < _materials.Length; i++)
-            {
-                if (unit.Kind == _method.beyondCraftingMaterials[i].unitKind &&
-                    unit.Rank == _method.beyondCraftingMaterials[i].unitRank)
-                {
-                    UnitAdd(unit, _materials[i]);
-                    unit.OnDisable += () =>
-                    {
-                        UnitRemove(unit, _materials[i]);
-                    };
-                    break;
-                }
-            }
-        };
-        UIManager.Instance.Get<UnitInfoUI>().OnUnitMix += unit =>
+        UnitFactory.Instance.OnUnitCreat += unit =>
         {
             for (int i = 0; i < _materials.Length; i++)
             {

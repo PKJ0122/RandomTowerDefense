@@ -7,7 +7,8 @@ public class Fortunate : ItemBase
     {
         UIManager.Instance.Get<UnitBuyUI>().UnitRankPercentage[UnitRank.Epic] += Value;
         float per = UIManager.Instance.Get<UnitBuyUI>().UnitRankPercentage[UnitRank.Epic];
-        UIManager.Instance.Get<UnitBuyUI>().OnUnitBuySuccess += unit =>
+
+        UnitFactory.Instance.OnUnitCreat += unit =>
         {
             if (unit.Rank != UnitRank.Epic) return;
 
