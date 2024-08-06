@@ -18,7 +18,8 @@ public class MissionUI : UIBase
 
     Button _close;
 
-    public event Action OnMissionClear;
+    public event Action<MissionBase> OnMissionClear;
+    public event Action OnBreak;
 
 
     protected override void Awake()
@@ -45,21 +46,31 @@ public class MissionUI : UIBase
             name.text = missionData.missionName;
             detail.text = missionData.detail;
 
-            missionData.OnProgressChange += value =>
+            void onProgressChangeHandler(int value)
             {
                 condition.text = $"( {value} / {missionData.condition} )";
                 if (missionData.Progress >= missionData.condition) missionData.IsClear = true;
-            };
-            missionData.OnIsClearChange += value =>
+            }
+            void onIsClearChangeHandler(bool value)
             {
                 clear.gameObject.SetActive(value);
                 if (value)
                 {
                     GameManager.Instance.Gold += ClearGold;
-                    UIManager.Instance.Get<NoticeEffectUI>().Show(null, $"\"{missionData.missionName}\" 미션 클리어");
-                    OnMissionClear?.Invoke();
+                    OnMissionClear?.Invoke(missionData);
                 }
+            }
+
+            missionData.OnProgressChange += onProgressChangeHandler;
+            missionData.OnIsClearChange += onIsClearChangeHandler;
+
+
+            OnBreak += () =>
+            {
+                missionData.OnProgressChange -= onProgressChangeHandler;
+                missionData.OnIsClearChange -= onIsClearChangeHandler;
             };
+
             missionData.Init();
         }
 
@@ -75,10 +86,7 @@ public class MissionUI : UIBase
 
     void OnDisable()
     {
-        foreach (MissionBase missionData in _missionDatas.missionDatas)
-        {
-            missionData.Break();
-        }
+        OnBreak?.Invoke();
     }
 
     public override void Show()

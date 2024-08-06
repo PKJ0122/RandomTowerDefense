@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 5030168145278585020}
   - component: {fileID: 617100021392297660}
   - component: {fileID: 2125119353465429745}
-  - component: {fileID: -6170375775345008137}
+  - component: {fileID: 1353546625262813321}
   m_Layer: 10
   m_Name: Enemy-Clown
   m_TagString: Untagged
@@ -1194,9 +1194,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &-6170375775345008137
+  m_Radius: 1.1810408
+  m_Center: {x: 0, y: 1.1478262, z: 0}
+--- !u!114 &1353546625262813321
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2133796901380397823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309021ed27542a749bd69389d2402e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: d76393d6d85cd984cab5fd076a588b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2585938764004535084

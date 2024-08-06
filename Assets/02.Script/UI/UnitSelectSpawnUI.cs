@@ -16,7 +16,7 @@ public class UnitSelectSpawnUI : UIBase
 
     Button[] _units = new Button[3];
 
-    public event Action<UnitRank> OnIsUse;
+    public event Action<UnitBase> OnIsUse;
 
 
     protected override void Awake()
@@ -58,9 +58,8 @@ public class UnitSelectSpawnUI : UIBase
             item.onClick.RemoveAllListeners();
             item.onClick.AddListener(() =>
             {
-                UnitFactory.Instance.UnitCreat<UnitBase>(slot, unitKind, _selectUnitRank);
-                OnIsUse?.Invoke(_selectUnitRank);
-                UIManager.Instance.Get<NoticeEffectUI>().Show(unitDatas[unitKind].unitImg, "소환완료.");
+                UnitBase unit = UnitFactory.Instance.UnitCreat<UnitBase>(slot, unitKind, _selectUnitRank);
+                OnIsUse?.Invoke(unit);
                 Hide();
             });
         }

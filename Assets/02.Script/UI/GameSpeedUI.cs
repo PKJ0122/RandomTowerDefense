@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameSpeedUI : UIBase
 {
-    const float MAX_SPEED = 10f;
+    const float MAX_SPEED = 3f;
     const float MIN_SPEED = 1f;
 
     Button _gameSpeedB;

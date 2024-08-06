@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,9 @@ public class EnemySpawner : MonoBehaviour
     int bossEnemycount;
 
     List<Enemy> _enemys = new List<Enemy>(100);
+
+    BossHpBar _bossHpBarPrefab;
+    Action<Boss> OnBossSpawn;
 
 
     void Awake()
@@ -38,6 +42,21 @@ public class EnemySpawner : MonoBehaviour
             ObjectPoolManager.Instance.CreatePool($"{prefab.name}", prefab, 2);
         }
         ObjectPoolManager.Instance.CreatePool($"{_goldBossPrefab.name}", _goldBossPrefab, 2);
+        GameManager.Instance.OnGameEnd += v =>
+        {
+            nomalEnemycount = 0;
+            bossEnemycount = 0;
+        };
+
+        _bossHpBarPrefab = Resources.Load<BossHpBar>("Canvas - BossHp");
+        ObjectPoolManager.Instance.CreatePool("BossHPBar", _bossHpBarPrefab, 2);
+        OnBossSpawn += boss =>
+        {
+            ObjectPoolManager.Instance.Get("BossHPBar")
+                                      .Get()
+                                      .GetComponent<BossHpBar>()
+                                      .Show(boss);
+        };
     }
 
     void Start()
@@ -102,6 +121,7 @@ public class EnemySpawner : MonoBehaviour
 
         _enemys.Add(enemy);
         enemy.OnRelasePool += () => _enemys.Remove(enemy);
+        OnBossSpawn?.Invoke((Boss)enemy);
 
         if (nomalEnemycount++ >= _nomalEnemyPrefab.Length) nomalEnemycount = 0;
         if (bossEnemycount++ >= _bossEnemyPrefab.Length) bossEnemycount = 0;
@@ -109,12 +129,26 @@ public class EnemySpawner : MonoBehaviour
 
     void GoldBossSpawn()
     {
+        int wave = GameManager.Instance.Wave + 1;
+
+        int start = wave / 10;
+
+        if (start == 5) return;
+
+        int now = Mathf.Max(1, wave % 10);
+
+        int startHp = start == 0 ? 0 : start * 10 - 1;
+        int endHp = start == 0 ? 9 : start + 10;
+
+        float hp = Mathf.Lerp(_waveDate.HpDatas[startHp], _waveDate.HpDatas[endHp], (float)now / 10f) * 0.65f;
+
         Enemy enemy = ObjectPoolManager.Instance.Get($"{_goldBossPrefab.name}")
                                                 .Get()
                                                 .GetComponent<Enemy>()
-                                                .Spawn(1);
+                                                .Spawn(hp);
 
         _enemys.Add(enemy);
         enemy.OnRelasePool += () => _enemys.Remove(enemy);
+        OnBossSpawn?.Invoke((Boss)enemy);
     }
 }

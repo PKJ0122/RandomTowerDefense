@@ -89,9 +89,9 @@ public class BossCoinUI : UIBase
         });
         GameManager.Instance.OnGameStart += () =>
         {
-            _epic = 0;
-            _unique = 0;
-            _legendary = 0;
+            Epic = 0;
+            Unique = 0;
+            Legendary = 0;
         };
         GameManager.Instance.OnKeyChange += v =>
         {
@@ -105,11 +105,11 @@ public class BossCoinUI : UIBase
         _epicUse.onClick.AddListener(() => UseButtonClick(UnitRank.Epic));
         _uniqueUse.onClick.AddListener(() => UseButtonClick(UnitRank.Unique));
         _legendaryUse.onClick.AddListener(() => UseButtonClick(UnitRank.Legendary));
-        UIManager.Instance.Get<UnitSelectSpawnUI>().OnIsUse += value =>
+        UIManager.Instance.Get<UnitSelectSpawnUI>().OnIsUse += unit =>
         {
-            if (value == UnitRank.Epic) Epic--;
-            else if (value == UnitRank.Unique) Unique--;
-            else if (value == UnitRank.Legendary) Legendary--;
+            if (unit.Rank == UnitRank.Epic) Epic--;
+            else if (unit.Rank == UnitRank.Unique) Unique--;
+            else if (unit.Rank == UnitRank.Legendary) Legendary--;
         };
     }
 
@@ -128,7 +128,6 @@ public class BossCoinUI : UIBase
         Slot slot = SlotManager.IsVacancy();
         if (slot == null)
         {
-            UIManager.Instance.Get<NoticeEffectUI>().Show(null, "유닛을 소환할 공간이 부족합니다.");
             return;
         }
 

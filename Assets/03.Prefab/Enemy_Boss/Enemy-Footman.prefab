@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 4307336495052155372}
   - component: {fileID: 8145176548092874891}
   - component: {fileID: 6052411243708096495}
-  - component: {fileID: 4407330609991764912}
+  - component: {fileID: 1384140883629169308}
   m_Layer: 10
   m_Name: Enemy-Footman
   m_TagString: Untagged
@@ -598,9 +598,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &4407330609991764912
+  m_Radius: 0.9830315
+  m_Center: {x: 0, y: 0.94814086, z: 0}
+--- !u!114 &1384140883629169308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5770882100401666794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309021ed27542a749bd69389d2402e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: d76393d6d85cd984cab5fd076a588b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7101238930180544705

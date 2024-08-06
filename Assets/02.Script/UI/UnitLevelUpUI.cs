@@ -66,7 +66,7 @@ public class UnitLevelUpUI : UIBase
 
         GameManager.Instance.Gold -= levelUpNeedGold;
         _unitLevels[unitKind]++;
-        OnUnitLevelUpSuccess.Invoke();
+        OnUnitLevelUpSuccess?.Invoke();
         return true;
     }
 

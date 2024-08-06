@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class UnitBase : PoolObject
 {
-    protected const float ATTACK_RANGE = 22.5f;
+    protected const float ATTACK_RANGE = 40f;
+    protected const float CHECK_TIME = 2f;
     protected const int MP_RECOVERY_AMOUNT = 10;
 
     protected LayerMask _targetMask;
@@ -33,9 +34,9 @@ public class UnitBase : PoolObject
             SlotManager.Slots[_slot] = this;
         }
     }
-    public virtual float Power 
-    { 
-        get => _power; 
+    public virtual float Power
+    {
+        get => _power;
         set
         {
             _power = value;
@@ -57,14 +58,16 @@ public class UnitBase : PoolObject
         set
         {
             _mp = value;
-            OnMpChange?.Invoke(value,_skillNeedMp);
+            OnMpChange?.Invoke(value, _skillNeedMp);
         }
     }
 
-    public Action<float> OnPowerChange;
-    public Action<float> OnDamageChange;
-    public Action<int,int> OnMpChange;
-    public Action OnDisable;
+    float _tick;
+
+    public event Action<float> OnPowerChange;
+    public event Action<float> OnDamageChange;
+    public event Action<int, int> OnMpChange;
+    public event Action OnDisable;
 
 
     protected virtual void Awake()
@@ -74,45 +77,74 @@ public class UnitBase : PoolObject
         _targetMask = LayerMask.GetMask("Enemy");
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, ATTACK_RANGE);
-    }
-
     void Update()
     {
         _animator.SetBool("IsTargeting", _targetEnemy != null);
 
-        Collider[] targets = Physics.OverlapSphere(transform.position, ATTACK_RANGE, _targetMask);
-
-        if (targets.Length == 0)
+        if (_targetEnemy == null)
         {
-            _targetEnemy = null;
-            return;
+            Collider[] targets = Physics.OverlapSphere(transform.position, ATTACK_RANGE, _targetMask);
+
+            foreach (Collider target in targets)
+            {
+                Enemy enemy = target.GetComponent<Enemy>();
+
+                if (_targetEnemy == null)
+                {
+                    _targetEnemy = enemy;
+                    continue;
+                }
+
+                if (_targetEnemy.Priority < enemy.Priority)
+                {
+                    _targetEnemy = enemy;
+                    break;
+                }
+
+                if (Vector3.SqrMagnitude(_targetEnemy.transform.position - transform.position) >
+                    Vector3.SqrMagnitude(enemy.transform.position - transform.position))
+                {
+                    _targetEnemy = enemy;
+                }
+            }
         }
-
-        foreach (Collider target in targets)
+        else
         {
-            Enemy enemy = target.GetComponent<Enemy>();
-
-            if (_targetEnemy == null)
+            if (!_targetEnemy.gameObject.activeSelf)
             {
-                _targetEnemy = enemy;
-                continue;
+                _targetEnemy = null;
+                return;
             }
 
-            if (_targetEnemy.Priority < enemy.Priority)
-            {
-                _targetEnemy = enemy;
-                break;
-            }
+            float distance = Vector3.Distance(transform.position, _targetEnemy.transform.position);
 
-            if (Vector3.SqrMagnitude(_targetEnemy.transform.position - transform.position) >
-                Vector3.SqrMagnitude(target.transform.position - transform.position))
-            //현재 타겟으로 등록된 몬스터보다 더 가까운 유닛이 있는지 체크하고 있다면 타겟 변경
+            if (distance >= ATTACK_RANGE)
             {
-                _targetEnemy = target.GetComponent<Enemy>();
+                _targetEnemy = null;
+                return;
+            }
+            
+            transform.LookAt(_targetEnemy.transform);
+
+            if (_targetEnemy is Boss) return;
+
+            _tick += Time.deltaTime;
+
+            if(_tick >= CHECK_TIME)
+            {
+                _tick = 0;
+                Collider[] targets = Physics.OverlapSphere(transform.position, ATTACK_RANGE, _targetMask);
+
+                foreach (Collider target in targets)
+                {
+                    Enemy enemy = target.GetComponent<Enemy>();
+
+                    if (_targetEnemy.Priority < enemy.Priority)
+                    {
+                        _targetEnemy = enemy;
+                        break;
+                    }
+                }
             }
         }
     }

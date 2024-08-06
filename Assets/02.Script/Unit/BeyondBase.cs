@@ -34,8 +34,7 @@ public class BeyondBase : UnitBase
         get => _power + AdditionalATK;
         set
         {
-            _power = value;
-            OnPowerChange?.Invoke(Power);
+            base.Power = value;
         }
     }
 
@@ -46,7 +45,6 @@ public class BeyondBase : UnitBase
         set
         {
             _additionalATK = value;
-            OnPowerChange?.Invoke(Power);
         }
     }
 

@@ -5,7 +5,7 @@ public class MissionClear : QuestBase
 {
     public override void Init()
     {
-        UIManager.Instance.Get<MissionUI>().OnMissionClear += () =>
+        UIManager.Instance.Get<MissionUI>().OnMissionClear += missonBase =>
         {
             PlayerData.Instance.SetQuestSaveData(questName, 1);
         };

@@ -25,6 +25,8 @@ public abstract class ItemBase : ScriptableObject
     public float Value => (early + (Level * weight));
     public string Amount => $"<color=red><b>{Value}</color></b>";
 
+    public event Action<ItemBase> OnItemUse;
+
 
     public void TryUse()
     {
@@ -36,6 +38,6 @@ public abstract class ItemBase : ScriptableObject
 
     protected void Notice()
     {
-        UIManager.Instance.Get<NoticeEffectUI>().Show(itemImage, $"\"{itemName}\" 효과발동");
+        OnItemUse?.Invoke(this);
     }
 }

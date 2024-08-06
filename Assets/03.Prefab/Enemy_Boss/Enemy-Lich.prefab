@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 3090958273640581768}
   - component: {fileID: 8122880597539461383}
   - component: {fileID: 6445807929976893189}
-  - component: {fileID: 1627235295793521301}
+  - component: {fileID: 5594600552073147594}
   m_Layer: 10
   m_Name: Enemy-Lich
   m_TagString: Untagged
@@ -233,9 +233,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &1627235295793521301
+  m_Radius: 1.0333035
+  m_Center: {x: 0, y: 0.9823148, z: 0}
+--- !u!114 &5594600552073147594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2459293992245913677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309021ed27542a749bd69389d2402e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: d76393d6d85cd984cab5fd076a588b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2472026685301800903

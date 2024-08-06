@@ -865,7 +865,7 @@ GameObject:
   - component: {fileID: 1443090595456036649}
   - component: {fileID: 1138386551469803365}
   - component: {fileID: 2472310068158316527}
-  - component: {fileID: 1618916608912747024}
+  - component: {fileID: 479753249099982457}
   m_Layer: 10
   m_Name: Enemy-Puncher
   m_TagString: Untagged
@@ -936,9 +936,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &1618916608912747024
+  m_Radius: 0.8176291
+  m_Center: {x: 0, y: 0.79801154, z: 0}
+--- !u!114 &479753249099982457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3886988971669258493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309021ed27542a749bd69389d2402e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: d76393d6d85cd984cab5fd076a588b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4050090194399533271

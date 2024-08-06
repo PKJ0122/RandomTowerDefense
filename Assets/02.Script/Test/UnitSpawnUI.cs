@@ -40,10 +40,8 @@ public class UnitSpawnUI : UIBase
 
         spawn.onClick.AddListener(() =>
         {
-            OnUnitSpawn?.Invoke(ObjectPoolManager.Instance.Get(((UnitKind)kind.value).ToString())
-                                                          .Get()
-                                                          .GetComponent<UnitBase>()
-                                                          .UnitSet(_slot, (UnitKind)kind.value, (UnitRank)rank.value));
+            Slot slot = SlotManager.IsVacancy();
+            OnUnitSpawn?.Invoke(UnitFactory.Instance.UnitCreat<UnitBase>(slot, (UnitKind)kind.value, (UnitRank)rank.value));
             Hide();
         });
         hide.onClick.AddListener(Hide);

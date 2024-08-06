@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 4340021700729448764}
   - component: {fileID: 1963395730958602748}
   - component: {fileID: 2579310522302295757}
-  - component: {fileID: 8614886205797193696}
+  - component: {fileID: 3755440150435206862}
   m_Layer: 10
   m_Name: Enemy-GoldBoss
   m_TagString: Untagged
@@ -500,9 +500,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &8614886205797193696
+  m_Radius: 0.8087268
+  m_Center: {x: 0, y: 0.73538446, z: 0}
+--- !u!114 &3755440150435206862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5168510064507210507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 309021ed27542a749bd69389d2402e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dc93adfc15ca254182f6a8ed931cdcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5459504247869714168

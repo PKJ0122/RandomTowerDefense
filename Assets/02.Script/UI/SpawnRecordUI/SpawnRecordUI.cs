@@ -31,7 +31,5 @@ public class SpawnRecordUI : UIBase
                                                         .SetText(unit);
 
         obj.transform.SetParent(_location,false);
-
-        Handheld.Vibrate();
     }
 }

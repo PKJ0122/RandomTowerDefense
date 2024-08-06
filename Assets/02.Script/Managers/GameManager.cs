@@ -107,10 +107,10 @@ public class GameManager : SingletonMonoBase<GameManager>
     IEnumerator C_Game()
     {
         yield return delay;
-        OnGameStart?.Invoke();
         Gold = START_GOLD;
         Wave = 0;
-        Key = 50;
+        Key = 0;
+        OnGameStart?.Invoke();
 
 
         while (Wave + 1 <= 50)

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class BeyondCraftingUI : UIBase
 {
-    BeyondCraftingMethods _beyondCraftingMethods;
     Button _beyondSlotPrefab;
     Transform _location;
     RectTransform _content;
@@ -25,7 +25,6 @@ public class BeyondCraftingUI : UIBase
     protected override void Awake()
     {
         base.Awake();
-        _beyondCraftingMethods = Resources.Load<BeyondCraftingMethods>("BeyondCraftingMethods");
         _beyondSlotPrefab = Resources.Load<Button>("Button - BeyondSlot");
         _info = transform.Find("Panel/Image/Image - Info").GetComponent<Transform>();
         _location = transform.Find("Panel/Image/Scroll View/Viewport/Content").GetComponent<Transform>();
@@ -39,19 +38,14 @@ public class BeyondCraftingUI : UIBase
         _beyond.onClick.AddListener(Beyond);
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
-    }
-
-    private void Start()
-    {
-        foreach (KeyValuePair<UnitKind, BeyondCraftingData> item in PlayerData.beyondCraftingDatas)
+        
+        BeyondCraftingCounterManager.Instance.OnCounterCreate += counter =>
         {
             Button beyondInfo = Instantiate(_beyondSlotPrefab, _location);
             Image unitImg = beyondInfo.transform.Find("Image - Unit").GetComponent<Image>();
             Image creatPossible = beyondInfo.transform.Find("Image - Creat").GetComponent<Image>();
-            BeyondCraftingCounter counter =
-                new BeyondCraftingCounter(_beyondCraftingMethods.BeyondCraftingMethodDatas[item.Key]);
 
-            UnitData unitData = UnitRepository.UnitKindDatas[item.Key];
+            UnitData unitData = UnitRepository.UnitKindDatas[counter.Method.unitKind];
             unitImg.sprite = unitData.unitImg;
 
             beyondInfo.onClick.AddListener(() =>
@@ -66,14 +60,13 @@ public class BeyondCraftingUI : UIBase
                 if (value)
                 {
                     beyondInfo.transform.SetAsFirstSibling();
-                    UIManager.Instance.Get<NoticeEffectUI>().Show(unitData.unitImg, "\"초월\" 준비완료");
                 }
                 else
                 {
                     beyondInfo.transform.SetAsLastSibling();
                 }
             };
-        }
+        };
     }
 
     public override void Show()
