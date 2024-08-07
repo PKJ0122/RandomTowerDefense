@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class DailyShopPage : ShopPageBase
     ItemDatas _itemDatas;
 
     Action OnLastShopChangeHandler;
+
 
 
     protected override void Awake()
@@ -77,17 +79,18 @@ public class DailyShopPage : ShopPageBase
             if (shopData.isBuy) continue;
 
             itemBuyButton.onClick.RemoveAllListeners();
-            itemBuyButton.onClick.AddListener(() =>
+
+            Func<bool> action = () =>
             {
                 if (shopData.priceKind == GOLD)
                 {
-                    if (PlayerData.Instance.Gold < shopData.price) return;
+                    if (PlayerData.Instance.Gold < shopData.price) return false;
 
                     PlayerData.Instance.Gold -= shopData.price;
                 }
                 else if (shopData.priceKind == DIAMOND)
                 {
-                    if (PlayerData.Instance.Diamond < shopData.price) return;
+                    if (PlayerData.Instance.Diamond < shopData.price) return false;
 
                     PlayerData.Instance.Diamond -= shopData.price;
                 }
@@ -95,8 +98,12 @@ public class DailyShopPage : ShopPageBase
                 shopData.isBuy = true;
                 buyObject.gameObject.SetActive(true);
                 PlayerData.Instance.SetItemAmount(shopData.itemName, 1);
-                UIManager.Instance.Get<ItemInfoUI>().Show(shopData.itemName);
                 itemBuyButton.onClick.RemoveAllListeners();
+                return true;
+            };
+            itemBuyButton.onClick.AddListener(() =>
+            {
+                UIManager.Instance.Get<ItemBuyInfoUI>().Show(action,shopData);
             });
         }
     }

@@ -28,7 +28,7 @@ public class SpawnRecordText : PoolObject
         return this;
     }
 
-    YieldInstruction _delay = new WaitForSeconds(5);
+    WaitForSecondsRealtime _delay = new WaitForSecondsRealtime(3f);
 
     IEnumerator C_Activity()
     {

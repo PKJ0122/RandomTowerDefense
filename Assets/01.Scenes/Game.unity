@@ -16842,10 +16842,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 34858131461358521, guid: 449d19e09150c4e428711a9762e32112, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6417316658285108171, guid: 449d19e09150c4e428711a9762e32112, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -17730,11 +17726,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493629300496364466, guid: 3157407d626d4cc48b36b713fd3cdbfb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 45434628
+      value: 46986412
       objectReference: {fileID: 0}
     - target: {fileID: 8375454493777996613, guid: 3157407d626d4cc48b36b713fd3cdbfb, type: 3}
       propertyPath: m_Name
       value: Canvas - Mission
+      objectReference: {fileID: 0}
+    - target: {fileID: 8473625402614450364, guid: 3157407d626d4cc48b36b713fd3cdbfb, type: 3}
+      propertyPath: m_Size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18264,14 +18264,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8844277862621086121, guid: ca9c278cbc784d540b34ce9c8d8e9bc0, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -388
-      objectReference: {fileID: 0}
-    - target: {fileID: 8844277862621086121, guid: ca9c278cbc784d540b34ce9c8d8e9bc0, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 256
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18410,10 +18402,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1812767435404096496, guid: d897a97485ee6e4479c803c8163bf3d9, type: 3}
-      propertyPath: m_text
-      value: "\uBCF4\uC2A4 \uC18C\uD658"
-      objectReference: {fileID: 0}
     - target: {fileID: 3314787240926070141, guid: d897a97485ee6e4479c803c8163bf3d9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -18494,17 +18482,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6263132124848620323, guid: d897a97485ee6e4479c803c8163bf3d9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6641147143384891663, guid: d897a97485ee6e4479c803c8163bf3d9, type: 3}
       propertyPath: m_Name
       value: Canvas - GoldBossButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 7572533397887949781, guid: d897a97485ee6e4479c803c8163bf3d9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -68.8999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19534,7 +19514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7990254238866128395, guid: 0ea94e3dd64da5b4a8bcba132051fe08, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11760337
+      value: 12390795
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19719,10 +19699,6 @@ PrefabInstance:
     - target: {fileID: 2655444983254978668, guid: dc964c294b93b064098b930c0cb07245, type: 3}
       propertyPath: m_Name
       value: Canvas - SpawnRecord
-      objectReference: {fileID: 0}
-    - target: {fileID: 2865648869099250143, guid: dc964c294b93b064098b930c0cb07245, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 467
       objectReference: {fileID: 0}
     - target: {fileID: 6579202087579938420, guid: dc964c294b93b064098b930c0cb07245, type: 3}
       propertyPath: m_Pivot.x

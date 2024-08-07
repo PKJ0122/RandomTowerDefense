@@ -36,6 +36,8 @@ public class MainUI : UIBase
         {
             _playerName.text = value;
         };
+
+        SoundManager.Instance.PlaySound(BGM.Lobby);
     }
 
     void Start()

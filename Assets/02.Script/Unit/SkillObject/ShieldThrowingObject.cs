@@ -12,6 +12,12 @@ public class ShieldThrowingObject : SkillObject
         if (_isGiveDamege)
             return;
 
+        if (!_target.gameObject.activeSelf)
+        {
+            _isGiveDamege = true;
+            RelasePool();
+        }
+
         _tick += Time.deltaTime;
         transform.position = Vector3.Lerp(_caster.transform.position, _target.transform.position, _tick / ARRIVAL_TIME);
         transform.LookAt(_target.transform.position);

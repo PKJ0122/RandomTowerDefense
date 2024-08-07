@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Promotion
   m_EditorClassIdentifier: 
   itemName: "\uC2B9\uC9C4"
-  description: "\uB9CC\uD07C \uB9E4\uD134 \uACE0\uC815\uC801\uC73C\uB85C \uC9C0\uAE09\uBC1B\uB294
-    \uC774\uC790\uB97C \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
+  description: "\uB9E4\uD134 \uACE0\uC815\uC801\uC73C\uB85C \uC9C0\uAE09\uB418\uB294
+    \uC774\uC790\uAC00 Amount\uACE8\uB4DC \uC99D\uAC00\uD569\uB2C8\uB2E4."
   itemImage: {fileID: 733066063, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
-  early: 0
-  weight: 0
+  early: 10
+  weight: 5

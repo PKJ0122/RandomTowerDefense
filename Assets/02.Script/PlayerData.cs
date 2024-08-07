@@ -258,6 +258,18 @@ public class PlayerData : SingletonMonoBase<PlayerData>
         return itemLevels.ContainsKey(itemName);
     }
 
+    /// <summary>
+    /// 메일 수령 확인 데이터 수정하는 함수
+    /// </summary>
+    /// <param name="mailName">메일 이름</param>
+    public void SetMailData(string mailName)
+    {
+        MailSaveData mailSaveData = new MailSaveData() { mailName = mailName };
+
+        mailSaveDatas.Add(mailName, mailSaveData);
+        PlayerDataContainer.mailSaveDatas.Add(mailSaveData);
+    }
+
     void SaveData()
     {
 #if UNITY_EDITOR

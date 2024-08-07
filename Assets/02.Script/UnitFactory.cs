@@ -25,6 +25,9 @@ public class UnitFactory : SingletonMonoBase<UnitFactory>
                                                   .UnitSet(slot, kind, rank);
 
         OnUnitCreat?.Invoke(unit);
+
+        if ((int)unit.Rank >= (int)UnitRank.Unique) SoundManager.Instance.Vibrate();
+
         return (T)unit;
     }
 

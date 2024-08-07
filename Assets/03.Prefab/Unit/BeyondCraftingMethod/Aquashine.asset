@@ -16,7 +16,7 @@ MonoBehaviour:
   beyondCraftingMaterials:
   - unitKind: 4
     unitRank: 4
-  - unitKind: 4
+  - unitKind: 5
     unitRank: 3
   - unitKind: 4
     unitRank: 2

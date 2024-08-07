@@ -129,6 +129,7 @@ public class MailBoxUI : UIBase
                 get.interactable = false;
                 diaAmount.text = "수령완료";
                 PlayerData.Instance.Diamond += item.Value.diamondAmount;
+                PlayerData.Instance.SetMailData(item.Key);
             });
         }
     }

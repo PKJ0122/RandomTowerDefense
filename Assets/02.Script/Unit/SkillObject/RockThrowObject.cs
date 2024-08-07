@@ -31,6 +31,8 @@ public class RockThrowObject : SkillObject
 
         while (tick <= THROWING_TIME)
         {
+            if (!_target.gameObject.activeSelf) break;
+
             tick += Time.deltaTime;
             transform.position = BezierCurves(_caster.transform.position, middle, _target.transform.position, tick / THROWING_TIME);
             transform.Rotate(10f, 0, 0);

@@ -5,11 +5,11 @@ using UnityEngine;
 [Serializable]
 public class PlayerSetting
 {
-    public float masterVolume;
+    public float masterVolume = -10;
     public bool masterMute;
-    public float bgmVolume;
+    public float bgmVolume = -10;
     public bool bgmMute;
-    public float sfxVolume;
+    public float sfxVolume = -10;
     public bool sfxMute;
     public bool vibration = true;
     public int frame = 3;

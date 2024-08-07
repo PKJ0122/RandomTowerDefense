@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UnitBase : PoolObject
 {
-    protected const float ATTACK_RANGE = 40f;
+    protected const float ATTACK_RANGE = 30f;
     protected const float CHECK_TIME = 2f;
     protected const int MP_RECOVERY_AMOUNT = 10;
 
@@ -207,6 +207,7 @@ public class UnitBase : PoolObject
     {
         OnDisable?.Invoke();
         OnDisable = null;
+        _targetEnemy = null;
         base.RelasePool();
     }
 }

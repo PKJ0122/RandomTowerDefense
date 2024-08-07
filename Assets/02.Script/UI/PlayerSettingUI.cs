@@ -1,6 +1,6 @@
-using System;
 using System.IO;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -68,29 +68,39 @@ public class PlayerSettingUI : UIBase
         _masterMute.isOn = PlayerSetting.masterMute;
         _bgmMute.isOn = PlayerSetting.bgmMute;
         _sfxMute.isOn = PlayerSetting.sfxMute;
+
         _master.onValueChanged.AddListener(value =>
         {
             PlayerSetting.masterVolume = value;
+            SoundManager.Instance.VolumeChange("Master", value);
         });
         _bgm.onValueChanged.AddListener(value =>
         {
             PlayerSetting.bgmVolume = value;
+            SoundManager.Instance.VolumeChange("BGM", value);
         });
         _sfx.onValueChanged.AddListener(value =>
         {
             PlayerSetting.sfxVolume = value;
+            SoundManager.Instance.VolumeChange("SFX", value);
         });
         _masterMute.onValueChanged.AddListener(value =>
         {
             PlayerSetting.masterMute = value;
+            SoundManager.Instance.VolumeChange("Master", value ? PlayerSetting.masterVolume : -80);
+            _master.interactable = value;
         });
         _bgmMute.onValueChanged.AddListener(value =>
         {
             PlayerSetting.bgmMute = value;
+            SoundManager.Instance.VolumeChange("BGM", value ? PlayerSetting.bgmVolume : -80);
+            _bgm.interactable = value;
         });
         _sfxMute.onValueChanged.AddListener(value =>
         {
             PlayerSetting.sfxMute = value;
+            SoundManager.Instance.VolumeChange("SFX", value ? PlayerSetting.sfxVolume : -80);
+            _sfx.interactable = value;
         });
 
         _close.onClick.AddListener(Hide);
@@ -119,6 +129,14 @@ public class PlayerSettingUI : UIBase
 
         _tutorial = transform.Find("Panel/Image/Button - Tutorial").GetComponent<Button>();
         _tutorial.onClick.AddListener(() => SceneManager.LoadScene("Tutorial"));
+
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.VolumeChange("Master", PlayerSetting.masterVolume);
+        SoundManager.Instance.VolumeChange("BGM", PlayerSetting.bgmVolume);
+        SoundManager.Instance.VolumeChange("SFX", PlayerSetting.sfxVolume);
     }
 
     private void OnApplicationQuit()

@@ -46,6 +46,7 @@ public abstract class UIBase : MonoBehaviour
     {
         if (_canvas.enabled) return;
 
+        SoundManager.Instance.PlaySound(SFX.UI_OnOff);
         UIManager.Instance.PushUI(this);
         _canvas.enabled = true;
     }
@@ -57,6 +58,7 @@ public abstract class UIBase : MonoBehaviour
     {
         if (!_canvas.enabled) return;
 
+        SoundManager.Instance.PlaySound(SFX.UI_OnOff);
         UIManager.Instance.PopUI(this);
         _canvas.enabled = false;
     }

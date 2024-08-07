@@ -14,6 +14,11 @@ public class AceShotObject : SkillObject
         if (_isGiveDamege)
             return;
 
+        if (!_target.gameObject.activeSelf)
+        {
+            transform.position = Vector3.zero;
+        }
+
         _tick += Time.deltaTime;
         transform.position = Vector3.Lerp(_caster.transform.position, _target.transform.position, _tick);
 

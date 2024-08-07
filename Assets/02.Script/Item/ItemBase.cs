@@ -22,8 +22,8 @@ public abstract class ItemBase : ScriptableObject
         }
     }
 
-    public float Value => (early + (Level * weight));
-    public string Amount => $"<color=red><b>{Value}</color></b>";
+    public float Value => (early + Mathf.Max(0,Level - 1) * weight);
+    public string Description => description.Replace("Amount", $"<color=red><b>{Value}</color></b>");
 
     public event Action<ItemBase> OnItemUse;
 

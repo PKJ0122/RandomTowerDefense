@@ -12,6 +12,10 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
+        foreach (var item in _itemDatas.itemDatas)
+        {
+            PlayerData.Instance.SetItemAmount($"{item.itemName}", 1);
+        }
         foreach (ItemBase item in _itemDatas.itemDatas)
         {
             item.TryUse();
