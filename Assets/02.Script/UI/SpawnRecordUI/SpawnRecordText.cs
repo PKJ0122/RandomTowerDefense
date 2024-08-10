@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,8 +7,9 @@ public class SpawnRecordText : PoolObject
     TMP_Text _text;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _text = transform.Find("Text (TMP) - SpawnRecord").GetComponent<TMP_Text>();
     }
 

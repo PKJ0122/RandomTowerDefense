@@ -16,9 +16,9 @@ public abstract class ItemBase : ScriptableObject
     {
         get
         {
-            if (!PlayerData.itemLevels.ContainsKey(itemName)) return 0;
+            if (!PlayerData.ItemLevels.ContainsKey(itemName)) return 0;
             
-            return PlayerData.itemLevels[itemName].level;
+            return PlayerData.ItemLevels[itemName].level;
         }
     }
 
@@ -30,7 +30,7 @@ public abstract class ItemBase : ScriptableObject
 
     public void TryUse()
     {
-        if (!PlayerData.itemLevels.ContainsKey(itemName)) return;
+        if (!PlayerData.ItemLevels.ContainsKey(itemName)) return;
         Use();
     }
 

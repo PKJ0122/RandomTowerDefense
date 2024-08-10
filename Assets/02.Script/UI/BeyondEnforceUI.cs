@@ -46,7 +46,7 @@ public class BeyondEnforceUI : UIBase
 
                 if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank))
                 {
-                    UnitBase unit = SlotManager.Slots[hit.collider.GetComponent<Slot>()];
+                    UnitBase unit = SlotManager.Instance.Slots[hit.collider.GetComponent<Slot>()];
                     UnitInfo material = _currentBeyond.EnforceMaterial.Value;
                     if (material.unitKind == unit.Kind && material.unitRank == unit.Rank)
                     {
@@ -71,7 +71,7 @@ public class BeyondEnforceUI : UIBase
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank))
             {
-                UnitBase unit = SlotManager.Slots[hit.collider.GetComponent<Slot>()];
+                UnitBase unit = SlotManager.Instance.Slots[hit.collider.GetComponent<Slot>()];
                 UnitInfo material = _currentBeyond.EnforceMaterial.Value;
                 if (material.unitKind == unit.Kind && material.unitRank == unit.Rank)
                 {

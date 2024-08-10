@@ -40,7 +40,7 @@ public class UnitSpawnUI : UIBase
 
         spawn.onClick.AddListener(() =>
         {
-            Slot slot = SlotManager.IsVacancy();
+            Slot slot = SlotManager.Instance.IsVacancy();
             OnUnitSpawn?.Invoke(UnitFactory.Instance.UnitCreat<UnitBase>(slot, (UnitKind)kind.value, (UnitRank)rank.value));
             Hide();
         });

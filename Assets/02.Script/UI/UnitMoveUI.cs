@@ -79,10 +79,10 @@ public class UnitMoveUI : UIBase
 
     void UnitMove(Slot moveSlot)
     {
-        UnitBase changeUnit = SlotManager.Slots[moveSlot];
+        UnitBase changeUnit = SlotManager.Instance.Slots[moveSlot];
 
-        SlotManager.Slots[_currentSlot].Slot = moveSlot;
-        SlotManager.Slots[_currentSlot] = null;
+        SlotManager.Instance.Slots[_currentSlot].Slot = moveSlot;
+        SlotManager.Instance.Slots[_currentSlot] = null;
 
         if (changeUnit != null) changeUnit.Slot = _currentSlot;
 

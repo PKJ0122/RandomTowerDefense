@@ -125,7 +125,7 @@ public class BossCoinUI : UIBase
 
     void UseButtonClick(UnitRank rank)
     {
-        Slot slot = SlotManager.IsVacancy();
+        Slot slot = SlotManager.Instance.IsVacancy();
         if (slot == null)
         {
             return;

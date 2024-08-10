@@ -48,7 +48,7 @@ public class ItemShopPage : ShopPageBase
         OnAdClosedHandler += (object sender, EventArgs args) =>
         {
             UIManager.Instance.Get<ItemDrawUI>().Show();
-            PlayerData.Instance.PlayerDataContainer.adItemBuy = true;
+            PlayerData.PlayerDataContainer.adItemBuy = true;
             ShopRefresh();
             AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
         };
@@ -56,8 +56,8 @@ public class ItemShopPage : ShopPageBase
 
     protected override void ShopRefresh()
     {
-        Slots[0].Find("Panel - Buy").gameObject.SetActive(PlayerData.Instance.PlayerDataContainer.adItemBuy);
-        if (!PlayerData.Instance.PlayerDataContainer.adItemBuy)
+        Slots[0].Find("Panel - Buy").gameObject.SetActive(PlayerData.PlayerDataContainer.adItemBuy);
+        if (!PlayerData.PlayerDataContainer.adItemBuy)
         {
             Button adItem = Slots[0].GetComponent<Button>();
             adItem.onClick.RemoveAllListeners();

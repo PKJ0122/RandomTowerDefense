@@ -6,6 +6,5 @@ public class TenaciousLife : ItemBase
     protected override void Use()
     {
         UIManager.Instance.Get<EnemyAmountUI>().DieAmount += (int)Value;
-        Notice();
     }
 }

@@ -75,6 +75,7 @@ public class UnitBuyUI : UIBase
         UnitFactory.Instance.UnitCreat<UnitBase>(slot, RandomRank());
         GameManager.Instance.Gold -= UnitPrice;
         UnitPrice += WEIGHT;
+        OnUnitBuy?.Invoke();
     }
 
     /// <summary>

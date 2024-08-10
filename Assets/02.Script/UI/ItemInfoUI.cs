@@ -71,7 +71,7 @@ public class ItemInfoUI : UIBase
 
     public bool IsLevelUpPossible(string itemName)
     {
-        if (!PlayerData.itemLevels.TryGetValue(itemName, out ItemLevelData itemLevelData))
+        if (!PlayerData.ItemLevels.TryGetValue(itemName, out ItemLevelData itemLevelData))
         {
             _levelUp.gameObject.SetActive(false);
             _level.text = $"0 Lv";

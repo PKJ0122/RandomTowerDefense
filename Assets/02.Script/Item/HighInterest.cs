@@ -6,6 +6,5 @@ public class HighInterest : ItemBase
     protected override void Use()
     {
         GameManager.Instance.Interest += (int)Value;
-        Notice();
     }
 }

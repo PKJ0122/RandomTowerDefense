@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GameEndUI : UIBase
 {
-    Dictionary<RewerdRank,RewerdData> _rewerdDatas = new Dictionary<RewerdRank,RewerdData>();
+    Dictionary<RewerdRank, RewerdData> _rewerdDatas = new Dictionary<RewerdRank, RewerdData>();
 
     const int GAME_CLEAR_WAVE = 51;
 
@@ -20,6 +20,7 @@ public class GameEndUI : UIBase
     Transform _rewerdLocation;
 
     public event Action OnReStartButtonClick;
+    public event Action OnLobbyButtonClick;
     Action _onHide;
 
     protected override void Awake()
@@ -33,8 +34,14 @@ public class GameEndUI : UIBase
         {
             Hide();
             OnReStartButtonClick?.Invoke();
+            GameManager.Instance.GameReStart();
         });
-        _lobby.onClick.AddListener(() => SceneManager.LoadScene("Lobby"));
+        _lobby.onClick.AddListener(() =>
+        {
+            Time.timeScale = 1f;
+            OnLobbyButtonClick?.Invoke();
+            SceneManager.LoadScene("Lobby");
+        });
         _rewerdLocation = transform.Find("Panel/Image - Rewerd").GetComponent<Transform>();
 
         RewerdDatas rewerdDatas = Resources.Load<RewerdDatas>("RewerdDatas");
@@ -82,16 +89,16 @@ public class GameEndUI : UIBase
                 {
                     rewerd = chest.rewerdPercentageDatas[j].rewerdList;
                     int min = chest.rewerdPercentageDatas[j].MinAmount;
-                    int max = chest.rewerdPercentageDatas[j].MaxAmount+1;
+                    int max = chest.rewerdPercentageDatas[j].MaxAmount + 1;
                     rewerdAmount = Random.Range(min, max);
                     break;
                 }
                 rewerdChacker1 = rewerdChacker2;
             }
             GameObject chestObject = Instantiate(chest.rewerPrefab, _rewerdLocation);
-            _onHide += () => 
-            {  
-                chestObject.SetActive(false); 
+            _onHide += () =>
+            {
+                chestObject.SetActive(false);
             };
             chestObject.GetComponent<Button>().onClick.AddListener(() =>
             {

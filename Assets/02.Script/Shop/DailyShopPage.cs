@@ -45,22 +45,22 @@ public class DailyShopPage : ShopPageBase
     protected override void ShopRefresh()
     {
         Transform buy = Slots[0].Find("Panel - Buy").GetComponent<Transform>();
-        buy.gameObject.SetActive(PlayerData.Instance.PlayerDataContainer.freeDiamondBuy);
+        buy.gameObject.SetActive(PlayerData.PlayerDataContainer.freeDiamondBuy);
 
-        if (!PlayerData.Instance.PlayerDataContainer.freeDiamondBuy)
+        if (!PlayerData.PlayerDataContainer.freeDiamondBuy)
         {
             Button freeDiamond = Slots[0].GetComponent<Button>();
             freeDiamond.onClick.RemoveAllListeners();
             freeDiamond.onClick.AddListener(() =>
             {
-                PlayerData.Instance.PlayerDataContainer.freeDiamondBuy = true;
+                PlayerData.PlayerDataContainer.freeDiamondBuy = true;
                 buy.gameObject.SetActive(true);
                 PlayerData.Instance.Diamond += 500;
                 freeDiamond.onClick.RemoveAllListeners();
             });
         }
 
-        List<ShopSaveData> shopDatas = PlayerData.Instance.PlayerDataContainer.shopSaveDatas;
+        List<ShopSaveData> shopDatas = PlayerData.PlayerDataContainer.shopSaveDatas;
 
         for (int i = 1; i < Slots.Length; i++)
         {

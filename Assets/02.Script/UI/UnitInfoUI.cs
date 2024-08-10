@@ -80,7 +80,7 @@ public class UnitInfoUI : UIBase
         _beyondEnforceUp = _beyondEnforce.transform.Find("Button - EnforceUp").GetComponent<Button>();
         
 
-        _unitDamageReSet.onClick.AddListener(() => SlotManager.Slots[_currentSlot].DamageReSet());
+        _unitDamageReSet.onClick.AddListener(() => SlotManager.Instance.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
 
         _onPowerChangeHandler += value =>
@@ -116,7 +116,7 @@ public class UnitInfoUI : UIBase
         _beyondEnforceUp.onClick.AddListener(() =>
         {
             Hide();
-            UIManager.Instance.Get<BeyondEnforceUI>().Show((BeyondBase)SlotManager.Slots[_currentSlot]);
+            UIManager.Instance.Get<BeyondEnforceUI>().Show((BeyondBase)SlotManager.Instance.Slots[_currentSlot]);
         });
     }
 
@@ -124,7 +124,7 @@ public class UnitInfoUI : UIBase
     {
         base.Show();
         _currentSlot = slot;
-        UnitBase unit = SlotManager.Slots[_currentSlot];
+        UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
         UnitData unitData = UnitRepository.UnitKindDatas[unit.Kind];
         _unitImage.sprite = unitData.unitImg;
         _unitName.text = $"{unitData.unitName}";
@@ -171,7 +171,7 @@ public class UnitInfoUI : UIBase
     public override void Hide()
     {
         base.Hide();
-        UnitBase unit = SlotManager.Slots[_currentSlot];
+        UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
         unit.OnPowerChange -= _onPowerChangeHandler;
         unit.OnDamageChange -= _onDamageChangeHandler;
         unit.OnMpChange -= _onMpChangeHandler;
@@ -182,18 +182,18 @@ public class UnitInfoUI : UIBase
         Hide();
         GameManager.Instance.Gold += UnitSellPrice();
         OnUnitSell?.Invoke(UnitSellPrice());
-        SlotManager.Slots[_currentSlot].RelasePool();
+        SlotManager.Instance.Slots[_currentSlot].RelasePool();
     }
 
     int UnitSellPrice()
     {
-        UnitBase unit = SlotManager.Slots[_currentSlot];
+        UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
         return (int)(Mathf.Pow(3, (int)unit.Rank) * UIManager.Instance.Get<UnitBuyUI>().UnitPrice / 2);
     }
 
     void UnitMix()
     {
-        UnitBase baseUnit = SlotManager.Slots[_currentSlot];
+        UnitBase baseUnit = SlotManager.Instance.Slots[_currentSlot];
         UnitKind unitKind = baseUnit.Kind;
         UnitRank unitRank = baseUnit.Rank;
 

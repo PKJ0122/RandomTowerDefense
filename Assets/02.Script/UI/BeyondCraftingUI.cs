@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class BeyondCraftingUI : UIBase
 {
@@ -38,7 +37,7 @@ public class BeyondCraftingUI : UIBase
         _beyond.onClick.AddListener(Beyond);
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
-        
+
         BeyondCraftingCounterManager.Instance.OnCounterCreate += counter =>
         {
             Button beyondInfo = Instantiate(_beyondSlotPrefab, _location);

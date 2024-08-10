@@ -1,6 +1,7 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,7 @@ public class GPGSManager : MonoBehaviour
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
-    internal void ProcessAuthentication(SignInStatus status)
+    public void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
         {
@@ -52,13 +53,13 @@ public class GPGSManager : MonoBehaviour
 
         if (data == "")
         {
-            PlayerData.Instance.PlayerDataContainer = new PlayerDataContainer();
+            PlayerData.PlayerDataContainer = new PlayerDataContainer();
             //SceneManager.LoadScene("Tutorial");
             SceneManager.LoadScene("Lobby");
         }
         else
         {
-            PlayerData.Instance.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+            PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
             SceneManager.LoadScene("Lobby");
         }
     }

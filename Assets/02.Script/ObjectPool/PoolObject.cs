@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -12,6 +10,16 @@ public abstract class PoolObject : MonoBehaviour
         set => _myPool = value;
     }
 
+    protected virtual void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += RelasePool;
+        UIManager.Instance.Get<GameEndUI>().OnLobbyButtonClick += RelasePool;
+    }
 
     public PoolObject SetPool(IObjectPool<PoolObject> pool)
     {
@@ -21,6 +29,8 @@ public abstract class PoolObject : MonoBehaviour
 
     public virtual void RelasePool()
     {
+        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick -= RelasePool;
+        UIManager.Instance.Get<GameEndUI>().OnLobbyButtonClick -= RelasePool;
         MyPool.Release(this);
     }
 }

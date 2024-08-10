@@ -6,6 +6,5 @@ public class Promotion : ItemBase
     protected override void Use()
     {
         GameManager.Instance.Salary += (int)Value;
-        Notice();
     }
 }

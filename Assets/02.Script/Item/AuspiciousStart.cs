@@ -10,7 +10,6 @@ public class AuspiciousStart : ItemBase
             if (v == 0)
             {
                 GameManager.Instance.Gold += (int)Value;
-                Notice();
             }
         };
     }

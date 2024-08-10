@@ -1,7 +1,5 @@
-using OpenCover.Framework.Model;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class BeyondCraftingCounter
 {
@@ -11,43 +9,10 @@ public class BeyondCraftingCounter
         Init();
     }
 
-    public BeyondCraftingCounter(BeyondCraftingMethod method,UnitATKChecker unitATKChecker)
-    {
-        _method = method;
-        OnMaterialsStateChange += () =>
-        {
-            for (int i = 0; i < _materials.Length; i++)
-            {
-                if (_materials[i].Count == 0)
-                {
-                    IsBeyondCraftingPossible = false;
-                    return;
-                }
-            }
-            IsBeyondCraftingPossible = true;
-        };
-        unitATKChecker.OnUnit += unit =>
-        {
-            for (int i = 0; i < _materials.Length; i++)
-            {
-                if (unit.Kind == _method.beyondCraftingMaterials[i].unitKind &&
-                    unit.Rank == _method.beyondCraftingMaterials[i].unitRank)
-                {
-                    UnitAdd(unit, _materials[i]);
-                    unit.OnDisable += () =>
-                    {
-                        UnitRemove(unit, _materials[i]);
-                    };
-                    break;
-                }
-            }
-        };
-    }
-
     BeyondCraftingMethod _method;
     public BeyondCraftingMethod Method => _method;
 
-    List<UnitBase>[] _materials = new List<UnitBase>[3] { new List<UnitBase>(), new List<UnitBase>() ,new List<UnitBase>() };
+    List<UnitBase>[] _materials = new List<UnitBase>[3] { new List<UnitBase>(), new List<UnitBase>(), new List<UnitBase>() };
     public List<UnitBase>[] Materials => _materials;
 
     bool _isBeyondCraftingPossible;
@@ -99,13 +64,13 @@ public class BeyondCraftingCounter
         };
     }
 
-    void UnitAdd(UnitBase unit , List<UnitBase> list)
+    void UnitAdd(UnitBase unit, List<UnitBase> list)
     {
         list.Add(unit);
         OnMaterialsStateChange?.Invoke();
     }
 
-    void UnitRemove(UnitBase unit , List<UnitBase> list)
+    void UnitRemove(UnitBase unit, List<UnitBase> list)
     {
         list.Remove(unit);
         OnMaterialsStateChange?.Invoke();

@@ -1,9 +1,11 @@
 using System;
+using UnityEngine;
 
+[Serializable]
 public class BeyondCraftingData
 {
     public UnitKind unitKind;
-    bool _isHave;
+    [SerializeField] bool _isHave;
     public bool IsHave
     {
         get => _isHave;

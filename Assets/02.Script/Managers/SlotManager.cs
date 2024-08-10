@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlotManager : MonoBehaviour
+public class SlotManager : SingletonMonoBase<SlotManager>
 {
-    static Dictionary<Slot, UnitBase> s_slots;
-    static public Dictionary<Slot, UnitBase> Slots
+    Dictionary<Slot, UnitBase> s_slots;
+    public Dictionary<Slot, UnitBase> Slots
     {
         get
         {
@@ -19,7 +19,8 @@ public class SlotManager : MonoBehaviour
 
     bool _isClickPossible;
 
-    void Awake()
+
+    protected override void Awake()
     {
         _layerMank = LayerMask.GetMask("Slot");
         _isClickPossible = true;
@@ -39,6 +40,14 @@ public class SlotManager : MonoBehaviour
                 Slots[unit.Slot] = null;
             };
         };
+    }
+    void Init()
+    {
+        Slot[] slots = transform.GetComponentsInChildren<Slot>();
+        foreach (var item in slots)
+        {
+            Slots.Add(item, null);
+        }
     }
 
     void Update()
@@ -72,29 +81,10 @@ public class SlotManager : MonoBehaviour
         }
     }
 
-    //void OnDisable()
-    //{
-    //    UIManager.Instance.Get<UnitBuyUI>().onBuyButtonClick -= () => IsVacancy();
-    //    UIManager.Instance.Get<UnitBuyUI>().onUnitBuySuccess -= (slot, unit) =>
-    //    {
-    //        Slots[slot] = unit;
-    //        unit.gameObject.transform.position = slot.gameObject.transform.position;
-    //    };
-    //}
-
-    void Init()
-    {
-        Slot[] slots = transform.GetComponentsInChildren<Slot>();
-        foreach (Slot slot in slots)
-        {
-            Slots.Add(slot, null);
-        }
-    }
-
     /// <summary>
     /// 유닛이 생성될 공간이 있는지 확인하고 있다면 해당 Slot을 반환해주는 함수 / 빈자리가 없다면 null을 반환
     /// </summary>
-    static public Slot IsVacancy()
+    public Slot IsVacancy()
     {
         foreach (KeyValuePair<Slot, UnitBase> item in Slots)
         {

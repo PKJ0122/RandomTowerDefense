@@ -83,7 +83,6 @@ public class GameManager : SingletonMonoBase<GameManager>
     protected override void Awake()
     {
         base.Awake();
-
         OnWaveChange += value =>
         {
             if (Wave <= 0) return;
@@ -96,7 +95,6 @@ public class GameManager : SingletonMonoBase<GameManager>
     private void Start()
     {
         UnitFactory.Instance.OnUnitCreat += unit => RegisterUnit(unit);
-        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += GameReStart;
     }
 
     YieldInstruction delay = new WaitForSeconds(1f); //µô·¹ÀÌ·Î »ç¿ëÇÒ °´Ã¼
@@ -156,7 +154,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         UIManager.Instance.Get<GameEndUI>().Show(Wave);
     }
 
-    void GameReStart()
+    public void GameReStart()
     {
         foreach (KeyValuePair<UnitKind, List<UnitBase>> item in Units)
         {

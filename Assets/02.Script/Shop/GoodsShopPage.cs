@@ -42,7 +42,7 @@ public class GoodsShopPage : ShopPageBase
         OnAdClosedHandler += (object sender, EventArgs args) =>
         {
             PlayerData.Instance.Diamond += AD_REWARD;
-            PlayerData.Instance.PlayerDataContainer.adDiamondBuy = true;
+            PlayerData.PlayerDataContainer.adDiamondBuy = true;
             ShopRefresh();
             AdManager.Instance.RewardedAd.OnAdClosed -= OnAdClosedHandler;
         };
@@ -50,8 +50,8 @@ public class GoodsShopPage : ShopPageBase
 
     protected override void ShopRefresh()
     {
-        Slots[0].Find("Panel - Buy").gameObject.SetActive(PlayerData.Instance.PlayerDataContainer.adDiamondBuy);
-        if (!PlayerData.Instance.PlayerDataContainer.adDiamondBuy)
+        Slots[0].Find("Panel - Buy").gameObject.SetActive(PlayerData.PlayerDataContainer.adDiamondBuy);
+        if (!PlayerData.PlayerDataContainer.adDiamondBuy)
         {
             Button adItem = Slots[0].GetComponent<Button>();
             adItem.onClick.RemoveAllListeners();

@@ -31,7 +31,7 @@ public class UnitBase : PoolObject
         {
             _slot = value;
             transform.position = _slot == null ? Vector3.zero : _slot.transform.position;
-            SlotManager.Slots[_slot] = this;
+            SlotManager.Instance.Slots[_slot] = this;
         }
     }
     public virtual float Power
@@ -70,8 +70,9 @@ public class UnitBase : PoolObject
     public event Action OnDisable;
 
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _animator = GetComponent<Animator>();
         _particleSystem = transform.Find("Rank").GetComponent<ParticleSystem>();
         _targetMask = LayerMask.GetMask("Enemy");

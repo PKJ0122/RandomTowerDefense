@@ -62,7 +62,7 @@ public class InventoryUI : UIBase
             itemCountT.text = "0 / 1";
             return;
         }
-        ItemLevelData itemLevelData = PlayerData.itemLevels[itemName];
+        ItemLevelData itemLevelData = PlayerData.ItemLevels[itemName];
 
         int level = Math.Min(9, itemLevelData.level);
 

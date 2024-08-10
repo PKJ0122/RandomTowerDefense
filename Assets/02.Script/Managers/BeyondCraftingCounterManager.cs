@@ -18,8 +18,10 @@ public class BeyondCraftingCounterManager : SingletonMonoBase<BeyondCraftingCoun
 
     private void Start()
     {
-        foreach (var item in PlayerData.beyondCraftingDatas)
+        foreach (var item in PlayerData.BeyondCraftingDatas)
         {
+            if (!item.Value.IsHave) continue; 
+
             BeyondCraftingCounter counter =
                 new BeyondCraftingCounter(_beyondCraftingMethods.BeyondCraftingMethodDatas[item.Key]);
 

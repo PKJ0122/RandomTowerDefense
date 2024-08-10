@@ -3,6 +3,7 @@ using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -10,37 +11,89 @@ public class PlayerData : SingletonMonoBase<PlayerData>
 {
     private const string FILENAME = "PlayerData.dat";
 
-    public static Dictionary<UnitKind, UnitLevelData> unitLevels = new Dictionary<UnitKind, UnitLevelData>(8);
-    public static Dictionary<string, ItemLevelData> itemLevels = new Dictionary<string, ItemLevelData>(10);
-    public static Dictionary<string, QuestSaveData> questDatas = new Dictionary<string, QuestSaveData>(9);
-    public static Dictionary<UnitKind, BeyondCraftingData> beyondCraftingDatas = new Dictionary<UnitKind, BeyondCraftingData>(8);
-    public static Dictionary<string, MailSaveData> mailSaveDatas = new Dictionary<string, MailSaveData>(5);
+    #region User Data Dictionary
+    static Dictionary<string, ItemLevelData> s_itemLevels;
+    static Dictionary<string, QuestSaveData> s_questDatas;
+    static Dictionary<UnitKind, BeyondCraftingData> s_beyondCraftingDatas;
+    static Dictionary<string, MailSaveData> s_mailSaveDatas;
+
+    public static Dictionary<string, ItemLevelData> ItemLevels
+    {
+        get
+        {
+            if (s_itemLevels == null)
+            {
+                s_itemLevels = new Dictionary<string, ItemLevelData>();
+                foreach (ItemLevelData itemLevelData in PlayerDataContainer.itemLevelData)
+                {
+                    s_itemLevels.Add(itemLevelData.itemName, itemLevelData);
+                }
+            }
+            return s_itemLevels;
+        }
+    }
+    public static Dictionary<string, QuestSaveData> QuestDatas
+    {
+        get
+        {
+            if (s_questDatas == null)
+            {
+                s_questDatas = new Dictionary<string, QuestSaveData>();
+                foreach (QuestSaveData questSaveData in PlayerDataContainer.questSaveDatas)
+                {
+                    s_questDatas.Add(questSaveData.QuestName, questSaveData);
+                }
+            }
+            return s_questDatas;
+        }
+    }
+    public static Dictionary<UnitKind, BeyondCraftingData> BeyondCraftingDatas
+    {
+        get
+        {
+            if (s_beyondCraftingDatas == null)
+            {
+                s_beyondCraftingDatas = new Dictionary<UnitKind, BeyondCraftingData>();
+                foreach (BeyondCraftingData beyondCraftingData in PlayerDataContainer.beyondCraftingDatas)
+                {
+                    s_beyondCraftingDatas.Add(beyondCraftingData.unitKind, beyondCraftingData);
+                }
+            }
+            return s_beyondCraftingDatas;
+        }
+    }
+    public static Dictionary<string, MailSaveData> MailSaveDatas
+    {
+        get
+        {
+            if (s_mailSaveDatas == null)
+            {
+                s_mailSaveDatas = new Dictionary<string, MailSaveData>();
+
+                foreach (MailSaveData mailSaveData in PlayerDataContainer.mailSaveDatas)
+                {
+                    s_mailSaveDatas.Add(mailSaveData.mailName, mailSaveData);
+                }
+            }
+            return s_mailSaveDatas;
+        }
+    }
+    #endregion
 
     static PlayerDataContainer s_playerDataContainer;
-    public PlayerDataContainer PlayerDataContainer
+    public static PlayerDataContainer PlayerDataContainer
     {
         get
         {
             if (s_playerDataContainer == null)
+            {
                 s_playerDataContainer = new PlayerDataContainer();
-
+            }
             return s_playerDataContainer;
         }
         set
         {
             s_playerDataContainer = value;
-            PlayerDataSetting();
-        }
-    }
-
-    public string PlayerName
-    {
-        get => PlayerDataContainer.playerName;
-        set
-        {
-            PlayerDataContainer.playerName = value;
-            OnPlayerNameChange?.Invoke(value);
-            SaveData();
         }
     }
 
@@ -98,32 +151,6 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     public event Action<ItemLevelData> OnItemDataChange;
     public event Action<QuestSaveData> OnQuestSaveDataChange;
 
-
-
-    public void PlayerDataSetting()
-    {
-        foreach (UnitLevelData unitLevelData in PlayerDataContainer.unitLevelDatas)
-        {
-            unitLevels.Add(unitLevelData.unitKind, unitLevelData);
-        }
-        foreach (ItemLevelData itemLevelData in PlayerDataContainer.itemLevelData)
-        {
-            itemLevels.Add(itemLevelData.itemName, itemLevelData);
-        }
-        foreach (QuestSaveData questSaveData in PlayerDataContainer.questSaveDatas)
-        {
-            questDatas.Add(questSaveData.QuestName, questSaveData);
-        }
-        foreach (BeyondCraftingData beyondCraftingData in PlayerDataContainer.beyondCraftingDatas)
-        {
-            beyondCraftingDatas.Add(beyondCraftingData.unitKind, beyondCraftingData);
-        }
-        foreach (MailSaveData mailSaveData in PlayerDataContainer.mailSaveDatas)
-        {
-            mailSaveDatas.Add(mailSaveData.mailName, mailSaveData);
-        }
-    }
-
     /// <summary>
     /// 상점 세이브 데이터 설정 함수
     /// </summary>
@@ -144,39 +171,13 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     }
 
     /// <summary>
-    /// 대표 유닛의 경험치 올려주는 함수
-    /// </summary>
-    /// <param name="unitKind">유닛 종류</param>
-    /// <param name="experience">유닛 경험치</param>
-    public void SetUnitLevel(UnitKind unitKind, int pulsExperience)
-    {
-        if (unitLevels.TryGetValue(unitKind, out UnitLevelData unitLevelData))
-        {
-            unitLevelData.experience += pulsExperience;
-            OnUnitDataChange?.Invoke(unitLevelData);
-            SaveData();
-            return;
-        }
-
-        UnitLevelData newUnitLevelData = new UnitLevelData()
-        {
-            unitKind = unitKind,
-            experience = pulsExperience
-        };
-        unitLevels.Add(unitKind, newUnitLevelData);
-        PlayerDataContainer.unitLevelDatas.Add(newUnitLevelData);
-        OnUnitDataChange?.Invoke(newUnitLevelData);
-        SaveData();
-    }
-
-    /// <summary>
     /// 퀘스트 정보 변경함수
     /// </summary>
     /// <param name="qusetName"></param>
     /// <param name="amount"></param>
     public void SetQuestSaveData(string qusetName, int amount)
     {
-        if (questDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
+        if (QuestDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
         {
             questSaveData.Amount += amount;
             OnQuestSaveDataChange?.Invoke(questSaveData);
@@ -189,7 +190,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             QuestName = qusetName,
             Amount = amount
         };
-        questDatas.Add(qusetName, newQuestSaveData);
+        QuestDatas.Add(qusetName, newQuestSaveData);
         PlayerDataContainer.questSaveDatas.Add(newQuestSaveData);
         OnQuestSaveDataChange?.Invoke(newQuestSaveData);
         SaveData();
@@ -201,7 +202,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// <param name="qusetName">반환 할 퀘스트 이름</param>
     public QuestSaveData GetQuestData(string qusetName)
     {
-        if (questDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
+        if (QuestDatas.TryGetValue(qusetName, out QuestSaveData questSaveData))
         {
             return questSaveData;
         }
@@ -211,7 +212,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             QuestName = qusetName,
         };
 
-        questDatas.Add(qusetName, newQuestSaveData);
+        QuestDatas.Add(qusetName, newQuestSaveData);
         PlayerDataContainer.questSaveDatas.Add(newQuestSaveData);
         return newQuestSaveData;
     }
@@ -223,7 +224,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// <param name="itemAmount">변경 개수</param>
     public void SetItemAmount(string itemName, int itemAmount)
     {
-        if (itemLevels.TryGetValue(itemName, out ItemLevelData itemLevelData))
+        if (ItemLevels.TryGetValue(itemName, out ItemLevelData itemLevelData))
         {
             itemLevelData.Amount += itemAmount;
             OnItemDataChange?.Invoke(itemLevelData);
@@ -236,7 +237,7 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             itemName = itemName,
             Amount = itemAmount
         };
-        itemLevels.Add(itemName, newItemLevelData);
+        ItemLevels.Add(itemName, newItemLevelData);
         PlayerDataContainer.itemLevelData.Add(newItemLevelData);
         OnItemDataChange?.Invoke(newItemLevelData);
         SaveData();
@@ -249,13 +250,13 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     /// <param name="itemAmount">레벨업 필요조건 개수 (양수로 입력)</param>
     public void SetItemLevel(string itemName, int itemAmount)
     {
-        itemLevels[itemName].level++;
+        ItemLevels[itemName].level++;
         SetItemAmount(itemName, -itemAmount);
     }
 
     public bool IsItemPossess(string itemName)
     {
-        return itemLevels.ContainsKey(itemName);
+        return ItemLevels.ContainsKey(itemName);
     }
 
     /// <summary>
@@ -266,8 +267,9 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     {
         MailSaveData mailSaveData = new MailSaveData() { mailName = mailName };
 
-        mailSaveDatas.Add(mailName, mailSaveData);
+        MailSaveDatas.Add(mailName, mailSaveData);
         PlayerDataContainer.mailSaveDatas.Add(mailSaveData);
+        SaveData();
     }
 
     void SaveData()
@@ -311,5 +313,4 @@ public class PlayerData : SingletonMonoBase<PlayerData>
             Debug.Log("저장 성공");
         }
     }
-
 }

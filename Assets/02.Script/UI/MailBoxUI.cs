@@ -89,8 +89,8 @@ public class MailBoxUI : UIBase
 
     void Refresh()
     {
-        int num = PlayerData.Instance.PlayerDataContainer.mailSaveDatas.Count - 1;
-        List<MailSaveData> list = PlayerData.Instance.PlayerDataContainer.mailSaveDatas;
+        int num = PlayerData.PlayerDataContainer.mailSaveDatas.Count - 1;
+        List<MailSaveData> list = PlayerData.PlayerDataContainer.mailSaveDatas;
         for (int i = num; i >= 0; i--)
         {
             string mailName = list[i].mailName;
@@ -98,7 +98,7 @@ public class MailBoxUI : UIBase
             if (!_mailDatas.ContainsKey(mailName))
             {
                 list.RemoveAt(i);
-                PlayerData.mailSaveDatas.Remove(mailName);
+                PlayerData.MailSaveDatas.Remove(mailName);
             }
         }
 
@@ -110,7 +110,7 @@ public class MailBoxUI : UIBase
 
             if (!(startResive.Date <= nowTime.Date && nowTime.Date <= endResive.Date)) continue;
 
-            if (PlayerData.mailSaveDatas.ContainsKey(item.Key)) continue;
+            if (PlayerData.MailSaveDatas.ContainsKey(item.Key)) continue;
 
             Image mail = Instantiate(_mailPrefab, _location);
             TMP_Text mailName = mail.transform.Find("Text (TMP) - Name").GetComponent<TMP_Text>();

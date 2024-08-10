@@ -9,8 +9,9 @@ public class ItemEffect : PoolObject
     TMP_Text _itemName;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _item = transform.Find("Image - Item").GetComponent<Image>();
         _itemName = transform.Find("Text (TMP) - ItemName").GetComponent<TMP_Text>();
     }

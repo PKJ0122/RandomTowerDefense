@@ -44,7 +44,7 @@ public class ItemLevelUpUI : UIBase
 
     public void Refresh(string itemName)
     {
-        ItemLevelData itemLevelData = PlayerData.itemLevels[itemName];
+        ItemLevelData itemLevelData = PlayerData.ItemLevels[itemName];
         ItemBase itemData = _itemDatas.Items[itemName];
         _item.sprite = itemData.itemImage;
 

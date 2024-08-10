@@ -15,7 +15,7 @@ public class Negotiation : ItemBase
                 UnitRank unitrank = (UnitRank)((int)unit.Rank - 1);
 
                 Slot slot = null;
-                foreach (KeyValuePair<Slot, UnitBase> item in SlotManager.Slots)
+                foreach (KeyValuePair<Slot, UnitBase> item in SlotManager.Instance.Slots)
                 {
                     if (item.Value == null)
                     {

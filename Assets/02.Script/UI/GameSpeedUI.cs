@@ -28,10 +28,10 @@ public class GameSpeedUI : UIBase
     {
         base.Awake();
 
+
         _gameSpeed = MIN_SPEED;
         _gameSpeedB = transform.Find("Button - MissionButton").GetComponent<Button>();
         _gameSpeedT = transform.Find("Button - MissionButton/Panel/Text (TMP) - GameSpeed").GetComponent<TMP_Text>();
-
         _gameSpeedB.onClick.AddListener(() => GameSpeed++);
     }
 

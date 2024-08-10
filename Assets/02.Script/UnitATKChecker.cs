@@ -47,18 +47,13 @@ public class UnitATKChecker : SingletonMonoBase<UnitATKChecker>
         unitBuyUI = UIManager.Instance.Get<UnitBuyUI>();
         _beyondCraftingMethods = Resources.Load<BeyondCraftingMethods>("BeyondCraftingMethods");
 
-        foreach (BeyondCraftingMethod item in _beyondCraftingMethods.beyondCraftingMethods)
-        {
-            BeyondCraftingCounter counter = new BeyondCraftingCounter(item, this);
-            counters.Add(item.unitKind, counter);
-        }
 
         OnUnit += unit =>
         {
             unit.OnDisable += () =>
             {
                 units[unit.Kind][unit.Rank].Remove(unit);
-                SlotManager.Slots[unit.Slot] = null;
+                SlotManager.Instance.Slots[unit.Slot] = null;
             };
         };
 
@@ -372,7 +367,7 @@ public class UnitATKChecker : SingletonMonoBase<UnitATKChecker>
 
         UnitBase unit = ObjectPoolManager.Instance.Get($"{unitKind}").Get().GetComponent<UnitBase>();
 
-        unit.UnitSet(SlotManager.IsVacancy(), unitKind, unitRank);
+        unit.UnitSet(SlotManager.Instance.IsVacancy(), unitKind, unitRank);
 
         return unit;
     }
@@ -390,7 +385,7 @@ public class UnitATKChecker : SingletonMonoBase<UnitATKChecker>
         }
 
         UnitBase unit = ObjectPoolManager.Instance.Get($"{unitKind}").Get().GetComponent<UnitBase>();
-        unit.UnitSet(SlotManager.IsVacancy(), unitKind, unitRank);
+        unit.UnitSet(SlotManager.Instance.IsVacancy(), unitKind, unitRank);
 
         this.units[unitKind][unitRank].Add(unit);
         OnUnit?.Invoke(unit);

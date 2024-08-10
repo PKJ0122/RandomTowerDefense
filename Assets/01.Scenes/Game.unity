@@ -17726,7 +17726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493629300496364466, guid: 3157407d626d4cc48b36b713fd3cdbfb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 46986412
+      value: 47256844
       objectReference: {fileID: 0}
     - target: {fileID: 8375454493777996613, guid: 3157407d626d4cc48b36b713fd3cdbfb, type: 3}
       propertyPath: m_Name
@@ -18735,6 +18735,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 781650521323648882, guid: ae927e7875ec8704f99afef6441425f0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3348500376611466276, guid: ae927e7875ec8704f99afef6441425f0, type: 3}
       propertyPath: m_Name
       value: Canvas - UnitInfo
@@ -19514,7 +19518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7990254238866128395, guid: 0ea94e3dd64da5b4a8bcba132051fe08, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12390795
+      value: 12499166
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19601,9 +19605,9 @@ RectTransform:
   - {fileID: 6905047745052205575}
   m_Father: {fileID: 4890747232101226064}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1842.2, y: 312.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -78.80005, y: 312.5}
   m_SizeDelta: {x: 102.64697, y: 103.68201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7760326399602963004

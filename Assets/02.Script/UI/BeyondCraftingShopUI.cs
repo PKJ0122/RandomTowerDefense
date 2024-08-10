@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class BeyondCraftingShopUI : UIBase
     Transform _slotLocation;
 
     Button _close;
+
+    event Action OnBreak;
 
 
     protected override void Awake()
@@ -20,27 +23,36 @@ public class BeyondCraftingShopUI : UIBase
         _close.onClick.AddListener(Hide);
         foreach (BeyondCraftingMethod item in _beyondCraftingMethods.beyondCraftingMethods)
         {
-            if (!PlayerData.beyondCraftingDatas.ContainsKey(item.unitKind))
+            if (!PlayerData.BeyondCraftingDatas.ContainsKey(item.unitKind))
             {
                 BeyondCraftingData newBeyondCraftingData = new BeyondCraftingData()
                 {
                     unitKind = item.unitKind,
                     IsHave = false
                 };
-                PlayerData.Instance.PlayerDataContainer.beyondCraftingDatas.Add(newBeyondCraftingData);
-                PlayerData.beyondCraftingDatas.Add(item.unitKind, newBeyondCraftingData);
+                PlayerData.BeyondCraftingDatas.Add(item.unitKind, newBeyondCraftingData);
+                PlayerData.PlayerDataContainer.beyondCraftingDatas.Add(newBeyondCraftingData);
             }
 
-            BeyondCraftingData beyondCraftingData = PlayerData.beyondCraftingDatas[item.unitKind];
+            BeyondCraftingData beyondCraftingData = PlayerData.BeyondCraftingDatas[item.unitKind];
             Button slot = Instantiate(_beyondCraftingSlotPrefab, _slotLocation);
             slot.onClick.AddListener(() => UIManager.Instance.Get<BeyondCraftingInfoUI>().Show(item, beyondCraftingData));
             Image unitImg = slot.transform.Find("Image - Unit").GetComponent<Image>();
             unitImg.sprite = UnitRepository.UnitKindDatas[item.unitKind].unitImg;
             unitImg.color = beyondCraftingData.IsHave ? Color.white : Color.black;
-            beyondCraftingData.OnIsHaveChange += v =>
+            
+            void HaveChange(bool value)
             {
-                if (v) unitImg.color = Color.white;
-            };
+                if (value) unitImg.color = Color.white;
+            }
+
+            beyondCraftingData.OnIsHaveChange += HaveChange;
+            OnBreak += () => { beyondCraftingData.OnIsHaveChange -= HaveChange; };
         }
+    }
+
+    private void OnDisable()
+    {
+        OnBreak?.Invoke();
     }
 }

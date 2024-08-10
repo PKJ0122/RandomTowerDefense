@@ -4,7 +4,6 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerDataContainer
 {
-    public string playerName = "이름없는";
     public int gold;
     public int diamond;
     public int itemSummons;
@@ -15,7 +14,6 @@ public class PlayerDataContainer
     public bool adDiamondBuy;
 
     public List<ShopSaveData> shopSaveDatas = new List<ShopSaveData>(5);
-    public List<UnitLevelData> unitLevelDatas = new List<UnitLevelData>(8);
     public List<ItemLevelData> itemLevelData = new List<ItemLevelData>(10);
     public List<QuestSaveData> questSaveDatas = new List<QuestSaveData>(8);
     public List<BeyondCraftingData> beyondCraftingDatas = new List<BeyondCraftingData>(8);

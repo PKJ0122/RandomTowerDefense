@@ -63,13 +63,9 @@ public class EnemySpawner : MonoBehaviour
     {
         GameManager.Instance.OnWaveChange += value => EnemySpawn(value);
         UIManager.Instance.Get<GoldBossUI>().OnBossSpawnButtonClick += GoldBossSpawn;
-        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        GameManager.Instance.OnGameEnd += v =>
         {
             StopAllCoroutines();
-            for (int i = _enemys.Count - 1; i >= 0; i--)
-            {
-                _enemys[i].RelasePool();
-            }
         };
     }
 

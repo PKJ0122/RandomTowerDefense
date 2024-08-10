@@ -35,7 +35,6 @@ public class Enemy : PoolObject
 
     public event Action OnRelasePool;
 
-
     void FixedUpdate()
     {
         Vector3 direction = (_node.Value - transform.position).normalized;

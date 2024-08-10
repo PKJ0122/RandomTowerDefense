@@ -10,8 +10,9 @@ public class BossHpBar : PoolObject
     Vector3 _bossHeight;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _hpbar = transform.Find("Slider - BossHp").GetComponent<Slider>();
         _canvas = GetComponent<Canvas>();
         _canvas.worldCamera = Camera.main;

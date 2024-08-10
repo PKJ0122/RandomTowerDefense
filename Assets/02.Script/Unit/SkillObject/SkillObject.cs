@@ -10,8 +10,9 @@ public class SkillObject : PoolObject
 
     public event Action OnDisableHandler;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _targetMask = LayerMask.GetMask("Enemy");
 
         OnDisableHandler += () => RelasePool();

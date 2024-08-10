@@ -1,10 +1,11 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class QuestSaveData
 {
     public string QuestName;
-    int _amount;
+    [SerializeField] int _amount;
     public int Amount
     {
         get => _amount;

@@ -10,7 +10,11 @@ public abstract class SingletonMonoBase<T> : MonoBehaviour
         {
             if (s_instance == null)
             {
-                s_instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                s_instance = (T)FindObjectOfType(typeof(T));
+                if (s_instance == null)
+                {
+                    s_instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                }
             }
 
             return s_instance;
@@ -24,7 +28,5 @@ public abstract class SingletonMonoBase<T> : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        s_instance = (T)this;
     }
 }
