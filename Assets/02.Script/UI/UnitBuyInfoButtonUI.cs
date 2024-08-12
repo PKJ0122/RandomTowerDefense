@@ -9,8 +9,7 @@ public class UnitBuyInfoButtonUI : UIBase
     {
         base.Awake();
         _unitBuyInfo = transform.Find("Button - UnitBuyInfo").GetComponent<Button>();
-
-
+        _unitBuyInfo.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _unitBuyInfo.interactable = false;
         GameManager.Instance.OnGameStart += () => _unitBuyInfo.interactable = true;
     }

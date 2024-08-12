@@ -25,10 +25,12 @@ public class ItemBuyInfoUI : UIBase
         _itemName = transform.Find("Panel/Image/Image - Name/Text (TMP)").GetComponent<TMP_Text>();
         _discription = transform.Find("Panel/Image/Image - Discription/Text (TMP)").GetComponent<TMP_Text>();
         _buy = transform.Find("Panel/Image/GameObject/Button - Buy").GetComponent<Button>();
+        _buy.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close = transform.Find("Panel/Image/GameObject/Button - Close").GetComponent<Button>();
         _price = _buy.transform.Find("Text (TMP)").GetComponent<TMP_Text>();
 
         _close.onClick.AddListener(Hide);
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         PlayerData.Instance.OnLastShopChangeChange += () =>
         {
             _buy.onClick.RemoveAllListeners();
@@ -46,6 +48,10 @@ public class ItemBuyInfoUI : UIBase
             {
                 Hide();
                 UIManager.Instance.Get<ItemInfoUI>().Show(shopSaveData.itemName);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound(SFX.Fail);
             }
         };
         _buy.onClick.RemoveAllListeners();

@@ -33,6 +33,7 @@ public class GameSpeedUI : UIBase
         _gameSpeedB = transform.Find("Button - MissionButton").GetComponent<Button>();
         _gameSpeedT = transform.Find("Button - MissionButton/Panel/Text (TMP) - GameSpeed").GetComponent<TMP_Text>();
         _gameSpeedB.onClick.AddListener(() => GameSpeed++);
+        _gameSpeedB.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     void Start()

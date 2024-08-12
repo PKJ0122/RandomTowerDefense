@@ -63,10 +63,12 @@ public class ItemLevelUpUI : UIBase
         _levelUp.onClick.RemoveAllListeners();
         _levelUp.interactable = PlayerData.Instance.Gold >= itemLevelUpNeedGold &&
             itemLevelData.Amount >= itemLevelUpNeedAmount;
+        _levelUp.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _levelUp.onClick.AddListener(() =>
         {
             PlayerData.Instance.Gold -= itemLevelUpNeedGold;
             PlayerData.Instance.SetItemLevel(itemName, itemLevelUpNeedAmount);
+            SoundManager.Instance.PlaySound(SFX.ItemLevelUp);
             Refresh(itemName);
         });
     }

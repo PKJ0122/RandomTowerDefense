@@ -36,12 +36,14 @@ public class GameEndUI : UIBase
             OnReStartButtonClick?.Invoke();
             GameManager.Instance.GameReStart();
         });
+        _reStart.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _lobby.onClick.AddListener(() =>
         {
             Time.timeScale = 1f;
             OnLobbyButtonClick?.Invoke();
             SceneManager.LoadScene("Lobby");
         });
+        _lobby.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _rewerdLocation = transform.Find("Panel/Image - Rewerd").GetComponent<Transform>();
 
         RewerdDatas rewerdDatas = Resources.Load<RewerdDatas>("RewerdDatas");
@@ -100,7 +102,9 @@ public class GameEndUI : UIBase
             {
                 chestObject.SetActive(false);
             };
-            chestObject.GetComponent<Button>().onClick.AddListener(() =>
+
+            Button chestButton = chestObject.GetComponent<Button>();
+            chestButton.onClick.AddListener(() =>
             {
                 chestObject.transform.Find("Chest").gameObject.SetActive(false);
                 chestObject.transform.Find($"Image - {rewerd}").gameObject.SetActive(true);
@@ -108,6 +112,7 @@ public class GameEndUI : UIBase
                 amount.gameObject.SetActive(true);
                 amount.text = rewerdAmount.ToString();
             });
+            chestButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
 
             switch (rewerd)
             {

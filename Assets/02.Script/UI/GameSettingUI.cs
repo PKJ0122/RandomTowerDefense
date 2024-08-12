@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class GameSettingUI : UIBase
@@ -12,7 +9,9 @@ public class GameSettingUI : UIBase
     {
         base.Awake();
         _setting = transform.Find("Button - Setting").GetComponent<Button>();
+        _setting.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _pause = transform.Find("Button - Pause").GetComponent<Button>();
+        _pause.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     void Start()

@@ -10,6 +10,7 @@ public class UnitLevelUpButtonUI : UIBase
     {
         base.Awake();
         _levelUp = transform.Find("Button - LevelUpButton").GetComponent<Button>();
+        _levelUp.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _levelUp.interactable = false;
         GameManager.Instance.OnGameStart += () =>
         {

@@ -14,6 +14,7 @@ public class GoldExplanationUI : UIBase
         base.Awake();
         _close = transform.Find("Panel/Panel/Button - CloseButton").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _Interest = transform.Find("Panel/Panel/Text (TMP) - Interest").GetComponent<TMP_Text>();
         _Salary = transform.Find("Panel/Panel/Text (TMP) - Salary").GetComponent<TMP_Text>();
 

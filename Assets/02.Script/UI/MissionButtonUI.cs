@@ -12,6 +12,7 @@ public class MissionButtonUI : UIBase
     {
         base.Awake();
         _mission = transform.Find("Button - MissionButton").GetComponent<Button>();
+        _mission.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     private void Start()

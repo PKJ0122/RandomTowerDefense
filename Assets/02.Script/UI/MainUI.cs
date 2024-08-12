@@ -22,12 +22,19 @@ public class MainUI : UIBase
     {
         base.Awake();
         _shop = transform.Find("Button - Shop").GetComponent<Button>();
+        _shop.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _inventory = transform.Find("Button - Inventory").GetComponent<Button>();
+        _inventory.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _beyondCrafting = transform.Find("Button - BeyondCrafting").GetComponent<Button>();
+        _beyondCrafting.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _quest = transform.Find("Button - Quest").GetComponent<Button>();
+        _quest.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _mailBox = transform.Find("Button - Mailbox").GetComponent<Button>();
+        _mailBox.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _playerSetting = transform.Find("Button - Setting").GetComponent<Button>();
+        _playerSetting.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _gameStart = transform.Find("Button - GameStart").GetComponent<Button>();
+        _gameStart.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _gameStart.onClick.AddListener(() => SceneManager.LoadScene("Game"));
 
         SoundManager.Instance.PlaySound(BGM.Lobby);

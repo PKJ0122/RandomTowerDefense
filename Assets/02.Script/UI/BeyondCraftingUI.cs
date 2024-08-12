@@ -34,8 +34,10 @@ public class BeyondCraftingUI : UIBase
             _materials[i] = _info.Find($"Image - Material{i}").GetComponent<Image>();
         }
         _beyond = _info.Find("Button - Beyond").GetComponent<Button>();
+        _beyond.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _beyond.onClick.AddListener(Beyond);
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
 
         BeyondCraftingCounterManager.Instance.OnCounterCreate += counter =>
@@ -47,6 +49,7 @@ public class BeyondCraftingUI : UIBase
             UnitData unitData = UnitRepository.UnitKindDatas[counter.Method.unitKind];
             unitImg.sprite = unitData.unitImg;
 
+            beyondInfo.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
             beyondInfo.onClick.AddListener(() =>
             {
                 _currentCounter = counter;
@@ -100,7 +103,7 @@ public class BeyondCraftingUI : UIBase
     {
         if (!_currentCounter.IsBeyondCraftingPossible) return;
 
-        Slot slot = slot = _currentCounter.Materials[0][0].Slot;
+        Slot slot = _currentCounter.Materials[0][0].Slot;
 
         for (int i = 0; i < _materials.Length; i++)
         {

@@ -29,6 +29,7 @@ public class MissionUI : UIBase
         _missionDatas = Resources.Load<MissionDatas>("MissionDatas");
         _missionPrefab = _missionDatas.missionPrefeb;
         _close = transform.Find("Image - Mission/Button - CloseButton").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
         _scrollLocation = _location.GetComponent<RectTransform>();
         _scrollEarlyLocation = new Vector2(_scrollLocation.anchoredPosition.x, 0);
@@ -74,7 +75,7 @@ public class MissionUI : UIBase
             missionData.Init();
         }
 
-        UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += () =>
+        GameManager.Instance.OnGameStart += () =>
         {
             foreach (MissionBase missionData in _missionDatas.missionDatas)
             {

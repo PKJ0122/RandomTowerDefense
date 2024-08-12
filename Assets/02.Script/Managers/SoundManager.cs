@@ -4,6 +4,9 @@ using UnityEngine.Audio;
 
 public class SoundManager : SingletonMonoBase<SoundManager>
 {
+    const int MIN_CHANNEL_COUNT = 1;
+    const int MAX_CHANNEL_CONUT = 16;
+
     PlayerSetting _playerSetting;
 
     AudioMixer _mixer;
@@ -23,10 +26,15 @@ public class SoundManager : SingletonMonoBase<SoundManager>
 
     List<AudioSource> _sources = new List<AudioSource>(16);
 
+    int _currentChannel;
+
+
 
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);
+        _currentChannel = MIN_CHANNEL_COUNT;
         _playerSetting = PlayerSettingUI.PlayerSetting;
         _soundDatas = Resources.Load<SoundDatas>("SoundDatas");
     }
@@ -50,45 +58,36 @@ public class SoundManager : SingletonMonoBase<SoundManager>
 
     public void PlaySound(BGM bgm)
     {
-        foreach (AudioSource source in _sources)
+        if (_sources.Count == 0)
         {
-            if (!source.isPlaying)
-            {
-                source.clip = _soundDatas.bgms[(int)bgm];
-                source.Play();
-                source.outputAudioMixerGroup = Mixer.FindMatchingGroups("BGM")[0];
-                source.loop = true;
-                return;
-            }
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            _sources.Add(audioSource);
         }
 
-        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-        _sources.Add(audioSource);
-        audioSource.clip = _soundDatas.bgms[(int)bgm];
-        audioSource.Play();
-        audioSource.outputAudioMixerGroup = Mixer.FindMatchingGroups("BGM")[0];
-        audioSource.loop = true;
+        AudioSource source = _sources[0];
+        source.clip = _soundDatas.bgms[(int)bgm];
+        source.Play();
+        source.outputAudioMixerGroup = Mixer.FindMatchingGroups("BGM")[0];
+        source.loop = true;
     }
 
     public void PlaySound(SFX sfx)
     {
-        foreach (AudioSource source in _sources)
+        for (int i = _sources.Count; i <= _currentChannel; i++)
         {
-            if (!source.isPlaying)
-            {
-                source.clip = _soundDatas.sfxs[(int)sfx];
-                source.Play();
-                source.outputAudioMixerGroup = Mixer.FindMatchingGroups("SFX")[0];
-                source.loop = false;
-                return;
-            }
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            _sources.Add(audioSource);
         }
 
-        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-        _sources.Add(audioSource);
-        audioSource.clip = _soundDatas.sfxs[(int)sfx];
-        audioSource.Play();
-        audioSource.outputAudioMixerGroup = Mixer.FindMatchingGroups("SFX")[0];
-        audioSource.loop = false;
+        AudioSource source = _sources[_currentChannel];
+        source.clip = _soundDatas.sfxs[(int)sfx];
+        source.Play();
+        source.outputAudioMixerGroup = Mixer.FindMatchingGroups("SFX")[0];
+        source.loop = false;
+
+        if (++_currentChannel >= MAX_CHANNEL_CONUT)
+        {
+            _currentChannel = MIN_CHANNEL_COUNT;
+        }
     }
 }

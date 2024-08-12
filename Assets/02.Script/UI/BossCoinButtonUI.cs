@@ -16,6 +16,7 @@ public class BossCoinButtonUI : UIBase
         _isUsePossible = _bossCoin.transform.Find("Image - IsUsePossible").GetComponent<Image>();
         _bossCoin.interactable = false;
         _bossCoin.onClick.AddListener(() => UIManager.Instance.Get<BossCoinUI>().Show());
+        _bossCoin.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         GameManager.Instance.OnGameStart += () =>
         {
             _bossCoin.interactable = true;

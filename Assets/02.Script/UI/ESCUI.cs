@@ -13,6 +13,8 @@ public class ESCUI : UIBase
         _ok = transform.Find("Panel/Image/Button - Ok").GetComponent<Button>();
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _ok.onClick.AddListener(() => Application.Quit());
+        _ok.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
     }
 

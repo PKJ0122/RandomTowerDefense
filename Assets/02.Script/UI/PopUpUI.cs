@@ -12,6 +12,7 @@ public class PopUpUI : UIBase
         _detail = transform.Find("Panel/Image/Text (TMP) - Detail").GetComponent<TMP_Text>();
         _ok = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _ok.onClick.AddListener(Hide);
+        _ok.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     public void Show(string detail)

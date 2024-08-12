@@ -11,6 +11,7 @@ public class BeyondCraftingButtonUI : UIBase
     {
         base.Awake();
         _beyondCrafting = transform.Find("Button - BeyondCraftingButton").GetComponent<Button>();
+        _beyondCrafting.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _beyondCrafting.interactable = false;
         GameManager.Instance.OnGameStart += () =>
         {

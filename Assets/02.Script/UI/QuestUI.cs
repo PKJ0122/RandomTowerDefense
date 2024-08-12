@@ -40,6 +40,7 @@ public class QuestUI : UIBase
                 PlayerData.Instance.Diamond += item.reward;
                 questSaveData.Amount -= item.requirements;
             });
+            rewardButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
             questSaveData.OnAmountChange += value =>
             {
                 rewardButton.interactable = value >= item.requirements;
@@ -49,6 +50,7 @@ public class QuestUI : UIBase
             _questSaveDatas.Add(questSaveData);
         }
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
     }
 

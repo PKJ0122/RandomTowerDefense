@@ -20,11 +20,13 @@ public class PauseUI : UIBase
             Hide();
             Time.timeScale = _beforeTimeScale;
         });
+        _resume.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _giveUp.onClick.AddListener(() =>
         {
             Hide();
             GameManager.Instance.GameEnd();
         });
+        _giveUp.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     public override void Show()

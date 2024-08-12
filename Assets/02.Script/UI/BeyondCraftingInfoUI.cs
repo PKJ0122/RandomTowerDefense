@@ -25,6 +25,7 @@ public class BeyondCraftingInfoUI : UIBase
         }
         _buy = transform.Find("Panel/Image/Button - Buy").GetComponent<Button>();
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
     }
 
@@ -51,9 +52,14 @@ public class BeyondCraftingInfoUI : UIBase
         if (ishave) return;
 
         _buy.onClick.RemoveAllListeners();
+        _buy.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _buy.onClick.AddListener(() =>
         {
-            if (PlayerData.Instance.Diamond < PRICE) return;
+            if (PlayerData.Instance.Diamond < PRICE)
+            {
+                SoundManager.Instance.PlaySound(SFX.Fail);
+                return;
+            }
 
             PlayerData.Instance.Diamond -= PRICE;
             craftingData.IsHave = true;

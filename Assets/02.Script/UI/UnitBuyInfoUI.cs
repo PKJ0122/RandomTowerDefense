@@ -23,6 +23,7 @@ public class UnitBuyInfoUI : UIBase
         _nomalPercentage = transform.Find("Panel/Panel/Text (TMP) - Nomal").GetComponent<TMP_Text>();
 
         _close = transform.Find("Panel/Panel/Button - CloseButton").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(() =>
         {
             Hide();

@@ -97,9 +97,11 @@ public class PlayerSettingUI : UIBase
         });
 
         _emailCopy = transform.Find("Panel/Image/Text (TMP) - Email/Button - Copy").GetComponent<Button>();
+        _emailCopy.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _emailCopy.onClick.AddListener(() => GUIUtility.systemCopyBuffer = EMAIL);
 
         _tutorial = transform.Find("Panel/Image/Button - Tutorial").GetComponent<Button>();
+        _tutorial.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _tutorial.onClick.AddListener(() => SceneManager.LoadScene("Tutorial"));
 
     }

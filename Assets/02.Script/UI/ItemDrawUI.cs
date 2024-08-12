@@ -26,6 +26,7 @@ public class ItemDrawUI : UIBase
             _itemImgs[i] = _itemSlots[i].Find("Image").GetComponent<Image>();
         }
         _skip = transform.Find("Panel/Image/Button - Skip").GetComponent<Button>();
+        _skip.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     private void Start()
@@ -83,6 +84,7 @@ public class ItemDrawUI : UIBase
             yield return _delay01;
             _itemSlots[tick++ % 5].localScale = Vector3.one;
             _itemSlots[tick % 5].localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            SoundManager.Instance.PlaySound(SFX.ItemDraw);
         }
 
         for (int i = tick; i <= tick + drawItemNum; i++)
@@ -90,6 +92,7 @@ public class ItemDrawUI : UIBase
             yield return _delay05;
             _itemSlots[i % 5].localScale = Vector3.one;
             _itemSlots[(i + 1) % 5].localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            SoundManager.Instance.PlaySound(SFX.ItemDraw);
         }
         yield return _delay05;
         yield return _delay05;

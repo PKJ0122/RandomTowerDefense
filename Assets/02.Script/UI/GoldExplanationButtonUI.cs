@@ -9,7 +9,7 @@ public class GoldExplanationButtonUI : UIBase
     {
         base.Awake();
         _goldExplanation = transform.Find("Button - UnitBuyInfo").GetComponent<Button>();
-
+        _goldExplanation.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _goldExplanation.interactable = false;
         GameManager.Instance.OnGameStart += () => _goldExplanation.interactable = true;
     }

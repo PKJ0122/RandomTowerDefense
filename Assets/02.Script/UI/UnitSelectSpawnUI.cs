@@ -56,6 +56,7 @@ public class UnitSelectSpawnUI : UIBase
             buttonImg.sprite = unitDatas[unitKind].unitImg;
 
             item.onClick.RemoveAllListeners();
+            item.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
             item.onClick.AddListener(() =>
             {
                 UnitBase unit = UnitFactory.Instance.UnitCreat<UnitBase>(slot, unitKind, _selectUnitRank);

@@ -37,6 +37,7 @@ public class UnitBuyUI : UIBase
     {
         base.Awake();
         _unitBuy = transform.Find("Button - UnitBuy").GetComponent<Button>();
+        _unitBuy.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _price = transform.Find("Text (TMP) - Gold").GetComponent<TMP_Text>();
         _unitBuy.onClick.AddListener(() => UnitBuy(OnBuyButtonClick?.Invoke()));
         _unitBuy.interactable = false;

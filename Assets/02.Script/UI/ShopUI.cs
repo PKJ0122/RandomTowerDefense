@@ -26,6 +26,7 @@ public class ShopUI : UIBase
                 _shop.transform.localScale = value ? new Vector3(1.3f, 1.3f, 1.3f) : Vector3.one;
                 _toggleLocation.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
                 _shopPageBase[_shop.gameObject.name].transform.SetAsLastSibling();
+                SoundManager.Instance.PlaySound(SFX.Button_Click);
             });
         }
         Transform _shopLocation = transform.Find("Panel/Image/GameObject - Shop");
@@ -36,6 +37,7 @@ public class ShopUI : UIBase
         _shops[0].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
     }
 

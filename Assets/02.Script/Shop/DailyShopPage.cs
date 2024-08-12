@@ -58,6 +58,7 @@ public class DailyShopPage : ShopPageBase
                 PlayerData.Instance.Diamond += 500;
                 freeDiamond.onClick.RemoveAllListeners();
             });
+            freeDiamond.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         }
 
         List<ShopSaveData> shopDatas = PlayerData.PlayerDataContainer.shopSaveDatas;
@@ -105,6 +106,7 @@ public class DailyShopPage : ShopPageBase
             {
                 UIManager.Instance.Get<ItemBuyInfoUI>().Show(action,shopData);
             });
+            itemBuyButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         }
     }
 }

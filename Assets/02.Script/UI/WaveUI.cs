@@ -24,5 +24,6 @@ public class WaveUI : UIBase
             _timeS.value = value;
             _timeT.text = value == 60f ? "01 : 00" : $"00 : {(int)value}";
         };
+        SoundManager.Instance.PlaySound(BGM.Game);
     }
 }

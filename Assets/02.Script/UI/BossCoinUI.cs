@@ -65,7 +65,9 @@ public class BossCoinUI : UIBase
         base.Awake();
         _key = transform.Find("Panel/Image/Image - Key/Text (TMP) - Amount").GetComponent<TMP_Text>();
         _open = transform.Find("Panel/Image/Button - Open").GetComponent<Button>();
+        _open.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
 
         Transform selectTransform = transform.Find("Panel/Image/Image - Select").GetComponent<Transform>();
@@ -105,6 +107,9 @@ public class BossCoinUI : UIBase
         _epicUse.onClick.AddListener(() => UseButtonClick(UnitRank.Epic));
         _uniqueUse.onClick.AddListener(() => UseButtonClick(UnitRank.Unique));
         _legendaryUse.onClick.AddListener(() => UseButtonClick(UnitRank.Legendary));
+        _epicUse.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
+        _uniqueUse.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
+        _legendaryUse.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         UIManager.Instance.Get<UnitSelectSpawnUI>().OnIsUse += unit =>
         {
             if (unit.Rank == UnitRank.Epic) Epic--;

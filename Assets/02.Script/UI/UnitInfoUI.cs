@@ -55,6 +55,7 @@ public class UnitInfoUI : UIBase
         _unitPower = transform.Find("Panel/Panel - UnitPower/Text (TMP) - UnitPower").GetComponent<TMP_Text>();
         _unitDamage = transform.Find("Panel/Panel - UnitDamage/Text (TMP) - UnitDamage").GetComponent<TMP_Text>();
         _unitDamageReSet = transform.Find("Panel/Button - UnitDamageReSet").GetComponent<Button>();
+        _unitDamageReSet.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
 
         _unitSkillImage = transform.Find("Panel/Image - UnitSkill/Image - Skill").GetComponent<Image>();
         _unitSkillName = transform.Find("Panel/Image - UnitSkill/Text (TMP) - SkillName").GetComponent<TMP_Text>();
@@ -63,13 +64,17 @@ public class UnitInfoUI : UIBase
         _unitSkillMpT = transform.Find("Panel/Image - UnitSkill/Slider - Mp/Text (TMP) - Mp").GetComponent<TMP_Text>();
 
         _unitSell = transform.Find("Panel/Image - UnitInfo/Button - UnitSell").GetComponent<Button>();
-        _unitSellPrice = transform.Find("Panel/Image - UnitInfo/Button - UnitSell/Text (TMP) - SellPrice").GetComponent<TMP_Text>();
+        _unitSell.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _unitSell.onClick.AddListener(UnitSell);
+        _unitSellPrice = transform.Find("Panel/Image - UnitInfo/Button - UnitSell/Text (TMP) - SellPrice").GetComponent<TMP_Text>();
         _unitMove = transform.Find("Panel/Image - UnitInfo/Button - UnitMove").GetComponent<Button>();
+        _unitMove.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _unitMix = transform.Find("Panel/Image - UnitInfo/Button - UnitMix").GetComponent<Button>();
+        _unitMix.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _unitMix.onClick.AddListener(UnitMix);
 
         _close = transform.Find("Panel/Button - CloseButton").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
 
         _beyondEnforce = transform.Find("Panel/Image - BeyondEnforce").GetComponent<Transform>();
         _enforce = _beyondEnforce.transform.Find("Panel - Enforce/Text (TMP)").GetComponent<TMP_Text>();
@@ -78,7 +83,8 @@ public class UnitInfoUI : UIBase
         _materialRank = _beyondEnforce.transform.Find("Image - Material/Text (TMP) - Rank").GetComponent<TMP_Text>();
         _maxEnforce = _beyondEnforce.transform.Find("Panel - MaxEnforce").GetComponent<Transform>();
         _beyondEnforceUp = _beyondEnforce.transform.Find("Button - EnforceUp").GetComponent<Button>();
-        
+        _beyondEnforceUp.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
+
 
         _unitDamageReSet.onClick.AddListener(() => SlotManager.Instance.Slots[_currentSlot].DamageReSet());
         _close.onClick.AddListener(Hide);
@@ -122,6 +128,8 @@ public class UnitInfoUI : UIBase
 
     public void Show(Slot slot)
     {
+        if (_canvas.enabled) return;
+
         base.Show();
         _currentSlot = slot;
         UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
@@ -170,6 +178,8 @@ public class UnitInfoUI : UIBase
 
     public override void Hide()
     {
+        if (!_canvas.enabled) return;
+
         base.Hide();
         UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
         unit.OnPowerChange -= _onPowerChangeHandler;
@@ -188,7 +198,7 @@ public class UnitInfoUI : UIBase
     int UnitSellPrice()
     {
         UnitBase unit = SlotManager.Instance.Slots[_currentSlot];
-        return (int)(Mathf.Pow(3, (int)unit.Rank) * UIManager.Instance.Get<UnitBuyUI>().UnitPrice / 2);
+        return (int)(Mathf.Pow(3, (int)unit.Rank) * 10);
     }
 
     void UnitMix()

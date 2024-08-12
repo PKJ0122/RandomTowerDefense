@@ -24,9 +24,13 @@ public class UnitFactory : SingletonMonoBase<UnitFactory>
                                                   .GetComponent<T>()
                                                   .UnitSet(slot, kind, rank);
 
-        OnUnitCreat?.Invoke(unit);
+        if ((int)unit.Rank >= (int)UnitRank.Unique)
+        {
+            SoundManager.Instance.Vibrate();
+            SoundManager.Instance.PlaySound(SFX.HighUnitSpawn);
+        }
 
-        if ((int)unit.Rank >= (int)UnitRank.Unique) SoundManager.Instance.Vibrate();
+        OnUnitCreat?.Invoke(unit);
         return (T)unit;
     }
 
@@ -50,7 +54,11 @@ public class UnitFactory : SingletonMonoBase<UnitFactory>
                                                   .GetComponent<T>()
                                                   .UnitSet(slot, kind, rank);
 
-        if ((int)unit.Rank >= (int)UnitRank.Unique) SoundManager.Instance.Vibrate();
+        if ((int)unit.Rank >= (int)UnitRank.Unique)
+        {
+            SoundManager.Instance.Vibrate();
+            SoundManager.Instance.PlaySound(SFX.HighUnitSpawn);
+        }
 
         OnUnitCreat?.Invoke(unit);
         return (T)unit;

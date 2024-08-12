@@ -27,6 +27,7 @@ public class GoodsShopPage : ShopPageBase
             PlayerData.Instance.Diamond -= PRICE;
             PlayerData.Instance.Gold += GOLD_AMOUNT;
         });
+        tradeButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         Button tenTradeButton = Slots[2].GetComponent<Button>();
         tenTradeButton.onClick.AddListener(() =>
         {
@@ -35,6 +36,7 @@ public class GoodsShopPage : ShopPageBase
             PlayerData.Instance.Diamond -= PRICE*10;
             PlayerData.Instance.Gold += GOLD_AMOUNT*10;
         });
+        tenTradeButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     private void Start()
@@ -61,6 +63,7 @@ public class GoodsShopPage : ShopPageBase
                 adItem.onClick.RemoveAllListeners();
                 AdManager.Instance.ShowAds();
             });
+            adItem.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         }
     }
 }

@@ -1,7 +1,6 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +19,10 @@ public class GPGSManager : MonoBehaviour
         if (status == SignInStatus.Success)
         {
             LoadData();
+        }
+        else
+        {
+            UIManager.Instance.Get<GPGSDownloadUI>().Show();
         }
     }
 

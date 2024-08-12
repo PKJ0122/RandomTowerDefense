@@ -28,6 +28,7 @@ public class ItemInfoUI : UIBase
         _levelUp = transform.Find("Panel/Image/GameObject/Button - LevelUp").GetComponent<Button>();
         _close = transform.Find("Panel/Image/GameObject/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _level = transform.Find("Panel/Image/Text (TMP) - ItemLevel").GetComponent<TMP_Text>();
         _itemCounts = transform.Find("Panel/Image/Slider - Count").GetComponent<Slider>();
         _itemCountT = _itemCounts.transform.Find("Text (TMP) - Count").GetComponent<TMP_Text>();
@@ -48,6 +49,7 @@ public class ItemInfoUI : UIBase
         _levelUp.gameObject.SetActive(UIManager.Instance.UIPeekCheck(UIManager.Instance.Get<InventoryUI>()));
         _levelUp.interactable = IsLevelUpPossible(itemName);
         _levelUp.onClick.RemoveAllListeners();
+        _levelUp.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _levelUp.onClick.AddListener(() =>
         {
             ItemLevelUpUI levelUpUI = UIManager.Instance.Get<ItemLevelUpUI>();

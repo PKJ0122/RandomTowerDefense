@@ -25,6 +25,7 @@ public class InventoryUI : UIBase
         _slotLocation = transform.Find("Panel/Image/Scroll View/Viewport/Content").GetComponent<Transform>();
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     private void Start()
@@ -32,6 +33,7 @@ public class InventoryUI : UIBase
         foreach (KeyValuePair<string, ItemBase> item in _itemDatas.Items)
         {
             Button slot = Instantiate(_slotPrefab, _slotLocation);
+            slot.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
             slot.onClick.AddListener(() => UIManager.Instance.Get<ItemInfoUI>().Show(item.Key));
             Image slotItemImg = slot.transform.Find("Image - Item").GetComponent<Image>();
             slotItemImg.sprite = _itemDatas.Items[item.Key].itemImage;

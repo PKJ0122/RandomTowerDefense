@@ -27,6 +27,7 @@ public class MailBoxUI : UIBase
         _mailPrefab = Resources.Load<Image>("Image - Mail");
         _close = transform.Find("Panel/Image/Button - Close").GetComponent<Button>();
         _close.onClick.AddListener(Hide);
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
 
         if (_mailDatas != null)
         {
@@ -131,6 +132,7 @@ public class MailBoxUI : UIBase
                 PlayerData.Instance.Diamond += item.Value.diamondAmount;
                 PlayerData.Instance.SetMailData(item.Key);
             });
+            get.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         }
     }
 }

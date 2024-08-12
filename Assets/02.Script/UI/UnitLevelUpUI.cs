@@ -19,6 +19,7 @@ public class UnitLevelUpUI : UIBase
     {
         base.Awake();
         _close = transform.Find("Button - CloseButton").GetComponent<Button>();
+        _close.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         _close.onClick.AddListener(Hide);
     }
 

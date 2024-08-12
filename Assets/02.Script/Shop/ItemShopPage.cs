@@ -33,14 +33,16 @@ public class ItemShopPage : ShopPageBase
             PlayerData.Instance.ItemSummons--;
             UIManager.Instance.Get<ItemDrawUI>().Show();
         });
-        Button DiamondButton = Slots[2].GetComponent<Button>();
-        DiamondButton.onClick.AddListener(() =>
+        itemSummonsButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
+        Button diamondButton = Slots[2].GetComponent<Button>();
+        diamondButton.onClick.AddListener(() =>
         {
             if (PlayerData.Instance.Diamond < PRICE) return;
 
             PlayerData.Instance.Diamond -= PRICE;
             UIManager.Instance.Get<ItemDrawUI>().Show();
         });
+        diamondButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
     }
 
     void Start()
@@ -67,6 +69,7 @@ public class ItemShopPage : ShopPageBase
                 adItem.onClick.RemoveAllListeners();
                 AdManager.Instance.ShowAds();
             });
+            adItem.onClick.AddListener(() => SoundManager.Instance.PlaySound(SFX.Button_Click));
         }
     }
 }
