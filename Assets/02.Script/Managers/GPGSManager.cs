@@ -1,12 +1,17 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
+using System.Collections;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GPGSManager : MonoBehaviour
 {
-    private const string FILENAME = "PlayerData.dat";
+    const string FILENAME = "PlayerData.dat";
+    const string UNSAVED_SAVE_DATA = "/storage/emulated/0/Android/data/com.KJParkCompany.DragonDefense/files/Dummy.json";
+    const string SAVE_HASH = "/storage/emulated/0/Android/data/com.KJParkCompany.DragonDefense/files/Hash.json";
 
 
     void Awake()
@@ -22,8 +27,14 @@ public class GPGSManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.Get<GPGSDownloadUI>().Show();
+            StartCoroutine(C_NonGPGS());
         }
+    }
+
+    IEnumerator C_NonGPGS()
+    {
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.Get<GPGSDownloadUI>().Show();
     }
 
     void LoadData()
@@ -52,7 +63,7 @@ public class GPGSManager : MonoBehaviour
 
     void OnSaveGameDataRead(SavedGameRequestStatus status, byte[] loadedData)
     {
-        string data = System.Text.Encoding.UTF8.GetString(loadedData);
+        string data = Encoding.UTF8.GetString(loadedData);
 
         if (data == "")
         {
@@ -62,8 +73,46 @@ public class GPGSManager : MonoBehaviour
         }
         else
         {
-            PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
-            SceneManager.LoadScene("Lobby");
+            if (File.Exists(UNSAVED_SAVE_DATA))
+            {
+                byte[] unsaveData = File.ReadAllBytes(UNSAVED_SAVE_DATA);
+
+                if (unsaveData.Length == 0)
+                {
+                    PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+                    SceneManager.LoadScene("Lobby");
+                    return;
+                }
+                else
+                {
+                    if (!File.Exists(SAVE_HASH))
+                    {
+                        PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+                        SceneManager.LoadScene("Lobby");
+                        return;
+                    }
+
+                    string currentHash = LocalDataChecker.ComputeChecksum(UNSAVED_SAVE_DATA);
+                    string saveHash = File.ReadAllText(SAVE_HASH);
+
+                    if (currentHash == saveHash)
+                    {
+                        string localData = Encoding.UTF8.GetString(unsaveData);
+                        PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(localData);
+                        SceneManager.LoadScene("Lobby");
+                    }
+                    else
+                    {
+                        PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+                        SceneManager.LoadScene("Lobby");
+                    }
+                }
+            }
+            else
+            {
+                PlayerData.PlayerDataContainer = JsonUtility.FromJson<PlayerDataContainer>(data);
+                SceneManager.LoadScene("Lobby");
+            }
         }
     }
 }

@@ -1,11 +1,12 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class ItemLevelData
 {
     public string itemName;
     public int level;
-    private int _amount;
+    [SerializeField] int _amount;
 
     public int Amount
     {

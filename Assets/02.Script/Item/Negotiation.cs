@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Negotiation", menuName = "ScriptableObject/Item/Negotiation")]
@@ -14,15 +13,7 @@ public class Negotiation : ItemBase
             {
                 UnitRank unitrank = (UnitRank)((int)unit.Rank - 1);
 
-                Slot slot = null;
-                foreach (KeyValuePair<Slot, UnitBase> item in SlotManager.Instance.Slots)
-                {
-                    if (item.Value == null)
-                    {
-                        slot = item.Key;
-                        break;
-                    }
-                }
+                Slot slot = SlotManager.Instance.IsVacancy();
 
                 UnitFactory.Instance.UnitCreat<UnitBase>(slot, unitrank);
                 Notice();

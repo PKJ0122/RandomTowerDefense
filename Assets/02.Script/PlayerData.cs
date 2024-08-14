@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerData : SingletonMonoBase<PlayerData>
 {
     private const string FILENAME = "PlayerData.dat";
+    const string UNSAVED_SAVE_DATA = "/storage/emulated/0/Android/data/com.KJParkCompany.DragonDefense/files/Dummy.json";
+    const string SAVE_HASH = "/storage/emulated/0/Android/data/com.KJParkCompany.DragonDefense/files/Hash.json";
 
     #region User Data Dictionary
     static Dictionary<string, ItemLevelData> s_itemLevels;
@@ -283,6 +286,11 @@ public class PlayerData : SingletonMonoBase<PlayerData>
 
     void OpenSaveGame()
     {
+        string localData = JsonUtility.ToJson(PlayerDataContainer);
+        byte[] bytes = Encoding.UTF8.GetBytes(localData);
+        File.WriteAllBytes(UNSAVED_SAVE_DATA, bytes);
+        File.WriteAllText(SAVE_HASH, LocalDataChecker.ComputeChecksum(UNSAVED_SAVE_DATA));
+
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
 
         savedGameClient.OpenWithAutomaticConflictResolution(FILENAME,
@@ -310,7 +318,8 @@ public class PlayerData : SingletonMonoBase<PlayerData>
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            Debug.Log("저장 성공");
+            File.WriteAllBytes(UNSAVED_SAVE_DATA, null);
+            File.WriteAllText(SAVE_HASH, null);
         }
     }
 }

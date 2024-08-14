@@ -61,8 +61,8 @@ public class BeyondCraftingInfoUI : UIBase
                 return;
             }
 
-            PlayerData.Instance.Diamond -= PRICE;
             craftingData.IsHave = true;
+            PlayerData.Instance.Diamond -= PRICE;
             Hide();
         });
     }
