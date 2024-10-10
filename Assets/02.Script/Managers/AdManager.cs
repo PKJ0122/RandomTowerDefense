@@ -16,7 +16,7 @@ public class AdManager : SingletonMonoBase<AdManager>
         }
     }
 #if UNITY_ANDROID
-    string adUnitId = "ca-app-pub-3940256099942544/5224354917";
+    string adUnitId = "ca-app-pub-5639813524802030/4478427050";
 #else
     string adUnitId = "adUnitId";
 #endif

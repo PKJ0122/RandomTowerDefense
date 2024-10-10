@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
+    const int GAME_CLEAR_WAVE = 49;
     const float ROUND_TIME = 60f;
     const int START_GOLD = 100;
     const int SALARY = 100;
@@ -88,6 +89,16 @@ public class GameManager : SingletonMonoBase<GameManager>
             if (Wave <= 0) return;
             Gold += Salary + (Gold / Interest);
         };
+        EnemySpawner.OnBossSpawn += boss =>
+        {
+            boss.OnDie += () =>
+            {
+                if (Wave == GAME_CLEAR_WAVE)
+                {
+                    GameEnd();
+                }
+            };
+        };
 
         StartCoroutine(C_Game());
     }
@@ -97,14 +108,14 @@ public class GameManager : SingletonMonoBase<GameManager>
         UnitFactory.Instance.OnUnitCreat += unit => RegisterUnit(unit);
     }
 
-    YieldInstruction delay = new WaitForSeconds(1f); //딜레이로 사용할 객체
+    YieldInstruction _delay = new WaitForSeconds(1f); //딜레이로 사용할 객체
 
     /// <summary>
     /// 게임로직 코루틴
     /// </summary>
     IEnumerator C_Game()
     {
-        yield return delay;
+        yield return _delay;
         Gold = START_GOLD;
         Wave = 0;
         Key = 0;
@@ -117,7 +128,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 
             while (TickTime > 0)
             {
-                yield return delay;
+                yield return _delay;
                 TickTime--;
             }
 

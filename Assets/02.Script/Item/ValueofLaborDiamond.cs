@@ -10,7 +10,6 @@ public class ValueofLaborDiamond : ItemBase
             if (value < 40) return;
 
             PlayerData.Instance.Diamond += (int)Value;
-            Notice();
         };
     }
 }

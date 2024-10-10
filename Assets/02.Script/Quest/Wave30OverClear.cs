@@ -5,7 +5,7 @@ public class Wave30OverClear : QuestBase
 {
     public override void Init()
     {
-        GameManager.Instance.OnWaveChange += value =>
+        GameManager.Instance.OnGameEnd += value =>
         {
             if (value == 32)
             {

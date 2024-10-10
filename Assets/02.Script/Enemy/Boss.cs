@@ -15,10 +15,10 @@ public abstract class Boss : Enemy
     }
 
     public event Action<float> OnHpChange;
+    public event Action OnDie;
 
 
-
-    private void Awake()
+    protected override void Awake()
     {
         Priority++;
     }
@@ -35,6 +35,8 @@ public abstract class Boss : Enemy
     protected override void Die()
     {
         GameManager.Instance.Key++;
+        OnDie?.Invoke();
+        OnDie = null;
         base.Die();
     }
 }

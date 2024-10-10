@@ -8,8 +8,6 @@ public class NoticeEffectUI : UIBase
     ItemEffect _itemEffectPrefab;
     Transform _itemEffectLocation;
 
-    Action OnBreak;
-
 
     protected override void Awake()
     {
@@ -30,20 +28,6 @@ public class NoticeEffectUI : UIBase
                 }
             };
         };
-
-        foreach (var item in _itemDatas.Items)
-        {
-            void onItemUse(ItemBase itemBase)
-            {
-                Show(item.Value.itemImage, $"\"{item.Value.itemName}\" 효과발동");
-            }
-
-            item.Value.OnItemUse += onItemUse;
-            OnBreak += () =>
-            {
-                item.Value.OnItemUse -= onItemUse;
-            };
-        }
     }
 
     private void Start()
@@ -58,12 +42,6 @@ public class NoticeEffectUI : UIBase
             Show(unitImg, "소환완료.");
         };
     }
-
-    private void OnDestroy()
-    {
-        OnBreak?.Invoke();
-    }
-
 
     /// <summary>
     /// 아이템 사용상황,미션 클리어 현황을 알려주는 UI

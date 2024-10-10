@@ -3,11 +3,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UnitBuy", menuName = "ScriptableObject/Quest/UnitBuy")]
 public class UnitBuy : QuestBase
 {
+    int _count;
+
     public override void Init()
     {
         UIManager.Instance.Get<UnitBuyUI>().OnUnitBuy += () =>
         {
-            PlayerData.Instance.SetQuestSaveData(questName, 1);
+            _count++;
+        };
+
+        GameManager.Instance.OnGameEnd += v =>
+        {
+            PlayerData.Instance.SetQuestSaveData(questName, _count);
+            _count = 0;
         };
     }
 }

@@ -16,7 +16,6 @@ public class Negotiation : ItemBase
                 Slot slot = SlotManager.Instance.IsVacancy();
 
                 UnitFactory.Instance.UnitCreat<UnitBase>(slot, unitrank);
-                Notice();
             }
         };
     }

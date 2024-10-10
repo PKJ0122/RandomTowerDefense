@@ -33,7 +33,7 @@ public class BossHpBar : PoolObject
         _hpbar.value = boss.Hp;
 
         _boss = boss;
-        _bossHeight = new Vector3(0, _boss.GetComponent<Collider>().bounds.size.y);
+        _bossHeight = new Vector3(0, _boss.GetComponent<Collider>().bounds.size.y + 0.1f);
         boss.OnHpChange += v => HpBarSet(v);
         boss.OnRelasePool += () =>
         {

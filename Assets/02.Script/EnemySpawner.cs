@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     List<Enemy> _enemys = new List<Enemy>(100);
 
     BossHpBar _bossHpBarPrefab;
-    Action<Boss> OnBossSpawn;
+    public static event Action<Boss> OnBossSpawn;
 
 
     void Awake()
@@ -69,6 +69,11 @@ public class EnemySpawner : MonoBehaviour
         };
     }
 
+    private void OnDestroy()
+    {
+        OnBossSpawn = null;
+    }
+
     /// <summary>
     /// 라운드를 매개변수로 몬스터 스폰
     /// </summary>
@@ -96,7 +101,7 @@ public class EnemySpawner : MonoBehaviour
             Enemy enemy = ObjectPoolManager.Instance.Get($"{_nomalEnemyPrefab[nomalEnemycount].name}")
                                                     .Get()
                                                     .GetComponent<Enemy>()
-                                                    .Spawn(hp);
+                                                    .Spawn(1);
 
             _enemys.Add(enemy);
             enemy.OnRelasePool += () => _enemys.Remove(enemy);
@@ -113,11 +118,12 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = ObjectPoolManager.Instance.Get($"{_bossEnemyPrefab[bossEnemycount].name}")
                                                 .Get()
                                                 .GetComponent<Enemy>()
-                                                .Spawn(hp);
+                                                .Spawn(1);
 
         _enemys.Add(enemy);
         enemy.OnRelasePool += () => _enemys.Remove(enemy);
-        OnBossSpawn?.Invoke((Boss)enemy);
+        Boss boss = (Boss)enemy;
+        OnBossSpawn?.Invoke(boss);
 
         if (nomalEnemycount++ >= _nomalEnemyPrefab.Length) nomalEnemycount = 0;
         if (bossEnemycount++ >= _bossEnemyPrefab.Length) bossEnemycount = 0;

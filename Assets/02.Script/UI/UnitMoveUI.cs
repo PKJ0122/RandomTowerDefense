@@ -38,15 +38,18 @@ public class UnitMoveUI : UIBase
             {
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
 
-                if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _layerMank))
+                RaycastHit[] raycastHits = Physics.RaycastAll(ray, float.MaxValue, _layerMank);
+
+                foreach (RaycastHit hit in raycastHits)
                 {
-                    Slot slot = hit.collider.GetComponent<Slot>();
-                    UnitMove(slot);
+                    if(hit.collider.gameObject.TryGetComponent<Slot>(out Slot slot))
+                    {
+                        UnitMove(slot);
+                        return;
+                    }
                 }
-                else
-                {
-                    Hide();
-                }
+
+                Hide();
             }
         }
 
