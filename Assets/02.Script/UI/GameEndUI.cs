@@ -10,8 +10,6 @@ public class GameEndUI : UIBase
 {
     Dictionary<RewerdRank, RewerdData> _rewerdDatas = new Dictionary<RewerdRank, RewerdData>();
 
-    const int GAME_CLEAR_WAVE = 51;
-
     Transform _gameOver;
     Transform _gameClear;
     Button _reStart;
@@ -56,7 +54,7 @@ public class GameEndUI : UIBase
     public void Show(int wave)
     {
         base.Show();
-        bool isClear = wave == GAME_CLEAR_WAVE;
+        bool isClear = wave == GameManager.GAME_CLEAR_WAVE;
         _gameClear.gameObject.SetActive(isClear);
         _gameOver.gameObject.SetActive(!isClear);
         Rewerd(wave);

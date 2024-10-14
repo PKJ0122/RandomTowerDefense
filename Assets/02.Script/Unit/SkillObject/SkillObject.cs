@@ -29,6 +29,7 @@ public class SkillObject : PoolObject
         _target = target;
         _damage = damage;
         _caster.OnDisable += OnDisableHandler;
+        _target.OnRelasePool += OnDisableHandler;
     }
 
     protected virtual void Damage()
@@ -39,6 +40,7 @@ public class SkillObject : PoolObject
     public override void RelasePool()
     {
         _caster.OnDisable -= OnDisableHandler;
+        _target.OnRelasePool -= OnDisableHandler;
         base.RelasePool();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBase<GameManager>
 {
-    const int GAME_CLEAR_WAVE = 49;
+    public const int GAME_CLEAR_WAVE = 50;
     const float ROUND_TIME = 60f;
     const int START_GOLD = 100;
     const int SALARY = 100;
@@ -110,6 +110,7 @@ public class GameManager : SingletonMonoBase<GameManager>
 
     YieldInstruction _delay = new WaitForSeconds(1f); //딜레이로 사용할 객체
 
+
     /// <summary>
     /// 게임로직 코루틴
     /// </summary>
@@ -121,8 +122,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         Key = 0;
         OnGameStart?.Invoke();
 
-
-        while (Wave + 1 <= 50)
+        while (Wave + 1 < GAME_CLEAR_WAVE)
         {
             TickTime = ROUND_TIME;
 
@@ -133,6 +133,7 @@ public class GameManager : SingletonMonoBase<GameManager>
             }
 
             Wave++;
+            yield return null;
         }
 
         GameEnd();
@@ -161,6 +162,7 @@ public class GameManager : SingletonMonoBase<GameManager>
     /// </summary>
     public void GameEnd()
     {
+        _wave++;
         OnGameEnd?.Invoke(Wave);
         UIManager.Instance.Get<GameEndUI>().Show(Wave);
     }

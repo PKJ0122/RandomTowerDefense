@@ -23,8 +23,9 @@ public abstract class Boss : Enemy
         Priority++;
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         StartCoroutine(C_BossActivity());
     }
 

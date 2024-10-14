@@ -15,7 +15,7 @@ public abstract class PoolObject : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         UIManager.Instance.Get<GameEndUI>().OnReStartButtonClick += RelasePool;
         UIManager.Instance.Get<GameEndUI>().OnLobbyButtonClick += RelasePool;

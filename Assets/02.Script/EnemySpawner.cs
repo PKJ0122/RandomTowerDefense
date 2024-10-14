@@ -101,7 +101,7 @@ public class EnemySpawner : MonoBehaviour
             Enemy enemy = ObjectPoolManager.Instance.Get($"{_nomalEnemyPrefab[nomalEnemycount].name}")
                                                     .Get()
                                                     .GetComponent<Enemy>()
-                                                    .Spawn(1);
+                                                    .Spawn(hp);
 
             _enemys.Add(enemy);
             enemy.OnRelasePool += () => _enemys.Remove(enemy);
@@ -118,7 +118,7 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = ObjectPoolManager.Instance.Get($"{_bossEnemyPrefab[bossEnemycount].name}")
                                                 .Get()
                                                 .GetComponent<Enemy>()
-                                                .Spawn(1);
+                                                .Spawn(hp);
 
         _enemys.Add(enemy);
         enemy.OnRelasePool += () => _enemys.Remove(enemy);
