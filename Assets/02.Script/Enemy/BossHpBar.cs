@@ -51,5 +51,6 @@ public class BossHpBar : PoolObject
     {
         _canvas.enabled = false;
         _boss = null;
+        RelasePool();
     }
 }

@@ -43,4 +43,10 @@ public class SkillObject : PoolObject
         _target.OnRelasePool -= OnDisableHandler;
         base.RelasePool();
     }
+
+
+    private void OnDestroy()
+    {
+        Debug.Log("ÆÄ±«µÊ");
+    }
 }

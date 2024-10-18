@@ -1,4 +1,5 @@
 using GoogleMobileAds.Api;
+using UnityEngine;
 
 public class AdManager : SingletonMonoBase<AdManager>
 {
@@ -21,6 +22,18 @@ public class AdManager : SingletonMonoBase<AdManager>
     string adUnitId = "adUnitId";
 #endif
 
+    protected override void Awake()
+    {
+        base.Awake();
+        if (_rewardedAd == null)
+        {
+            MobileAds.Initialize(initStatus => { });
+            _rewardedAd = new RewardedAd(adUnitId);
+        }
+        AdRequest request = new AdRequest.Builder().Build();
+        RewardedAd.LoadAd(request);
+    }
+
     //_rewardedAd.OnAdLoaded += HandleRewardedAdLoaded; // 광고 로드가 완료되면 호출
     //_rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad; // 광고 로드가 실패했을 때 호출
     //_rewardedAd.OnAdOpening += HandleRewardedAdOpening; // 광고가 표시될 때 호출(기기 화면을 덮음)
@@ -30,11 +43,13 @@ public class AdManager : SingletonMonoBase<AdManager>
 
     public void ShowAds()
     {
-        AdRequest request = new AdRequest.Builder().Build();
-        RewardedAd.LoadAd(request);
         if (RewardedAd.IsLoaded())
         {
             RewardedAd.Show();
+        }
+        else
+        {
+            UIManager.Instance.Get<PopUpUI>().Show("광고를 불러오지 못했습니다.");
         }
     }
 }

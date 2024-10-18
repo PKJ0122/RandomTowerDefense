@@ -122,7 +122,7 @@ public class GameManager : SingletonMonoBase<GameManager>
         Key = 0;
         OnGameStart?.Invoke();
 
-        while (Wave + 1 < GAME_CLEAR_WAVE)
+        while (true)
         {
             TickTime = ROUND_TIME;
 
@@ -132,7 +132,13 @@ public class GameManager : SingletonMonoBase<GameManager>
                 TickTime--;
             }
 
+            if (Wave == GAME_CLEAR_WAVE - 1)
+            {
+                break;
+            }
+
             Wave++;
+
             yield return null;
         }
 
