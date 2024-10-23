@@ -18,7 +18,7 @@ public class PopUpUI : UIBase
     public void Show(string detail)
     {
         base.Show();
-        SortingOrder = 99999;
+        SortingOrder = 100000000;
         _detail.text = detail;
     }
 }

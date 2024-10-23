@@ -1,21 +1,12 @@
 using GoogleMobileAds.Api;
+using System;
 using UnityEngine;
 
 public class AdManager : SingletonMonoBase<AdManager>
 {
     RewardedAd _rewardedAd;
-    public RewardedAd RewardedAd
-    {
-        get
-        {
-            if (_rewardedAd == null)
-            {
-                MobileAds.Initialize(initStatus => { });
-                _rewardedAd = new RewardedAd(adUnitId);
-            }
-            return _rewardedAd;
-        }
-    }
+    public RewardedAd RewardedAd => _rewardedAd;
+
 #if UNITY_ANDROID
     string adUnitId = "ca-app-pub-5639813524802030/4478427050";
 #else
@@ -29,6 +20,11 @@ public class AdManager : SingletonMonoBase<AdManager>
         {
             MobileAds.Initialize(initStatus => { });
             _rewardedAd = new RewardedAd(adUnitId);
+            _rewardedAd.OnAdClosed += (object sender, EventArgs args) =>
+            {
+                AdRequest request = new AdRequest.Builder().Build();
+                RewardedAd.LoadAd(request);
+            };
         }
         AdRequest request = new AdRequest.Builder().Build();
         RewardedAd.LoadAd(request);
@@ -50,6 +46,14 @@ public class AdManager : SingletonMonoBase<AdManager>
         else
         {
             UIManager.Instance.Get<PopUpUI>().Show("광고를 불러오지 못했습니다.");
+            _rewardedAd = new RewardedAd(adUnitId);
+            _rewardedAd.OnAdClosed += (object sender, EventArgs args) =>
+            {
+                AdRequest request = new AdRequest.Builder().Build();
+                RewardedAd.LoadAd(request);
+            };
+            AdRequest request = new AdRequest.Builder().Build();
+            RewardedAd.LoadAd(request);
         }
     }
 }

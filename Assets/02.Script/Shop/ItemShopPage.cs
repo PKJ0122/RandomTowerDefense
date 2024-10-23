@@ -65,10 +65,11 @@ public class ItemShopPage : ShopPageBase
             adItem.onClick.RemoveAllListeners();
             adItem.onClick.AddListener(() =>
             {
+                if (PlayerData.PlayerDataContainer.adItemBuy) return;
+
                 AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedHandler;
                 AdManager.Instance.ShowAds();
                 SoundManager.Instance.PlaySound(SFX.Button_Click);
-                adItem.onClick.RemoveAllListeners();
             });
         }
     }

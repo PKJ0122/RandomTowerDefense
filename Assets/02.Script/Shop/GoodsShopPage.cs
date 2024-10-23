@@ -59,10 +59,11 @@ public class GoodsShopPage : ShopPageBase
             adItem.onClick.RemoveAllListeners();
             adItem.onClick.AddListener(() =>
             {
+                if (PlayerData.PlayerDataContainer.adDiamondBuy) return;
+
                 AdManager.Instance.RewardedAd.OnAdClosed += OnAdClosedHandler;
                 AdManager.Instance.ShowAds();
                 SoundManager.Instance.PlaySound(SFX.Button_Click);
-                adItem.onClick.RemoveAllListeners();
             });
         }
     }
