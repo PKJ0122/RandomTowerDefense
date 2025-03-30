@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Negotiation
   m_EditorClassIdentifier: 
   itemName: "\uC5D0\uB204\uB9AC"
-  description: "\uC720\uB2DB \uC870\uD569\uC2DC Amount% \uD655\uB960\uB85C \uC7AC\uB8CC
+  description: "\uC720\uB2DB \uC870\uD569\uC2DC $% \uD655\uB960\uB85C \uC7AC\uB8CC
     \uB4F1\uAE09\uC758 \uC720\uB2DB\uC744 \uD55C\uB9C8\uB9AC \uC18C\uD658\uD569\uB2C8\uB2E4."
   itemImage: {fileID: 936618226, guid: ea298d55cd181fe4cb9cc6ffc84734d5, type: 3}
   early: 10

@@ -1,5 +1,7 @@
 using System;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 [Serializable]
 public abstract class ItemBase : ScriptableObject
@@ -23,7 +25,17 @@ public abstract class ItemBase : ScriptableObject
     }
 
     public float Value => (early + Mathf.Max(0,Level - 1) * weight);
-    public string Description => description.Replace("Amount", $"<color=red><b>{Value}</color></b>");
+    
+    public string ItemName()
+    {
+        return LocalizationSettings.StringDatabase.GetLocalizedString("MyTable", itemName, LocalizationSettings.SelectedLocale);
+    }
+
+    public string Description()
+    {
+        string de = LocalizationSettings.StringDatabase.GetLocalizedString("MyTable", description, LocalizationSettings.SelectedLocale);
+        return de.Replace("$", $"<color=red><b>{Value}</color></b>");
+    }
 
 
     public void TryUse()

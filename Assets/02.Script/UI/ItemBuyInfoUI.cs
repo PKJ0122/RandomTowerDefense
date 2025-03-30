@@ -59,8 +59,8 @@ public class ItemBuyInfoUI : UIBase
 
         ItemBase itemData = _itemDatas.Items[shopSaveData.itemName];
         _item.sprite = itemData.itemImage;
-        _itemName.text = itemData.itemName;
-        _discription.text = itemData.Description;
+        _itemName.text = itemData.ItemName();
+        _discription.text = itemData.Description();
         _price.text = $"<sprite={shopSaveData.priceKind}> {shopSaveData.price}";
     }
 }

@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class PopUpUI : UIBase
@@ -18,7 +19,7 @@ public class PopUpUI : UIBase
     public void Show(string detail)
     {
         base.Show();
-        SortingOrder = 100000000;
-        _detail.text = detail;
+        SortingOrder = 999;
+        _detail.text = LocalizationSettings.StringDatabase.GetLocalizedString("MyTable", detail, LocalizationSettings.SelectedLocale);
     }
 }

@@ -1,5 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class BeyondCraftingInfoUI : UIBase
@@ -34,7 +36,7 @@ public class BeyondCraftingInfoUI : UIBase
         base.Show();
         UnitData unitData = UnitRepository.UnitKindDatas[method.unitKind];
         _unit.sprite = unitData.unitImg;
-        _unitName.text = unitData.unitName;
+        _unitName.text = LocalizationSettings.StringDatabase.GetLocalizedString("MyTable", unitData.unitName, LocalizationSettings.SelectedLocale);
         for (int i = 0; i < _materials.Length; i++)
         {
             Image materialImg = _materials[i].transform.Find("Image - Unit").GetComponent<Image>();
@@ -42,7 +44,7 @@ public class BeyondCraftingInfoUI : UIBase
             UnitInfo material = method.beyondCraftingMaterials[i];
             materialImg.sprite = UnitRepository.UnitKindDatas[material.unitKind].unitImg;
             UnitRankData unitRankData = UnitRepository.UnitRankDatas[material.unitRank];
-            materialRank.text = unitRankData.unitRankName;
+            materialRank.text = LocalizationSettings.StringDatabase.GetLocalizedString("MyTable", unitRankData.unitRankName, LocalizationSettings.SelectedLocale);
             materialRank.color = unitRankData.unitRankColor;
         }
         bool ishave = craftingData.IsHave;
